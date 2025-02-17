@@ -1,0 +1,97 @@
+/* Sidebar Styles */
+.sidebar {
+    background-color: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+  
+  .sidebarClosed {
+    width: 5rem;
+  }
+  
+  .sidebarOpen {
+    width: 16rem;
+  }
+  
+  .sidebarHeader {
+    padding: 1rem;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  
+  .sidebarTitle {
+    font-weight: bold;
+    font-size: 1.25rem;
+  }
+  
+  .sidebarMenuItem {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 0.25rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .sidebarMenuItem:hover {
+    background-color: #f1f5f9;
+  }
+  
+  .sidebarMenuText {
+    margin-left: 0.75rem;
+  }
+  
+  /* Main Content Styles */
+  .mainContent {
+    flex: 1;
+    overflow: hidden;
+  }
+  
+  .header {
+    background-color: white;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+  }
+  
+  .searchWrapper {
+    position: relative;
+    max-width: 40rem;
+    flex: 1;
+  }
+  
+  .searchInput {
+    width: 100%;
+    padding-left: 2.5rem;
+    padding-right: 1rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-radius: 0.5rem;
+    border: 1px solid #e2e8f0;
+    outline: none;
+  }
+  
+  .searchIcon {
+    position: absolute;
+    left: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #cbd5e0;
+  }
+  
+  /* Content Area */
+  .contentArea {
+    padding: 1.5rem;
+    background-color: #cbd5e0;
+    overflow: auto;
+    height: calc(100vh - 4rem);
+    border-radius: 20px;
+  }
+  
+  .contentCard {
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+  }
+  
