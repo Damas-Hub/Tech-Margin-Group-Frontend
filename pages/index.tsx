@@ -1,5 +1,5 @@
  import React from 'react'
-import Admin from './api/admin'
+import Admin from './admin'
  
  const index = () => {
    return (
