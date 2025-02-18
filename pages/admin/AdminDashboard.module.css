@@ -7,11 +7,13 @@
   
   .sidebarClosed {
     width: 5rem;
-    margin-top: 1.8rem;
+    margin-top: 1.2rem;
   }
   
   .sidebarOpen {
     width: 12rem;
+    margin-top: 1.2rem;
+
   }
   
   .sidebarHeader {
@@ -51,7 +53,7 @@
   }
   
   .header {
-    background-color: rgb(219, 51, 51);
+    background-color: #ffff;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     padding: 0.5rem;
     height: 5rem;

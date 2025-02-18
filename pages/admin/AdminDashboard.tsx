@@ -119,7 +119,7 @@ const AdminDashboard = () => {
                 className={styles.searchInput}
               />
             </div>
-            <div className="flex items-center space-x-6 ml-auto">
+            <div className="flex items-center space-x-8 ml-auto">
       <Bell className="w-6 h-6 cursor-pointer text-gray-700" />
       <img src="https://media.istockphoto.com/id/1036660952/vector/auto-service-sign-car-repair-logo-eps.jpg?s=612x612&w=0&k=20&c=YGPt3hie_G2IvanKJcLCTy8oNqP_KAkebHfynjx8QnE=" alt="Logo" className="w-10 h-10 rounded-full" />
     </div>
