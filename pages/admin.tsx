@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Search, Package, Users, FileText, MessageCircle, ShoppingBag, LogOut, Menu } from 'lucide-react';
-import styles from '../../pages/Admin.module.css';
+import styles from "./Admin.module.css";
 
 const Admin = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -15,7 +15,7 @@ const Admin = () => {
   ];
 
   return (
-    <div className="flex h-screen bg-green-100">
+    <div className="flex h-screen bg-black">
       {/* Sidebar */}
       <div className={`${styles.sidebar} ${isSidebarOpen ? styles.sidebarOpen : styles.sidebarClosed}`}>
         <div className={styles.sidebarHeader}>
