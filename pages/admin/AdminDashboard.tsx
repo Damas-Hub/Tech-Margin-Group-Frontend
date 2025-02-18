@@ -59,11 +59,11 @@ const AdminDashboard = () => {
           <h1
             className={`${styles.sidebarTitle} ${!isSidebarOpen && "hidden"}`}
           >
-            TMG
+          
           </h1>
           <button
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-            className={styles.sidebarMenuItem}
+            className={styles.menuIcon}
           >
             <Menu className="w-6 h-6" />
           </button>
@@ -91,6 +91,7 @@ const AdminDashboard = () => {
         </nav>
 
         {/* Logout */}
+        <div className={styles.logout}>
         <button
           className={styles.sidebarMenuItem}
           style={{ marginTop: "auto" }}
@@ -104,7 +105,7 @@ const AdminDashboard = () => {
             Logout
           </span>
         </button>
-      </div>
+      </div></div>
 
       {/* Main Content */}
       <div className={styles.mainContent}>
