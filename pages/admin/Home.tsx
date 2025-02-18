@@ -8,6 +8,7 @@ import React from 'react'
       <LiveData icon={<Users className="w-8 h-8 text-blue-600" />} number={50} text="Clients Today" />
       <LiveData icon={<Users className="w-8 h-8 text-green-600" />} number={5} text="Staffs" />
       <LiveData icon={<MessageCircle className="w-8 h-8 text-red-600" />} number={10} text="Messages" />
+      
     </div>
    )
  }
