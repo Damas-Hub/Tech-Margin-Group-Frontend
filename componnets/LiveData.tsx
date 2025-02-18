@@ -1,12 +1,20 @@
-import React from 'react'
-import styles from "./LiveData.module.css"
+import React from "react";
+import styles from "./LiveData.module.css";
 
-const LiveData = () => {
-  return (
-    <div className={styles.container}>
-live data
-    </div>
-  )
+interface LiveDataProps {
+  icon: React.ReactNode;  
+  number: number;  
+  text: string;  
 }
 
-export default LiveData
+const LiveData: React.FC<LiveDataProps> = ({ icon, number, text }) => {
+  return (
+    <div className={styles.container}>
+      <div className={styles.icon}>{icon}</div>
+      <div className={styles.number}>{number}</div>
+      <div className={styles.text}>{text}</div>
+    </div>
+  );
+};
+
+export default LiveData;
