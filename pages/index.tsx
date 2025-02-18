@@ -1,9 +1,9 @@
  import React from 'react'
-import Dashboard from './Dashboard'
+import AdminDashboard from './AdminDashboard'
  
  const index = () => {
    return (
-      <Dashboard/>
+      <AdminDashboard/>
    )
  }
  
