@@ -21,7 +21,7 @@ const AdminDashboard = () => {
 
   const menuItems = [
     {
-      label: "Admin",
+      label: "Dashboard",
       icon: <Users className="w-5 h-5" />,
       component: <Admin />,
     },
