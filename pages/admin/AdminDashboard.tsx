@@ -8,22 +8,22 @@ import {
   LogOut,
   Menu,
 } from "lucide-react";
-import styles from "./Admin.module.css";
+import styles from "./AdminDashboard.module.css";
 import Clients from "./Clients";
 import Store from "./Store";
 import Message from "./Message";
 import Staffs from "./Staffs";
-import Admin from "./admin";
+import Home from "./Home";
 
 const AdminDashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const [activePage, setActivePage] = useState("Admin"); // Default page
+  const [activePage, setActivePage] = useState("Home"); // Default page
 
   const menuItems = [
     {
-      label: "Dashboard",
+      label: "Home",
       icon: <Users className="w-5 h-5" />,
-      component: <Admin />,
+      component: <Home/>,
     },
     {
       label: "Store",
