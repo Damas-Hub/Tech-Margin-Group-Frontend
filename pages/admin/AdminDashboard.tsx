@@ -23,34 +23,33 @@ const AdminDashboard = () => {
   const menuItems = [
     {
       label: "Home",
-      icon: <Users className="w-5 h-5" />,
+      icon: <Users className="w-7 h-7" />,
       component: <Home />,
     },
     {
       label: "Store",
-      icon: <ShoppingBag className="w-5 h-5" />,
+      icon: <ShoppingBag className="w-7 h-7" />,
       component: <Store />,
     },
     {
       label: "Clients",
-      icon: <Users className="w-5 h-5" />,
+      icon: <Users className="w-7 h-7" />,
       component: <Clients />,
     },
     {
       label: "Messages",
-      icon: <MessageCircle className="w-5 h-5" />,
+      icon: <MessageCircle className="w-7 h-7" />,
       component: <Message />,
     },
     {
       label: "Staffs",
-      icon: <Users className="w-5 h-5" />,
+      icon: <Users className="w-7 h-7" />,
       component: <Staffs />,
     },
   ];
 
   return (
     <div className="flex h-screen">
-      {/* Sidebar */}
       <div
         className={`${styles.sidebar} ${
           isSidebarOpen ? styles.sidebarOpen : styles.sidebarClosed
@@ -64,47 +63,48 @@ const AdminDashboard = () => {
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
             className={styles.memu}
           >
-            <Menu className="w-6 h-6" />
+            <Menu className="w-8 h-8" />
           </button>
         </div>
 
-        <nav>
-          {menuItems.map((item) => (
-            <button
-              key={item.label}
-              className={`${styles.sidebarMenuItem} ${
-                activePage === item.label ? "bg-gray-300" : ""
-              }`}
-              onClick={() => setActivePage(item.label)}
-            >
-              {item.icon}
+        {/* Sidebar Navigation - Wrapped in a flex container */}
+        <div className={styles.sidebarContent}>
+          <nav>
+            {menuItems.map((item) => (
+              <button
+                key={item.label}
+                className={`${styles.sidebarMenuItem} ${
+                  activePage === item.label ? "bg-gray-300" : ""
+                }`}
+                onClick={() => setActivePage(item.label)}
+              >
+                {item.icon}
+                <span
+                  className={`${styles.sidebarMenuText} ${
+                    !isSidebarOpen && "hidden"
+                  }`}
+                >
+                  {item.label}
+                </span>
+              </button>
+            ))}
+          </nav>
+
+          {/* Logout Button */}
+          <div className={styles.logout}>
+            <button className={styles.sidebarMenuItem}>
+              <LogOut className="w-7 h-7" />
               <span
                 className={`${styles.sidebarMenuText} ${
                   !isSidebarOpen && "hidden"
                 }`}
               >
-                {item.label}
+                Logout
               </span>
             </button>
-          ))}
-        </nav>
-
-        {/* Logout */}
-        <div className={styles.logout}>
-        <button
-          className={styles.sidebarMenuItem}
-          style={{ marginTop: "auto" }}
-        >
-          <LogOut className="w-5 h-5" />
-          <span
-            className={`${styles.sidebarMenuText} ${
-              !isSidebarOpen && "hidden"
-            }`}
-          >
-            Logout
-          </span>
-        </button>
-      </div></div>
+          </div>
+        </div>
+      </div>
 
       {/* Main Content */}
       <div className={styles.mainContent}>
@@ -120,9 +120,13 @@ const AdminDashboard = () => {
               />
             </div>
             <div className="flex items-center space-x-8 ml-auto">
-      <Bell className="w-6 h-6 cursor-pointer text-gray-700" />
-      <img src="https://media.istockphoto.com/id/1036660952/vector/auto-service-sign-car-repair-logo-eps.jpg?s=612x612&w=0&k=20&c=YGPt3hie_G2IvanKJcLCTy8oNqP_KAkebHfynjx8QnE=" alt="Logo" className="w-10 h-10 rounded-full" />
-    </div>
+              <Bell className="w-6 h-6 cursor-pointer text-gray-700" />
+              <img
+                src="https://media.istockphoto.com/id/1036660952/vector/auto-service-sign-car-repair-logo-eps.jpg?s=612x612&w=0&k=20&c=YGPt3hie_G2IvanKJcLCTy8oNqP_KAkebHfynjx8QnE="
+                alt="Logo"
+                className="w-10 h-10 rounded-full"
+              />
+            </div>
           </div>
         </header>
 

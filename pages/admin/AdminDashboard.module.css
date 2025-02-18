@@ -1,104 +1,115 @@
 /* Sidebar Styles */
 .sidebar {
-    background-color: white;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-  }
-  
-  .sidebarClosed {
-    width: 2rem;
-    margin-top: 1.2rem;
-  }
-  
-  .sidebarOpen {
-    width: 12rem;
-    margin-top: 1.2rem;
+  background-color: white;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  color: rgb(60, 145, 230);
+}
+.sidebarContent {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1; /* Makes content take up remaining space */
+}
 
-  }
-  
-  .sidebarHeader {
-    padding: 1rem;
-  }
-  
-  .sidebarTitle {
-    font-weight: bold;
-    font-size: 1.25rem;
-  }
-  
-  .sidebarMenuItem {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    padding: 0.5rem;
-    margin-bottom: 1rem;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-  }
-  .memu{
-    color: brown;
-  }
-  .sidebarMenuItem:hover {
-    background-color: #f1f5f9;
-  }
-  
-  .sidebarMenuText {
-    margin-left: 0.75rem;
-  }
-  
-  /* Main Content Styles */
-  .mainContent {
-    flex: 1;
-    overflow: hidden;
-  }
-  
-  .header {
-    background-color: #ffff;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    padding: 0.5rem;
-    height: 5rem;
-    border-radius: 20px;
-  }
-  
-  .searchWrapper {
-    position: relative;
-    max-width: 30rem;
-    flex: 1;
-    margin-top: -0.8rem;
-  }
-  
-  .searchInput {
-    width: 100%;
-    padding-left: 2.5rem;
-    padding-right: 1rem;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
-    border-radius: 0.5rem;
-    border: 1px solid #e2e8f0;
-    outline: none;
-  }
-  
-  .searchIcon {
-    position: absolute;
-    left: 0.75rem;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #cbd5e0;
-  }
-  
-  /* Content Area */
-  .contentArea {
-    padding: 1.5rem;
-    background-color: #cbd5e0;
-    overflow: auto;
-    height: calc(100vh - 4rem);
-    border-radius: 20px;
-  }
-  
-  .contentCard {
-    background-color: white;
-    border-radius: 0.5rem;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    padding: 1.5rem;
-  }
-  
+.sidebarClosed {
+  width: 2.5rem;
+  margin-top: 1.2rem;
+}
+
+.sidebarOpen {
+  width: 12rem;
+  margin-top: 1.2rem;
+}
+
+.sidebarHeader {
+  padding: 1rem;
+}
+
+.sidebarTitle {
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+
+.sidebarMenuItem {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  justify-content: space-evenly;
+  border-radius: 10rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+.memu {
+  color: rgb(60, 145, 230);
+  margin-left: -10px;
+}
+.sidebarMenuItem:hover {
+  background-color: #f1f5f9;
+}
+
+/* Main Content Styles */
+.mainContent {
+  flex: 1;
+  overflow: hidden;
+}
+
+.header {
+  background-color: #ffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 0.5rem;
+  height: 5rem;
+  border-radius: 20px;
+}
+
+.searchWrapper {
+  position: relative;
+  max-width: 30rem;
+  flex: 1;
+  margin-top: -0.8rem;
+}
+
+.searchInput {
+  width: 100%;
+  padding-left: 2.5rem;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid #e2e8f0;
+  outline: none;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #cbd5e0;
+}
+
+/* Content Area */
+.contentArea {
+  padding: 1.5rem;
+  background-color: #cbd5e0;
+  overflow: auto;
+  height: calc(100vh - 4rem);
+  border-radius: 20px;
+}
+
+.contentCard {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+}
+.logout {
+  margin-top: auto;
+  padding: 0.4rem;
+  color: rgb(60, 145, 230);
+  margin-left: -0.5rem;
+}
