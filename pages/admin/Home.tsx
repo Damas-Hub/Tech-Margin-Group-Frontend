@@ -1,8 +1,11 @@
- import React from 'react'
+ import LiveData from '@/componnets/LiveData'
+import React from 'react'
  
  const Home = () => {
    return (
-     <div>Home</div>
+     <div>
+<LiveData />
+     </div>
    )
  }
  

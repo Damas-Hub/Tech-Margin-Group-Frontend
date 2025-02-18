@@ -1,8 +1,11 @@
 import React from 'react'
+import styles from "./LiveData.module.css"
 
 const LiveData = () => {
   return (
-    <div>LiveData</div>
+    <div className={styles.container}>
+live data
+    </div>
   )
 }
 
