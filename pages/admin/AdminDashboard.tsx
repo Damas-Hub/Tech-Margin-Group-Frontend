@@ -23,7 +23,7 @@ const AdminDashboard = () => {
     {
       label: "Home",
       icon: <Users className="w-5 h-5" />,
-      component: <Home/>,
+      component: <Home />,
     },
     {
       label: "Store",
@@ -58,12 +58,10 @@ const AdminDashboard = () => {
         <div className={styles.sidebarHeader}>
           <h1
             className={`${styles.sidebarTitle} ${!isSidebarOpen && "hidden"}`}
-          >
-            TMG
-          </h1>
+          ></h1>
           <button
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-            className={styles.sidebarMenuItem}
+            className={styles.memu}
           >
             <Menu className="w-6 h-6" />
           </button>
