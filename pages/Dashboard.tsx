@@ -5,14 +5,15 @@ import Clients from './Clients';
 import Store from './Store';
 import Message from './Message';
 import Staffs from './Staffs';
+import Admin from './admin';
 
  
-const Admin = () => {
+const Dashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const [activePage, setActivePage] = useState('Dashboard'); // Default page
+  const [activePage, setActivePage] = useState('Admin'); // Default page
 
   const menuItems = [
-    { label: 'admin', icon: <Users className="w-5 h-5" />, component: <Admin /> },
+    { label: 'Admin', icon: <Users className="w-5 h-5" />, component: <Admin /> },
     { label: 'Store', icon: <ShoppingBag className="w-5 h-5" />, component: <Store /> },
     { label: 'Clients', icon: <Users className="w-5 h-5" />, component: <Clients /> },
     { label: 'Messages', icon: <MessageCircle className="w-5 h-5" />, component: <Message /> },
@@ -88,4 +89,4 @@ const Admin = () => {
   );
 };
 
-export default Admin;
+export default Dashboard;
