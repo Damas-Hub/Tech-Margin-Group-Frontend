@@ -1,10 +1,10 @@
-import React from "react";
-import styles from "./LiveData.module.css";
+import React from 'react';
+import styles from './LiveData.module.css';
 
 interface LiveDataProps {
-  icon: React.ReactNode;  
-  number: number;  
-  text: string;  
+  icon: React.ReactNode;
+  number: number;
+  text: string;
 }
 
 const LiveData: React.FC<LiveDataProps> = ({ icon, number, text }) => {
