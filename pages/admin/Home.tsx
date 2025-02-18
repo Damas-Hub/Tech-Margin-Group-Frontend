@@ -6,7 +6,7 @@ import React from 'react';
 const Home = () => {
   return (
      
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
       <LiveData icon={<Users className="w-8 h-8 text-blue-600" />} number={50} text="Clients Today" />
       <LiveData icon={<Users className="w-8 h-8 text-green-600" />} number={5} text="Staffs" />
       <LiveData icon={<MessageCircle className="w-8 h-8 text-red-600" />} number={10} text="Messages" />
