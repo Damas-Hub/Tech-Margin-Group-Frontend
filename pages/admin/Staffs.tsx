@@ -1,8 +1,11 @@
+import StaffProfile from '@/componnets/StaffProfile'
 import React from 'react'
 
 const Staffs = () => {
   return (
-    <div>Staffs</div>
+    <div>Staffs
+<StaffProfile />
+    </div>
   )
 }
 
