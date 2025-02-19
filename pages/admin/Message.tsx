@@ -1,8 +1,12 @@
+import Form from '@/componnets/Form'
 import React from 'react'
 
 const Message = () => {
   return (
-    <div>Message</div>
+    <div>Message
+
+      <Form />
+    </div>
   )
 }
 
