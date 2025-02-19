@@ -1,5 +1,4 @@
-/* Sidebar Styles */
-.sidebar {
+  .sidebar {
   background-color: white;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
@@ -11,7 +10,7 @@
 .sidebarContent {
   display: flex;
   flex-direction: column;
-  flex-grow: 1; /* Makes content take up remaining space */
+  flex-grow: 1; 
 }
 
 .sidebarClosed {
