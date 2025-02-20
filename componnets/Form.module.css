@@ -117,10 +117,14 @@
   background-color: #06b;
 }
 .closeIcon {
-  color: red;
-  cursor: pointer;
-  font-size: 30px;
-  position: absolute;
-  right: 40px;
-  top: 20px;
-}
+    position: fixed;
+    right: 530px;
+    margin-top: 2rem;
+    font-size: 30px;  
+    cursor: pointer;
+    color: #e63a3a;  
+  }
+  
+  .closeIcon:hover {
+    color: red; /* Change color on hover */
+  }
