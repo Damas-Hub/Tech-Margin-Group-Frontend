@@ -5,7 +5,7 @@ const Message = () => {
   return (
     <div>Message
 
-      <Form />
+       
     </div>
   )
 }

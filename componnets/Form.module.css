@@ -7,7 +7,8 @@
   box-sizing: border-box;
   height: fit-content;
   padding: 20px;
-  width: 400px;
+  width: 80vh;
+  height: fit-content;
 }
 
 .title {
@@ -114,4 +115,12 @@
 
 .submit:active {
   background-color: #06b;
+}
+.closeIcon {
+  color: red;
+  cursor: pointer;
+  font-size: 30px;
+  position: absolute;
+  right: 40px;
+  top: 20px;
 }
