@@ -1,5 +1,5 @@
   .sidebar {
-  background-color: white;
+  background-color:  #56021F;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
   display: flex;
@@ -15,12 +15,12 @@
 
 .sidebarClosed {
   width: 2.5rem;
-  margin-top: 1.2rem;
+  /* margin-top: 1.2rem; */
 }
 
 .sidebarOpen {
   width: 12rem;
-  margin-top: 1.2rem;
+  /* margin-top: 1.2rem; */
 }
 
 .sidebarHeader {
@@ -37,6 +37,7 @@
   align-items: center;
   width: 100%;
   padding: 0.5rem;
+  margin-top: 1.6rem;
   margin-bottom: 1rem;
   justify-content: space-evenly;
   border-radius: 10rem;
@@ -58,11 +59,11 @@
 }
 
 .header {
-  background-color: #ffff;
+  background-color:  #56021F;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   padding: 0.5rem;
-  height: 5rem;
-  border-radius: 20px;
+  height: 6rem;
+  /* border-radius: 10px; */
 }
 
 .searchWrapper {
@@ -104,7 +105,7 @@
   background-color: white;
   border-radius: 0.5rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  padding: 1.5rem;
+  padding: 1rem;
 }
 .logout {
   margin-top: auto;
