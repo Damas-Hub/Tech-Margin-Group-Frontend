@@ -10,6 +10,7 @@ const Staffs = () => {
       staffId="ST12345"
       role="Secretary"
       contactNumber="+1234567890"
+       backDetails="This staff member is responsible for handling administrative tasks and ensuring smooth operations."
     />
     </div>
   )

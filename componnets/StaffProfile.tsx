@@ -7,6 +7,7 @@ interface StaffProfileProps {
   staffId: string;
   role: string;
   contactNumber: string;
+  backDetails: string;
 }
 
 const StaffProfile: React.FC<StaffProfileProps> = ({
@@ -15,6 +16,7 @@ const StaffProfile: React.FC<StaffProfileProps> = ({
   staffId,
   role,
   contactNumber,
+  backDetails,
 }) => {
   return (
     <div className={styles.container}>
@@ -24,8 +26,12 @@ const StaffProfile: React.FC<StaffProfileProps> = ({
           <img src={profilePic} alt="Profile" className={styles.profileImage} />
           <p className={styles.heading}>{role}</p>
           <p className={styles.follow}>{name}</p>
-          <p className={styles.follow}>Staff ID: {staffId}</p>
-          <p className={styles.follow}>Contact: {contactNumber}</p>
+          <p className={styles.name}>Staff ID: {staffId}</p>
+          <p className={styles.name}>Contact: {contactNumber}</p>
+        </div>
+        <div className={styles.back}>
+          <p className={styles.heading}>Additional Info</p>
+          <p className={styles.details}>{backDetails}</p>
         </div>
       </div>
     </div>
