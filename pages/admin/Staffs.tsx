@@ -3,7 +3,7 @@ import React from 'react'
 
 const Staffs = () => {
   return (
-    <div>Staffs
+    <div>
   <StaffProfile
       profilePic="https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg"
       name="John Doe"
