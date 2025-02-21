@@ -109,7 +109,7 @@ const AdminDashboard = () => {
                 placeholder="Search..."
                 className={styles.searchInput}
                 value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)} // ✅ Update searchTerm
+                onChange={(e) => setSearchTerm(e.target.value)}  
               />
             </div>
             <div className="flex items-center space-x-8 ml-auto">

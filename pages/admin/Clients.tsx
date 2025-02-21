@@ -9,7 +9,7 @@ const Clients: React.FC<ClientProps> = ({ searchTerm = "" }) => {
   const currentDate = new Date().toISOString().split("T")[0];
 
   const items = [
-    { name: "Ama Kofi", itemBrought: "Laptop", phoneNumber: "0543737222", problem: "Hard drive", status: "Not Done" },
+    { name: "Ama Kofi", itemBrought: "Laptop", phoneNumber: "0543737222", problem: "Hard drive", status: "Resolved" },
     { name: "John Doe", itemBrought: "System Unit", phoneNumber: "0543734222", problem: "Motherboard", status: "Not Done" },
     { name: "Ama Kofi", itemBrought: "Laptop", phoneNumber: "0543737222", problem: "Hard drive", status: "Not Done" },
     { name: "John Doe", itemBrought: "System Unit", phoneNumber: "0543734222", problem: "Motherboard", status: "Not Done" },
