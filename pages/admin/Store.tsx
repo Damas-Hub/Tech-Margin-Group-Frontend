@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./Store.module.css";
 
 interface StoreProps {
-  searchTerm: string; // ✅ Accept searchTerm as a prop
+  searchTerm: string;  
 }
 
 const Store: React.FC<StoreProps> = ({ searchTerm }) => {
@@ -19,7 +19,6 @@ const Store: React.FC<StoreProps> = ({ searchTerm }) => {
     { serialNo: 10, name: "Router", quantity: 5, price: "$80" },
   ];
 
-  // ✅ Filter items based on searchTerm
   const filteredItems = items.filter((item) =>
     Object.values(item).some((value) =>
       value.toString().toLowerCase().includes(searchTerm.toLowerCase())

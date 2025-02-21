@@ -1,0 +1,59 @@
+.storeWrapper {
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .storeTable {
+    width: 80%;
+    border-collapse: collapse;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  
+  .storeTable th,
+  .storeTable td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .storeTable th {
+    background-color: white;
+    font-weight: bold;
+  }
+  
+  .storeTable tr:nth-child(even) {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+  
+  .addButton {
+    background-color: #56021F;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .addButton:hover {
+    background-color: darkblue;
+  }
+  .resolved {
+    color: green;
+    font-weight: bold;
+  }
+  
+  .notDone {
+    color: red;
+    font-weight: bold;
+  }
+  
+  .noResults {
+    text-align: center;
+    padding: 15px;
+    font-size: 16px;
+    color: gray;
+  }

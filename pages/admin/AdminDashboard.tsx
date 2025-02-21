@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { Search, Bell, Menu, LogOut, MessageCircle, ShoppingBag, Users } from "lucide-react";
+import {
+  Search,
+  Bell,
+  Menu,
+  LogOut,
+  MessageCircle,
+  ShoppingBag,
+  Users,
+} from "lucide-react";
 import styles from "./AdminDashboard.module.css";
 import Clients from "./Clients";
 import Store from "./Store";
@@ -9,23 +17,46 @@ import Home from "./Home";
 
 const AdminDashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const [activePage, setActivePage] = useState("Store"); // Default to Store page
-  const [searchTerm, setSearchTerm] = useState(""); // ✅ Track search term
+  const [activePage, setActivePage] = useState("Store");
+  const [searchTerm, setSearchTerm] = useState("");
 
   const menuItems = [
     { label: "Home", icon: <Users className="w-7 h-7" />, component: <Home /> },
-    { label: "Store", icon: <ShoppingBag className="w-7 h-7" />, component: <Store searchTerm={searchTerm} /> }, // ✅ Pass searchTerm
-    { label: "Clients", icon: <Users className="w-7 h-7" />, component: <Clients /> },
-    { label: "Messages", icon: <MessageCircle className="w-7 h-7" />, component: <Message /> },
-    { label: "Staffs", icon: <Users className="w-7 h-7" />, component: <Staffs /> },
+    {
+      label: "Store",
+      icon: <ShoppingBag className="w-7 h-7" />,
+      component: <Store searchTerm={searchTerm} />,
+    },
+    {
+      label: "Clients",
+      icon: <Users className="w-7 h-7" />,
+      component: <Clients searchTerm={searchTerm} />,
+    },
+    {
+      label: "Messages",
+      icon: <MessageCircle className="w-7 h-7" />,
+      component: <Message />,
+    },
+    {
+      label: "Staffs",
+      icon: <Users className="w-7 h-7" />,
+      component: <Staffs />,
+    },
   ];
 
   return (
     <div className="flex h-screen">
       {/* Sidebar */}
-      <div className={`${styles.sidebar} ${isSidebarOpen ? styles.sidebarOpen : styles.sidebarClosed}`}>
+      <div
+        className={`${styles.sidebar} ${
+          isSidebarOpen ? styles.sidebarOpen : styles.sidebarClosed
+        }`}
+      >
         <div className={styles.sidebarHeader}>
-          <button onClick={() => setIsSidebarOpen(!isSidebarOpen)} className={styles.memu}>
+          <button
+            onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+            className={styles.memu}
+          >
             <Menu className="w-8 h-8" />
           </button>
         </div>
@@ -35,18 +66,32 @@ const AdminDashboard = () => {
             {menuItems.map((item) => (
               <button
                 key={item.label}
-                className={`${styles.sidebarMenuItem} ${activePage === item.label ? "bg-gray-300" : ""}`}
+                className={`${styles.sidebarMenuItem} ${
+                  activePage === item.label ? "bg-gray-300" : ""
+                }`}
                 onClick={() => setActivePage(item.label)}
               >
                 {item.icon}
-                <span className={`${styles.sidebarMenuText} ${!isSidebarOpen && "hidden"}`}>{item.label}</span>
+                <span
+                  className={`${styles.sidebarMenuText} ${
+                    !isSidebarOpen && "hidden"
+                  }`}
+                >
+                  {item.label}
+                </span>
               </button>
             ))}
           </nav>
           <div className={styles.logout}>
             <button className={styles.sidebarMenuItem}>
               <LogOut className="w-7 h-7" />
-              <span className={`${styles.sidebarMenuText} ${!isSidebarOpen && "hidden"}`}>Logout</span>
+              <span
+                className={`${styles.sidebarMenuText} ${
+                  !isSidebarOpen && "hidden"
+                }`}
+              >
+                Logout
+              </span>
             </button>
           </div>
         </div>
@@ -81,7 +126,9 @@ const AdminDashboard = () => {
         {/* Render Active Page */}
         <main className={styles.contentArea}>
           <div className={styles.contentCard}>
-            {menuItems.find((item) => item.label === activePage)?.component || <h2 className="text-2xl font-semibold">Page Not Found</h2>}
+            {menuItems.find((item) => item.label === activePage)?.component || (
+              <h2 className="text-2xl font-semibold">Page Not Found</h2>
+            )}
           </div>
         </main>
       </div>
