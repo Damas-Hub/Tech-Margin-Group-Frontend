@@ -54,7 +54,7 @@ const Staffs = () => {
           cursor: "pointer",
         }}
       >
-        Add Staff
+        Edit Profile
       </button>
 
       <div

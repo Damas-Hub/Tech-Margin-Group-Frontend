@@ -6,21 +6,10 @@ const Form: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   return (
     <div className={styles.formWrapper}>
       <div className={styles.form}>
-      <AiOutlineClose className={styles.closeIcon} onClick={onClose} />
+        <AiOutlineClose className={styles.closeIcon} onClick={onClose} />
         <div className={styles.title}>Welcome</div>
-        <div className={styles.subtitle}>Let's create staff account!</div>
-        <div className={`${styles.inputContainer} ${styles.ic1}`}>
-          <input
-            placeholder=""
-            type="text"
-            className={styles.input}
-            id="StaffID"
-          />
-          <div className={styles.cut} />
-          <label className={styles.iLabel} htmlFor="staffid">
-            Staff ID
-          </label>
-        </div>
+        <div className={styles.subtitle}>Let's Complete Your Profile!</div>
+
         <div className={`${styles.inputContainer} ${styles.ic1}`}>
           <input
             placeholder=""
@@ -30,7 +19,7 @@ const Form: React.FC<{ onClose: () => void }> = ({ onClose }) => {
           />
           <div className={styles.cut} />
           <label className={styles.iLabel} htmlFor="StaffName">
-            Staff Name
+            Full Name
           </label>
         </div>
         <div className={`${styles.inputContainer} ${styles.ic1}`}>
@@ -60,11 +49,13 @@ const Form: React.FC<{ onClose: () => void }> = ({ onClose }) => {
         <div className={`${styles.inputContainer} ${styles.ic1}`}>
           <input type="email" className={styles.input} id="Email" />
           <div className={styles.cut} />
-          <label className={styles.iLabel} htmlFor="Email">Email</label>
+          <label className={styles.iLabel} htmlFor="Email">
+            Email
+          </label>
         </div>
 
         {/* Role Dropdown */}
-        <div className={`${styles.inputContainer} ${styles.ic1}`}>
+        {/*   <div className={`${styles.inputContainer} ${styles.ic1}`}>
           <select className={styles.input} id="Role">
             <option value="">Select Role</option>
             <option value="Secretary">Secretary</option>
@@ -73,9 +64,11 @@ const Form: React.FC<{ onClose: () => void }> = ({ onClose }) => {
             <option value="Special Assignment">Special Assignment</option>
           </select>
           <div className={styles.cut} />
-          <label className={styles.iLabel} htmlFor="Role">Role</label>
-        </div>
-        <div className={`${styles.inputContainer} ${styles.ic2}`}>
+          <label className={styles.iLabel} htmlFor="Role">
+            Role
+          </label>
+        </div> */}
+      {/*   <div className={`${styles.inputContainer} ${styles.ic2}`}>
           <input
             placeholder=""
             type="text"
@@ -86,17 +79,17 @@ const Form: React.FC<{ onClose: () => void }> = ({ onClose }) => {
           <label className={styles.iLabel} htmlFor="password">
             Password
           </label>
-        </div>
+        </div> */}
         <div className={`${styles.inputContainer} ${styles.ic2}`}>
           <input
             placeholder=""
-            type="text"
+            type="date"
             className={styles.input}
-            id="confirmPassword"
+            id="date0fBirth"
           />
           <div className={`${styles.cut} ${styles.cutShort}`} />
-          <label className={styles.iLabel} htmlFor="confirmPassword">
-            Confirm Password
+          <label className={styles.iLabel} htmlFor="date0fBirth">
+             Date of Birth
           </label>
         </div>
         <button className={styles.submit} type="button">

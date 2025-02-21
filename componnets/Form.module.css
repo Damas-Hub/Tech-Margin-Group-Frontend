@@ -117,14 +117,12 @@
   background-color: #06b;
 }
 .closeIcon {
-    position: fixed;
+    position: absolute;
     right: 530px;
-    margin-top: 2rem;
+    margin-top: 1rem;
     font-size: 30px;  
     cursor: pointer;
     color: #e63a3a;  
   }
   
-  .closeIcon:hover {
-    color: red; /* Change color on hover */
-  }
+ 
