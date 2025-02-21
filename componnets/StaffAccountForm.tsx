@@ -2,10 +2,11 @@ import React from "react";
 import styles from "./Form.module.css";
 import { AiOutlineClose } from "react-icons/ai";
 
-const StaffAccountForm = () => {
+const StaffAccountForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   return (
     <div className={styles.formWrapper}>
       <div className={styles.form}>
+        <AiOutlineClose className={styles.closeIcon} onClick={onClose} />
         <div className={styles.title}>Welcome</div>
         <div className={styles.subtitle}>Let's Complete Your Profile!</div>
 
@@ -52,7 +53,7 @@ const StaffAccountForm = () => {
             Email
           </label>
         </div>
-
+ 
         <div className={`${styles.inputContainer} ${styles.ic2}`}>
           <input
             placeholder=""
@@ -62,7 +63,7 @@ const StaffAccountForm = () => {
           />
           <div className={`${styles.cut} ${styles.cutShort}`} />
           <label className={styles.iLabel} htmlFor="date0fBirth">
-            Date of Birth
+             Date of Birth
           </label>
         </div>
         <button className={styles.submit} type="button">
