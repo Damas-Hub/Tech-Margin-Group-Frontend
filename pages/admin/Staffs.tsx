@@ -1,4 +1,5 @@
 import Form from "@/componnets/Form";
+import StaffAccountForm from "@/componnets/StaffAccountForm";
 import StaffProfile from "@/componnets/StaffProfile";
 import React, { useState } from "react";
 
@@ -88,7 +89,7 @@ const Staffs = () => {
           <div
            
           >
-            {<Form onClose={() => setShowModal(false)} />}
+            {<StaffAccountForm onClose={() => setShowModal(false)} />}
           </div>
         </div>
       )}
