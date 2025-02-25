@@ -6,7 +6,6 @@ const Form: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   return (
     <div className={styles.formWrapper}>
       <div className={styles.form}>
-        <AiOutlineClose className={styles.closeIcon} onClick={onClose} />
         <div className={styles.title}>Welcome</div>
         <div className={styles.subtitle}>Let's Complete Your Profile!</div>
 

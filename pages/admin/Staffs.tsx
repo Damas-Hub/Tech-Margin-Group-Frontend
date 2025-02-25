@@ -89,7 +89,7 @@ const Staffs = () => {
           <div
            
           >
-            {<StaffAccountForm onClose={() => setShowModal(false)} />}
+            {<Form onClose={() => setShowModal(false)} />}
             {/* {<StaffAccountForm onClose={() => setShowModal(false)} />} */}
           </div>
         </div>

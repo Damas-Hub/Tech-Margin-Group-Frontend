@@ -3,14 +3,13 @@ import styles from "./StaffAccountForm.module.css";
 
 const StaffAccountForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const [isVisible, setIsVisible] = useState(false);
-  
+
   useEffect(() => {
-    // Trigger animation after component mounts
     setIsVisible(true);
   }, []);
   return (
-    <div className={`${styles.formWrapper} ${isVisible ? styles.visible : ''}`}>
-      <div className={`${styles.form} ${isVisible ? styles.formVisible : ''}`}>
+    <div className={`${styles.formWrapper} ${isVisible ? styles.visible : ""}`}>
+      <div className={`${styles.form} ${isVisible ? styles.formVisible : ""}`}>
         <div className={styles.title}>Welcome</div>
         <div className={styles.subtitle}>Let's Create Staff Account!</div>
 
@@ -65,10 +64,17 @@ const StaffAccountForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
         </div>
 
         <div className={styles.buttonContainer}>
-          <button className={`${styles.button} ${styles.cancelButton}`} type="button" onClick={onClose}>
+          <button
+            className={`${styles.button} ${styles.cancelButton}`}
+            type="button"
+            onClick={onClose}
+          >
             Cancel
           </button>
-          <button className={`${styles.button} ${styles.submitButton}`} type="button">
+          <button
+            className={`${styles.button} ${styles.submitButton}`}
+            type="button"
+          >
             Submit
           </button>
         </div>

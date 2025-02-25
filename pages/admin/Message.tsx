@@ -9,7 +9,7 @@ const Message = () => {
   return (
     <div> 
       {showModal && <Form onClose={() => setShowModal(false)} />}
-      {showStaffForm && <StaffAccountForm onClose={() => setShowStaffForm(false)} />}
+      
 
       {/* Buttons to open different forms */}
       <button onClick={() => setShowModal(true)}>Open Form</button>
