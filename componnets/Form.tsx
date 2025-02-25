@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Form.module.css";
-import { AiOutlineClose } from "react-icons/ai";
 
 const Form: React.FC<{ onClose: () => void }> = ({ onClose }) => {
+    const [isVisible, setIsVisible] = useState(false);
+  
+    useEffect(() => {
+      setIsVisible(true);
+    }, []);
   return (
-    <div className={styles.formWrapper}>
-      <div className={styles.form}>
+    <div className={`${styles.formWrapper} ${isVisible ? styles.visible : ""}`}>
+      <div className={`${styles.form} ${isVisible ? styles.formVisible : ""}`}>
         <div className={styles.title}>Welcome</div>
         <div className={styles.subtitle}>Let's Complete Your Profile!</div>
 
@@ -52,34 +56,8 @@ const Form: React.FC<{ onClose: () => void }> = ({ onClose }) => {
             Email
           </label>
         </div>
-
-        {/* Role Dropdown */}
-        {/*   <div className={`${styles.inputContainer} ${styles.ic1}`}>
-          <select className={styles.input} id="Role">
-            <option value="">Select Role</option>
-            <option value="Secretary">Secretary</option>
-            <option value="Repairer">Repairer</option>
-            <option value="Store Keeper">Store Keeper</option>
-            <option value="Special Assignment">Special Assignment</option>
-          </select>
-          <div className={styles.cut} />
-          <label className={styles.iLabel} htmlFor="Role">
-            Role
-          </label>
-        </div> */}
-      {/*   <div className={`${styles.inputContainer} ${styles.ic2}`}>
-          <input
-            placeholder=""
-            type="text"
-            className={styles.input}
-            id="Password"
-          />
-          <div className={styles.cut} />
-          <label className={styles.iLabel} htmlFor="password">
-            Password
-          </label>
-        </div> */}
-        <div className={`${styles.inputContainer} ${styles.ic2}`}>
+ 
+        <div className={`${styles.inputContainerr} ${styles.ic2}`}>
           <input
             placeholder=""
             type="date"
@@ -91,9 +69,21 @@ const Form: React.FC<{ onClose: () => void }> = ({ onClose }) => {
              Date of Birth
           </label>
         </div>
-        <button className={styles.submit} type="button">
-          Submit
-        </button>
+        <div className={styles.buttonContainer}>
+          <button
+            className={`${styles.button} ${styles.cancelButton}`}
+            type="button"
+            onClick={onClose}
+          >
+            Cancel
+          </button>
+          <button
+            className={`${styles.button} ${styles.submitButton}`}
+            type="button"
+          >
+            Submit
+          </button>
+        </div>
       </div>
     </div>
   );
