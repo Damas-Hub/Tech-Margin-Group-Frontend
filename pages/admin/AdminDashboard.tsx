@@ -17,7 +17,7 @@ import Home from "./Home";
 
 const AdminDashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const [activePage, setActivePage] = useState("Store");
+  const [activePage, setActivePage] = useState("Home");
   const [searchTerm, setSearchTerm] = useState("");
 
   const menuItems = [
@@ -101,7 +101,6 @@ const AdminDashboard = () => {
       <div className={styles.mainContent}>
         <header className={styles.header}>
           <div className="flex items-center justify-between p-4">
-            {/* ✅ Search Input */}
             <div className={styles.searchWrapper}>
               <Search className={styles.searchIcon} />
               <input
@@ -109,11 +108,11 @@ const AdminDashboard = () => {
                 placeholder="Search..."
                 className={styles.searchInput}
                 value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}  
+                onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
-            <div className="flex items-center space-x-8 ml-auto">
-              <Bell className="w-6 h-6 cursor-pointer text-gray-700" />
+            <div className="flex items-center space-x-12 ml-auto">
+              <Bell className="w-7 h-7 cursor-pointer text-red-600" />
               <img
                 src="https://tinyurl.com/2ccmosk6"
                 alt="Logo"
