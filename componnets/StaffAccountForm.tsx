@@ -1,12 +1,16 @@
-import React from "react";
-import styles from "./Form.module.css";
-import { AiOutlineClose } from "react-icons/ai";
+import React, { useEffect, useState } from "react";
+import styles from "./StaffAccountForm.module.css";
 
 const StaffAccountForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
+  const [isVisible, setIsVisible] = useState(false);
+  
+  useEffect(() => {
+    // Trigger animation after component mounts
+    setIsVisible(true);
+  }, []);
   return (
-    <div className={styles.formWrapper}>
-      <div className={styles.form}>
-        <AiOutlineClose className={styles.closeIcon} onClick={onClose} />
+    <div className={`${styles.formWrapper} ${isVisible ? styles.visible : ''}`}>
+      <div className={`${styles.form} ${isVisible ? styles.formVisible : ''}`}>
         <div className={styles.title}>Welcome</div>
         <div className={styles.subtitle}>Let's Create Staff Account!</div>
 
@@ -38,31 +42,36 @@ const StaffAccountForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
         <div className={`${styles.inputContainer} ${styles.ic1}`}>
           <input
             placeholder=""
-            type="pasword"
+            type="password"
             className={styles.input}
-            id="  Password"
+            id="Password"
           />
           <div className={styles.cut} />
-          <label className={styles.iLabel} htmlFor="phoneNumber">
+          <label className={styles.iLabel} htmlFor="Password">
             Password
           </label>
         </div>
         <div className={`${styles.inputContainer} ${styles.ic1}`}>
           <input
             placeholder=""
-            type="Comfirmpasword"
+            type="password"
             className={styles.input}
-            id="ComfirmPassword"
+            id="ConfirmPassword"
           />
           <div className={styles.cut} />
-          <label className={styles.iLabel} htmlFor="phoneNumber">
+          <label className={styles.iLabel} htmlFor="ConfirmPassword">
             Confirm Password
           </label>
         </div>
 
-        <button className={styles.submit} type="button">
-          Submit
-        </button>
+        <div className={styles.buttonContainer}>
+          <button className={`${styles.button} ${styles.cancelButton}`} type="button" onClick={onClose}>
+            Cancel
+          </button>
+          <button className={`${styles.button} ${styles.submitButton}`} type="button">
+            Submit
+          </button>
+        </div>
       </div>
     </div>
   );

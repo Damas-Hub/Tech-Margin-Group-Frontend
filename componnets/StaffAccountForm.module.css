@@ -7,9 +7,16 @@
   height: fit-content;
   padding: 20px;
   width: 80vh;
-  height: fit-content;
+  transform: scale(0.8);
+  opacity: 0;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+    opacity 0.3s ease;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
 }
-
+.visible {
+  background-color: rgba(0, 0, 0, 0.5);
+  pointer-events: all;
+}
 .title {
   color: #eee;
   font-family: sans-serif;
@@ -114,11 +121,75 @@
 .submit:active {
   background-color: #06b;
 }
-.closeIcon {
-  position: absolute;
-  right: 530px;
-  margin-top: 1rem;
-  font-size: 30px;
+.buttonContainer {
+  display: flex;
+  gap: 20px;
+  margin-top: 38px;
+}
+
+.button {
+  border-radius: 12px;
+  border: 0;
+  box-sizing: border-box;
+  color: #eee;
   cursor: pointer;
-  color: #e63a3a;
+  font-size: 18px;
+  height: 50px;
+  text-align: center;
+  flex: 1;
+}
+
+.submitButton {
+  background-color: #08d;
+}
+
+.submitButton:active {
+  background-color: #06b;
+}
+
+.cancelButton {
+  background-color: #e63a3a;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.cancelButton:active {
+  background-color: #c72b2b;
+}
+.formVisible {
+  transform: scale(1);
+  opacity: 1;
+}
+.ic1:nth-child(3) {
+  animation-delay: 0.1s;
+}
+
+.ic1:nth-child(4) {
+  animation-delay: 0.2s;
+}
+
+.ic1:nth-child(5) {
+  animation-delay: 0.3s;
+}
+
+.ic1:nth-child(6) {
+  animation-delay: 0.4s;
+}
+@keyframes slideIn {
+  0% {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
