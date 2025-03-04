@@ -1,0 +1,145 @@
+.wrapper {
+  display: flex;
+  height: 100vh;
+  background: #2c2c2c;
+}
+
+.imageSide {
+  flex: 1;
+  background: url("https://images.pexels.com/photos/4489776/pexels-photo-4489776.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2")
+    no-repeat center center;
+  background-size: cover;
+}
+
+.formSide {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  width: 50rem;
+  height: 50rem;
+  background: linear-gradient(0deg, #fff 0%, #f4f7fb 100%);
+  border-radius: 40px;
+  padding: 25px 35px;
+  border: 5px solid #fff;
+  box-shadow: rgba(133, 189, 215, 0.88) 0px 30px 30px -35px;
+}
+/* Media query for small screens */
+@media (max-width: 768px) {
+  .wrapper {
+    flex-direction: column;
+  }
+
+  .imageSide {
+    flex: 0.5;
+    height: 30%;
+  }
+
+  .formSide {
+    flex: 1;
+  }
+
+  .container {
+    max-width: 100%;
+    height: auto;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .imageSide {
+    display: none;
+  }
+
+  .formSide {
+    flex: 1;
+  }
+
+  .container {
+    max-width: 95%;
+  }
+}
+
+.heading {
+  text-align: center;
+  font-weight: 900;
+  font-size: 30px;
+  color: #2c1203;
+}
+
+.form {
+  margin-top: 30px;
+}
+
+.input {
+  width: 100%;
+  background: #fff;
+  color: black;
+  border: none;
+  padding: 25px 25px;
+  border-radius: 20px;
+  margin-top: 3rem;
+  box-shadow: #cff0ff 0px 10px 10px -5px;
+}
+
+.input:focus {
+  outline: none;
+  border: 2px solid #12b1d1;
+}
+
+.forgotPassword {
+  display: block;
+  margin-top: 20px;
+  text-align: right;
+}
+
+.forgotPassword a {
+  font-size: 16px;
+  color: #2c1203;
+  text-decoration: none;
+}
+
+.loginButton {
+  width: 100%;
+  font-weight: bold;
+  background: linear-gradient(45deg, #2c1203 0%, #12b1d1 100%);
+  color: white;
+  padding: 15px;
+  margin: 20px 0;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.loginButton:hover {
+  transform: scale(1.03);
+}
+
+.loginButton:disabled {
+  background: #c8c8c8;
+  cursor: not-allowed;
+}
+
+.loader {
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #12b1d1;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  animation: spin 1s linear infinite;
+  margin: auto;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

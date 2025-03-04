@@ -18,11 +18,23 @@ const ForgotPassword: React.FC<{ onClose: () => void }> = ({ onClose }) => {
             placeholder=""
             type="text"
             className={styles.input}
-            id="StaffName"
+            id="Staffid"
           />
           <div className={styles.cut} />
-          <label className={styles.iLabel} htmlFor="StaffName">
-            Full Name
+          <label className={styles.iLabel} htmlFor="Staffid">
+            Staff ID
+          </label>
+        </div>
+        <div className={`${styles.inputContainer} ${styles.ic1}`}>
+          <input
+            placeholder=""
+            type="email"
+            className={styles.input}
+            id="Email "
+          />
+          <div className={styles.cut} />
+          <label className={styles.iLabel} htmlFor="email">
+            Email
           </label>
         </div>
         <div className={`${styles.inputContainer} ${styles.ic1}`}>
@@ -30,30 +42,23 @@ const ForgotPassword: React.FC<{ onClose: () => void }> = ({ onClose }) => {
             placeholder=""
             type="text"
             className={styles.input}
-            id="Address"
+            id="NewPassword"
           />
           <div className={styles.cut} />
-          <label className={styles.iLabel} htmlFor="address">
-            Address
+          <label className={styles.iLabel} htmlFor="newPassword">
+            New Password
           </label>
         </div>
         <div className={`${styles.inputContainer} ${styles.ic1}`}>
           <input
             placeholder=""
-            type="number"
+            type="text"
             className={styles.input}
-            id="Phone Number"
+            id="ComfirmPassword"
           />
           <div className={styles.cut} />
-          <label className={styles.iLabel} htmlFor="phoneNumber">
-            Phone Number
-          </label>
-        </div>
-        <div className={`${styles.inputContainer} ${styles.ic1}`}>
-          <input type="email" className={styles.input} id="Email" />
-          <div className={styles.cut} />
-          <label className={styles.iLabel} htmlFor="Email">
-            Email
+          <label className={styles.iLabel} htmlFor="comfirmPassword">
+          Comfirm Password
           </label>
         </div>
 
