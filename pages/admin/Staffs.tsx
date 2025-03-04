@@ -1,3 +1,4 @@
+import ForgotPassword from "@/componnets/ForgotPassword";
 import Form from "@/componnets/Form";
 import StaffAccountForm from "@/componnets/StaffAccountForm";
 import StaffProfile from "@/componnets/StaffProfile";
@@ -89,8 +90,7 @@ const Staffs = () => {
           <div
            
           >
-            {<Form onClose={() => setShowModal(false)} />}
-            {/* {<StaffAccountForm onClose={() => setShowModal(false)} />} */}
+            {<ForgotPassword onClose={() => setShowModal(false)} />}
           </div>
         </div>
       )}
