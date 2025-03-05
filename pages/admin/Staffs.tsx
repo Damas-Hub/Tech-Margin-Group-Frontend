@@ -1,8 +1,8 @@
-import ForgotPassword from "@/componnets/ForgotPassword";
 import Form from "@/componnets/Form";
 import StaffAccountForm from "@/componnets/StaffAccountForm";
 import StaffProfile from "@/componnets/StaffProfile";
 import React, { useState } from "react";
+import ForgotPassword from "../forgot-password";
 
 const Staffs = () => {
   const [showModal, setShowModal] = useState(false);
@@ -90,7 +90,6 @@ const Staffs = () => {
           <div
            
           >
-            {<ForgotPassword onClose={() => setShowModal(false)} />}
           </div>
         </div>
       )}

@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from "react";
-import styles from "../componnets/ForgotPassword.module.css";
+import styles from "./forgot-password.module.css";
+import { useRouter } from "next/router";  
 
-const ForgotPassword: React.FC<{ onClose: () => void }> = ({ onClose }) => {
-  const [isVisible, setIsVisible] = useState(false);
+const ForgotPassword: React.FC = () => {
+  const router = useRouter();
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    setIsVisible(true);
+    setIsClient(true);  
   }, []);
+
+  if (!isClient) return null;  
+
   return (
-    <div className={`${styles.formWrapper} ${isVisible ? styles.visible : ""}`}>
-      <div className={`${styles.form} ${isVisible ? styles.formVisible : ""}`}>
+    <div className={`${styles.formWrapper}   `}>
+      <div className={`${styles.form} `}>
         <div className={styles.title}>Forgot Your Password?</div>
         <div className={styles.subtitle}>Let's Help you create new one</div>
 
@@ -67,7 +72,6 @@ const ForgotPassword: React.FC<{ onClose: () => void }> = ({ onClose }) => {
           <button
             className={`${styles.button} ${styles.cancelButton}`}
             type="button"
-            onClick={onClose}
           >
             Cancel
           </button>

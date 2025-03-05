@@ -1,14 +1,18 @@
- import React from 'react'
-import AdminDashboard from './admin/AdminDashboard'
-import Login from '@/componnets/Login'
- 
- const index = () => {
-   return (
+import Login from "@/componnets/Login";
+import dynamic from "next/dynamic";
+import AdminDashboard from "./admin/AdminDashboard";
+import Form from "@/componnets/Form";
+
+// Disable SSR for ForgotPassword
+const ForgotPassword = dynamic(() => import("../pages/forgot-password"), { ssr: false });
+
+export default function Index() {
+  return (
     <>
-      {/* <AdminDashboard/> */}
-      <Login /> 
-      </>
-   )
- }
- 
- export default index
+      <Login />
+      {/* <ForgotPassword /> */}
+      {/* <AdminDashboard /> */}
+      {/* <Form /> */}
+    </>
+  );
+}
