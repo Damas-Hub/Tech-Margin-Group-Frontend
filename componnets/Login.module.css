@@ -65,12 +65,20 @@
 }
 
 .heading {
-  text-align: center;
-  font-weight: 900;
+  /* text-align: center; */
+  font-weight: 700;
   font-size: 30px;
-  color: #2c1203;
-}
+  color: black;
+  font-family: 'roboto';
 
+}
+.subheading{
+  font-size: 20px;
+  margin-top: 10px;
+  font-family: helvetica;
+  color: rgb(112, 112, 112);
+
+}
 .form {
   margin-top: 30px;
 }

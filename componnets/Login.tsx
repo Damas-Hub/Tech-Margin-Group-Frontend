@@ -1,16 +1,17 @@
 import React from "react";
-import { useRouter } from "next/router"; // ✅ Use Next.js router
+import { useRouter } from "next/router";  
 import styles from "./Login.module.css";
 
 const Login = () => {
-  const router = useRouter(); // ✅ Use useRouter instead of useNavigate
+  const router = useRouter(); 
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.imageSide}></div>
       <div className={styles.formSide}>
         <div className={styles.container}>
-          <div className={styles.heading}>Sign In</div>
+          <div className={styles.heading}>Welcome back! </div>
+          <div className={styles.subheading}>You can sign in to access your existing account</div>
           <form className={styles.form}>
             <input
               placeholder="Staff-ID"
