@@ -1,40 +1,58 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# Mechanic Shop Management System
 
-## Getting Started
+## Overview
+The **Mechanic Shop Management System** is a web-based platform designed to streamline operations within a mechanic shop. It enables an **admin** to manage staff, track repairs, handle item requests, and facilitate communication among different roles.
 
-First, run the development server:
+## Features
+### 🔹 Admin Panel
+- Secure authentication for admin login
+- Ability to create and manage staff accounts
+- Overview of shop activities
+- Notification management
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### 🔹 Staff Management
+- Staff login using **Staff ID** and **password**
+- Role-based access (Secretary, Repairer, Store Keeper)
+- Ability to update personal details (name, email, phone, etc.)
+- Change password feature
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 🔹 Inventory & Repairs
+- Staff can request items from the store
+- Store Keeper receives real-time notifications for item requests
+- Repair tracking and estimated duration management
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+### 🔹 Authentication & Security
+- Firebase authentication for **admin & staff login**
+- Role-based access control (RBAC)
+- Password reset with Staff ID and verified contact details
+- Secure backend API (to be implemented)
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+## Technology Stack
+### 💻 **Frontend**
+- **HTML, CSS, JavaScript** for UI development
+- **Firebase Authentication** for user login & management
+- **LocalStorage/SessionStorage** for temporary state management
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+### 🔧 **Backend (To Be Implemented)**
+- **Firebase Firestore** for database storage
+- **Node.js & Express.js** for API handling
+ 
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+ 
+## Roadmap
+✅ **Frontend UI Development** (In Progress)  
+🚀 **Firebase Authentication Integration** (Next Step)  
+🔧 **Backend API Development** (Upcoming)  
+📱 **Mobile Optimization** (Future Feature)  
 
-## Learn More
+## Contribution
+If you'd like to contribute:
+1. Fork the repo
+2. Create a new branch (`feature-branch-name`)
+3. Commit your changes
+4. Push to the branch and submit a pull request
 
-To learn more about Next.js, take a look at the following resources:
+## License
+This project is licensed under the **MIT License**.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+ 
