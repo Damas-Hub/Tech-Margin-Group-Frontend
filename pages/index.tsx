@@ -12,9 +12,9 @@ export default function Index() {
   return (
     <>
       <ToastContainer position="top-right" autoClose={3000} />
-      {/* <Login /> */}
+      <Login />
       {/* <ForgotPassword /> */}
-      <AdminDashboard />
+      {/* <AdminDashboard /> */}
       {/* <Form /> */}
     </>
   );
