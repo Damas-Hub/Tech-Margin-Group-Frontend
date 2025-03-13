@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import styles from "./forgot-password.module.css";
+import styles from "../componnets/forgot-password.module.css";
 import { useRouter } from "next/router";
 
 const ForgotPassword: React.FC = () => {
@@ -11,7 +11,7 @@ const ForgotPassword: React.FC = () => {
     setIsClient(true);
     setTimeout(() => {
       setIsVisible(true);
-    }, 100);  
+    }, 100);
   }, []);
 
   if (!isClient) return null;
@@ -87,12 +87,14 @@ const ForgotPassword: React.FC = () => {
           </div>
 
           <div className={styles.buttonContainer}>
-            <button
-              className={`${styles.button} ${styles.cancelButton}`}
-              type="button"
-            >
-              Cancel
-            </button>
+          <button
+  className={`${styles.button} ${styles.cancelButton}`}
+  type="button"
+  onClick={() => router.push("/login")}  
+>
+  Cancel
+</button>
+
             <button
               className={`${styles.button} ${styles.submitButton}`}
               type="button"
