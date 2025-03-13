@@ -9,9 +9,9 @@ const ForgotPassword = dynamic(() => import("../pages/forgot-password"), { ssr: 
 export default function Index() {
   return (
     <>
-      <Login />
+      {/* <Login /> */}
       {/* <ForgotPassword /> */}
-      {/* <AdminDashboard /> */}
+      <AdminDashboard />
       {/* <Form /> */}
     </>
   );

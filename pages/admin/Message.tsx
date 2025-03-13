@@ -1,8 +1,11 @@
- import React from 'react'
+ import StaffAccountForm from '@/componnets/StaffAccountForm'
+import React from 'react'
  
  const Message = () => {
    return (
-     <div>Message</div>
+     <div>
+      <StaffAccountForm onClose={() => { /* handle close */ }} />
+     </div>
    )
  }
  
