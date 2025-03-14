@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { auth, db, signInWithEmailAndPassword } from "../src/firebaseConfig";
 import { doc, getDoc } from "firebase/firestore";
@@ -13,17 +13,21 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [pageLoading, setPageLoading] = useState(true); // Page loading state
+
+  // Simulate a loading screen before showing the login form
+  useEffect(() => {
+    setTimeout(() => {
+      setPageLoading(false); // Hide preloader after 2 seconds
+    }, 2000);
+  }, []);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
       const userRef = doc(db, "users", user.uid);

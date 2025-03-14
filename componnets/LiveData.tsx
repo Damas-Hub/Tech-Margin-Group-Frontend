@@ -1,5 +1,5 @@
-import React from 'react';
-import styles from './LiveData.module.css';
+import React from "react";
+import styles from "./LiveData.module.css";
 
 interface LiveDataProps {
   icon: React.ReactNode;
