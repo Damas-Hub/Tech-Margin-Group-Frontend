@@ -29,7 +29,7 @@ const Login = () => {
         const userData = userSnap.data();
         console.log("User Data:", userData);
 
-        // Show success toast
+        // success toast
         toast.success("Login successful! Redirecting...", { autoClose: 2000 });
 
         // Redirect based on role
