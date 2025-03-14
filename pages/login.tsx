@@ -25,20 +25,30 @@ const Login = () => {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-
+  
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
-
+  
       const userRef = doc(db, "users", user.uid);
       const userSnap = await getDoc(userRef);
-
+  
       if (userSnap.exists()) {
         const userData = userSnap.data();
         console.log("User Data:", userData);
-
+  
+        // Check if this is the user's first login
+        if (userData.isFirstLogin) {
+          toast.success("Login successful! Redirecting to Change Password...");
+          setTimeout(() => {
+            router.push("/change-password");  
+          }, 2000);
+          return;
+        }
+  
+        // Normal role-based redirection
         toast.success("Login successful! Redirecting...", { autoClose: 2000 });
-
+  
         setTimeout(() => {
           switch (userData.role) {
             case "Admin":
@@ -67,6 +77,7 @@ const Login = () => {
       setLoading(false);
     }
   };
+  
 
   return (
     <div className={styles.wrapper}>

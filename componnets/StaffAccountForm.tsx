@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { db } from "../src/firebaseConfig"; // Adjust path if needed
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
-import bcrypt from "bcryptjs"; // For password hashing
+import { auth, db } from "../src/firebaseConfig";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { collection, doc, setDoc, serverTimestamp } from "firebase/firestore";
 import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css"; // Import styles
+import "react-toastify/dist/ReactToastify.css";
 import styles from "./StaffAccountForm.module.css";
 
 const StaffAccountForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
@@ -11,6 +11,7 @@ const StaffAccountForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const [staffId, setStaffId] = useState("");
   const [role, setRole] = useState("");
   const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
   useEffect(() => {
@@ -19,7 +20,7 @@ const StaffAccountForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 
   // Handle form submission
   const handleSubmit = async () => {
-    if (!staffId || !role || !password || !confirmPassword) {
+    if (!staffId || !role || !password || !confirmPassword || !email) {
       toast.error("All fields are required!");
       return;
     }
@@ -30,32 +31,40 @@ const StaffAccountForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     }
 
     try {
-      const hashedPassword = await bcrypt.hash(password, 10); // Hash password
-      await addDoc(collection(db, "users"), {
+      // Create user in Firebase Authentication with default password
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
+
+      // Save staff details in Firestore
+      await setDoc(doc(db, "users", user.uid), {
+        uid: user.uid, // Store Firebase Authentication User ID
         staff_id: staffId,
-        password: hashedPassword,
+        email: email,
         role,
-        isFirstLogin: true,
+        isFirstLogin: true, // Mark that they need to change the password
         createdAt: serverTimestamp(),
         name: "",
-        email: "",
         phone: "",
         address: "",
       });
 
-      toast.success("Account created successfully!");
+      toast.success("Staff account created successfully!");
       setStaffId("");
       setRole("");
       setPassword("");
       setConfirmPassword("");
-    } catch (error) {
-      toast.error("Failed to create account. Try again!");
+      setEmail("");
+    } catch (error: any) {
+      toast.error("Failed to create account: " + error.message);
     }
   };
 
   return (
     <div className={`${styles.formWrapper} ${isVisible ? styles.visible : ""}`}>
-      {/* ToastContainer added here */}
       <ToastContainer position="top-right" autoClose={3000} />
 
       <div className={`${styles.form} ${isVisible ? styles.formVisible : ""}`}>
@@ -69,6 +78,15 @@ const StaffAccountForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
             value={staffId}
             onChange={(e) => setStaffId(e.target.value)}
             placeholder="Staff ID"
+          />
+        </div>
+        <div className={`${styles.inputContainer} ${styles.ic1}`}>
+          <input
+            type="email"
+            className={styles.input}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Email"
           />
         </div>
 

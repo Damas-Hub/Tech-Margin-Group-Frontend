@@ -1,21 +1,21 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
 
-// Firebase configuration
+// Firebase configuration using environment variables
 const firebaseConfig = {
-  apiKey: "AIzaSyBX_KgEmcFcYH9yQbs_Kc0GufHBF191-dE",
-  authDomain: "tech-margin-group-fa802.firebaseapp.com",
-  projectId: "tech-margin-group-fa802",
-  storageBucket: "tech-margin-group-fa802.appspot.com",
-  messagingSenderId: "606769289886",
-  appId: "1:606769289886:web:071e32ccae5a819d84b98f",
-  measurementId: "G-WF13ZZ07M8",
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);  // Firestore database
-const auth = getAuth(app);      // Firebase authentication
+const db = getFirestore(app);
+const auth = getAuth(app);
 
-export { db, auth, signInWithEmailAndPassword  };
+export { db, auth, signInWithEmailAndPassword, createUserWithEmailAndPassword };
