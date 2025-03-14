@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { db } from "../src/firebaseConfig"; // Adjust path if needed
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import bcrypt from "bcryptjs"; // For password hashing
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"; // Import styles
 import styles from "./StaffAccountForm.module.css";
 
@@ -55,6 +55,9 @@ const StaffAccountForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 
   return (
     <div className={`${styles.formWrapper} ${isVisible ? styles.visible : ""}`}>
+      {/* ToastContainer added here */}
+      <ToastContainer position="top-right" autoClose={3000} />
+
       <div className={`${styles.form} ${isVisible ? styles.formVisible : ""}`}>
         <div className={styles.title}>Welcome</div>
         <div className={styles.subtitle}>Let's Create Staff Account!</div>
