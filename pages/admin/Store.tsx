@@ -1,6 +1,5 @@
 import React from "react";
 import styles from "./Store.module.css";
-import ForgotPassword from "../forgot-password";
 
 interface StoreProps {
   searchTerm: string;

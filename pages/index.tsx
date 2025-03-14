@@ -1,8 +1,7 @@
 import Login from "@/componnets/Login";
 import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css"; // Import styles for toast
+import "react-toastify/dist/ReactToastify.css";  
 
-// Disable SSR for ForgotPassword
 
 export default function Index() {
   return (
@@ -12,10 +11,7 @@ export default function Index() {
 
       <Login />
 
-      {/* Uncomment components when needed */}
-      {/* <ForgotPassword /> */}
-      {/* <AdminDashboard /> */}
-      {/* <Form /> */}
+      
     </>
   );
 }
