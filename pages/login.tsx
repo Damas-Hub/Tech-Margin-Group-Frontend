@@ -55,13 +55,13 @@ const Login = () => {
               router.push("/admin/AdminDashboard");
               break;
             case "Repairer":
-              router.push("/repairer/Dashboard");
+              router.push("/repairer/RepairerDashboard");
               break;
             case "Secretary":
-              router.push("/secretary/Dashboard");
+              router.push("/secretary/SecretaryDashboard");
               break;
             case "Store Keeper":
-              router.push("/store/Dashboard");
+              router.push("/store/StoreKeeperDashboard");
               break;
             default:
               toast.error("Invalid role. Contact Admin.");

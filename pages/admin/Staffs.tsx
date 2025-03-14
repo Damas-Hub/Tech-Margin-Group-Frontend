@@ -1,3 +1,4 @@
+import Form from "@/componnets/Form";
 import StaffProfile from "@/componnets/StaffProfile";
 import React, { useState } from "react";
 
@@ -38,13 +39,20 @@ const Staffs = () => {
   ];
 
   return (
-    <div style={{ position: "relative", padding: "20px", maxWidth: "", margin: "0 auto" }}>
+    <div
+      style={{
+        position: "relative",
+        padding: "20px",
+        maxWidth: "1000px",
+        margin: "0 auto",
+      }}
+    >
       <button
         onClick={() => setShowModal(true)}
         style={{
           position: "absolute",
           top: "10px",
-          right: "10px",
+          right: "0px",
           padding: "10px 20px",
           backgroundColor: "#007bff",
           color: "white",
@@ -82,11 +90,11 @@ const Staffs = () => {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
+            zIndex: 1000,
           }}
         >
-          <div
-           
-          >
+          <div>
+            <Form onClose={() => setShowModal(false)} />
           </div>
         </div>
       )}
