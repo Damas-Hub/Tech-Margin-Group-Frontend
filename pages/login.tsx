@@ -2,26 +2,30 @@ import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { auth, db, signInWithEmailAndPassword } from "../src/firebaseConfig";
 import { doc, getDoc } from "firebase/firestore";
-import styles from "./Login.module.css";
+import styles from "../componnets/Login.module.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Login = () => {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      // Sign in with Firebase Authentication
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       const user = userCredential.user;
 
-      // Fetch user details from Firestore using email
       const userRef = doc(db, "users", user.uid);
       const userSnap = await getDoc(userRef);
 
@@ -29,10 +33,8 @@ const Login = () => {
         const userData = userSnap.data();
         console.log("User Data:", userData);
 
-        // success toast
         toast.success("Login successful! Redirecting...", { autoClose: 2000 });
 
-        // Redirect based on role
         setTimeout(() => {
           switch (userData.role) {
             case "Admin":
@@ -79,22 +81,38 @@ const Login = () => {
               onChange={(e) => setEmail(e.target.value)}
               required
             />
-            <input
-              placeholder="Password"
-              type="password"
-              className={styles.input}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
+            <div className={styles.passwordWrapper}>
+              <input
+                placeholder="Password"
+                type={showPassword ? "text" : "password"}
+                className={styles.input}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              <span
+                className={styles.eyeIcon}
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </span>
+            </div>
             <span
               className={styles.forgotPassword}
               onClick={() => router.push("/forgot-password")}
-              style={{ cursor: "pointer", color: "blue", textDecoration: "underline" }}
+              style={{
+                cursor: "pointer",
+                color: "blue",
+                textDecoration: "underline",
+              }}
             >
               Forgot Password?
             </span>
-            <button type="submit" className={styles.loginButton} disabled={loading}>
+            <button
+              type="submit"
+              className={styles.loginButton}
+              disabled={loading}
+            >
               {loading ? "Signing In..." : "Sign In"}
             </button>
           </form>

@@ -1,7 +1,7 @@
-import Login from "@/componnets/Login";
 import dynamic from "next/dynamic";
 import { ToastContainer } from "react-toastify"; 
 import "react-toastify/dist/ReactToastify.css";  
+import Login from "./Login";
 
 
 

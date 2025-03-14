@@ -112,6 +112,19 @@
   color: #2c1203;
   text-decoration: none;
 }
+.passwordWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.eyeIcon {
+  position: absolute;
+  right: 1rem;
+  cursor: pointer;
+  font-size: 18px;
+  color: #7fd1f7;
+}
 
 .loginButton {
   width: 100%;
