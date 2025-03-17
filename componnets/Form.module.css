@@ -30,11 +30,6 @@
   position: relative;
   width: 100%;
 }
-.inputContainerr {
-  height: 50px;
-  /* position: relative; */
-  width: 100%;
-}
 
 .ic1 {
   margin-top: 40px;
@@ -58,7 +53,7 @@
 }
 
 .cut {
-  background-color: transparent;
+  background-color: #15172b;
   border-radius: 10px;
   height: 20px;
   left: 20px;
@@ -171,7 +166,6 @@
 .ic1:nth-child(6) {
   animation-delay: 0.4s;
 }
-
 @keyframes slideIn {
   0% {
     transform: translateY(20px);

@@ -72,7 +72,7 @@ const Form: React.FC<{ onClose: () => void }> = ({ onClose }) => {
         <form onSubmit={handleSubmit}>
           <div className={`${styles.inputContainer} ${styles.ic1}`}>
             <input
-              placeholder=""
+              placeholder=" Full Name"
               type="text"
               name="fullName"
               value={formData.fullName}
@@ -83,13 +83,13 @@ const Form: React.FC<{ onClose: () => void }> = ({ onClose }) => {
             />
             <div className={styles.cut} />
             <label className={styles.iLabel} htmlFor="fullName">
-              Full Name
+             
             </label>
           </div>
 
           <div className={`${styles.inputContainer} ${styles.ic1}`}>
             <input
-              placeholder=""
+              placeholder="Address"
               type="text"
               name="address"
               value={formData.address}
@@ -100,13 +100,13 @@ const Form: React.FC<{ onClose: () => void }> = ({ onClose }) => {
             />
             <div className={styles.cut} />
             <label className={styles.iLabel} htmlFor="address">
-              Address
+              
             </label>
           </div>
 
           <div className={`${styles.inputContainer} ${styles.ic1}`}>
             <input
-              placeholder=""
+              placeholder="Phone Number"
               type="number"
               name="phoneNumber"
               value={formData.phoneNumber}
@@ -117,13 +117,13 @@ const Form: React.FC<{ onClose: () => void }> = ({ onClose }) => {
             />
             <div className={styles.cut} />
             <label className={styles.iLabel} htmlFor="phoneNumber">
-              Phone Number
+              
             </label>
           </div>
 
           <div className={`${styles.inputContainer} ${styles.ic2}`}>
             <input
-              placeholder=""
+              placeholder=" Date of Birth"
               type="date"
               name="dateOfBirth"
               value={formData.dateOfBirth}
@@ -134,7 +134,7 @@ const Form: React.FC<{ onClose: () => void }> = ({ onClose }) => {
             />
             <div className={`${styles.cut} ${styles.cutShort}`} />
             <label className={styles.iLabel} htmlFor="dateOfBirth">
-              Date of Birth
+              
             </label>
           </div>
 
