@@ -66,7 +66,6 @@ const StaffAccountForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   return (
     <div className={`${styles.formWrapper} ${isVisible ? styles.visible : ""}`}>
       <ToastContainer position="top-right" autoClose={3000} />
-
       <div className={`${styles.form} ${isVisible ? styles.formVisible : ""}`}>
         <div className={styles.title}>Welcome</div>
         <div className={styles.subtitle}>Let's Create Staff Account!</div>
