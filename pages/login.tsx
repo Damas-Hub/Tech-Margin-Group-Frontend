@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { auth, db, signInWithEmailAndPassword } from "../src/firebaseConfig";
-import { doc, getDoc } from "firebase/firestore";
+import { auth, db } from "../src/firebaseConfig";
+import { doc, getDoc, getDocs, collection, query, where } from "firebase/firestore";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import styles from "../componnets/Login.module.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -9,79 +10,86 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Login = () => {
   const router = useRouter();
-  const [email, setEmail] = useState("");
+  const [staffId, setStaffId] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [pageLoading, setPageLoading] = useState(true); // Page loading state
 
-  // Simulate a loading screen before showing the login form
   useEffect(() => {
     setTimeout(() => {
       setPageLoading(false); // Hide preloader after 2 seconds
     }, 2000);
   }, []);
 
-const handleLogin = async (e: React.FormEvent) => {
-  e.preventDefault();
-  setLoading(true);
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
 
-  try {
-    const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    const user = userCredential.user;
+    try {
+      // Step 1: Find the email associated with the entered staff ID
+      const userQuery = query(collection(db, "users"), where("staff_id", "==", staffId));
+      const querySnapshot = await getDocs(userQuery);
 
-    // Get user data from Firestore
-    const userRef = doc(db, "users", user.uid);
-    const userSnap = await getDoc(userRef);
-
-    if (userSnap.exists()) {
-      const userData = userSnap.data();
-      console.log("User Data:", userData);
-
-      // Check if this is the user's first login
-      if (userData.isFirstLogin) {
-        toast.success("Login successful! Redirecting to Change Password...");
-        setTimeout(() => {
-          router.push("/change-password");  
-        }, 2000);
+      if (querySnapshot.empty) {
+        toast.error("Invalid Staff ID!");
+        setLoading(false);
         return;
       }
 
-      // Redirecting Based on Role
-      toast.success("Login successful! Redirecting...", { autoClose: 2000 });
+      const userData = querySnapshot.docs[0].data();
+      const userEmail = userData.email; // Retrieve associated email
 
-      setTimeout(() => {
-        if (userData.role === "Admin") {
-          router.push("/admin/AdminDashboard"); // Admin Dashboard
-        } else {
-          // Redirect staff to their dashboards
-          switch (userData.role) {
-            case "Repairer":
-              router.push("/repairer/RepairerDashboard");
-              break;
-            case "Secretary":
-              router.push("/secretary/SecretaryDashboard");
-              break;
-            case "Store Keeper":
-              router.push("/store/StoreKeeperDashboard");
-              break;
-            default:
-              toast.error("Invalid role. Contact Admin.");
-          }
+      // Step 2: Log in using email & password
+      const userCredential = await signInWithEmailAndPassword(auth, userEmail, password);
+      const user = userCredential.user;
+
+      // Get user data from Firestore
+      const userRef = doc(db, "users", user.uid);
+      const userSnap = await getDoc(userRef);
+
+      if (userSnap.exists()) {
+        const userData = userSnap.data();
+        console.log("User Data:", userData);
+
+        if (userData.isFirstLogin) {
+          toast.success("Login successful! Redirecting to Change Password...");
+          setTimeout(() => {
+            router.push("/change-password");  
+          }, 2000);
+          return;
         }
-      }, 2000);
-    } else {
-      toast.error("User not found in Firestore.");
-    }
-  } catch (error: any) {
-    toast.error("Invalid email or password.");
-    console.error("Login Error:", error.message);
-  } finally {
-    setLoading(false);
-  }
-};
 
-  
+        toast.success("Login successful! Redirecting...", { autoClose: 2000 });
+        setTimeout(() => {
+          if (userData.role === "Admin") {
+            router.push("/admin/AdminDashboard");
+          } else {
+            switch (userData.role) {
+              case "Repairer":
+                router.push("/repairer/RepairerDashboard");
+                break;
+              case "Secretary":
+                router.push("/secretary/SecretaryDashboard");
+                break;
+              case "Store Keeper":
+                router.push("/store/StoreKeeperDashboard");
+                break;
+              default:
+                toast.error("Invalid role. Contact Admin.");
+            }
+          }
+        }, 2000);
+      } else {
+        toast.error("User not found in Firestore.");
+      }
+    } catch (error: any) {
+      toast.error("Invalid Staff ID or Password.");
+      console.error("Login Error:", error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className={styles.wrapper}>
@@ -93,11 +101,11 @@ const handleLogin = async (e: React.FormEvent) => {
           <div className={styles.subheading}>Sign in to your account</div>
           <form className={styles.form} onSubmit={handleLogin}>
             <input
-              placeholder="Email"
-              type="email"
+              placeholder="Staff ID"
+              type="text"
               className={styles.input}
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={staffId}
+              onChange={(e) => setStaffId(e.target.value)}
               required
             />
             <div className={styles.passwordWrapper}>
@@ -110,7 +118,7 @@ const handleLogin = async (e: React.FormEvent) => {
                 required
               />
               <span
-                className={`${styles.eyeIcon} ${styles.passwordWrapper} `}
+                className={`${styles.eyeIcon} ${styles.passwordWrapper}`}
                 onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
@@ -119,11 +127,7 @@ const handleLogin = async (e: React.FormEvent) => {
             <span
               className={styles.forgotPassword}
               onClick={() => router.push("/forgot-password")}
-              style={{
-                cursor: "pointer",
-                color: "blue",
-                textDecoration: "underline",
-              }}
+              style={{ cursor: "pointer", color: "blue", textDecoration: "underline" }}
             >
               Forgot Password?
             </span>
