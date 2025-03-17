@@ -49,7 +49,16 @@ const ClientForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+  const items: Client[] = []; // Define the items array
+  const searchTerm = ""; // Define the searchTerm variable
 
+  const filteredItems = items.filter((item) =>
+    Object.values(item).some((value) =>
+      value
+        ? value.toString().toLowerCase().includes(searchTerm.toLowerCase())
+        : false
+    )
+  );
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const { name, itemBrought, phoneNumber, problem, date } = formData;
@@ -134,10 +143,18 @@ const ClientForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
             </option>
           </select>
           <div className={styles.buttonGroup}>
-            <button type="button" onClick={onClose} className={styles.cancelButton}>
+            <button
+              type="button"
+              onClick={onClose}
+              className={styles.cancelButton}
+            >
               Cancel
             </button>
-            <button type="submit" disabled={loading} className={styles.addButton}>
+            <button
+              type="submit"
+              disabled={loading}
+              className={styles.addButton}
+            >
               {loading ? "Saving..." : "Submit"}
             </button>
           </div>
@@ -166,14 +183,22 @@ const ClientForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                 <td>{client.phoneNumber}</td>
                 <td>{client.problem}</td>
                 <td>{client.date}</td>
-                <td className={client.status === "Resolved" ? styles.resolved : styles.notDone}>
+                <td
+                  className={
+                    client.status === "Resolved"
+                      ? styles.resolved
+                      : styles.notDone
+                  }
+                >
                   {client.status}
                 </td>
               </tr>
             ))
           ) : (
             <tr>
-              <td colSpan={6} className={styles.noResults}>No Clients Added Yet</td>
+              <td colSpan={6} className={styles.noResults}>
+                No Clients Added Yet
+              </td>
             </tr>
           )}
         </tbody>
