@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FaEye, FaEyeSlash } from "react-icons/fa"; // Imported the correct icons
+import { FaEye, FaEyeSlash, FaCopy } from "react-icons/fa";
 import { auth, db } from "../src/firebaseConfig";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { collection, doc, setDoc, serverTimestamp } from "firebase/firestore";
@@ -11,34 +11,31 @@ const StaffAccountForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [staffId, setStaffId] = useState("");
   const [role, setRole] = useState("");
-  const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-
+  const [generatedPassword, setGeneratedPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [accountCreated, setAccountCreated] = useState(false);
 
   useEffect(() => {
     setIsVisible(true);
   }, []);
 
+  // Function to generate a random password
+  const generateRandomPassword = () => {
+    return Math.random().toString(36).slice(-8); // Generates an 8-character password
+  };
+
   const handleSubmit = async () => {
-    if (!staffId || !role || !password || !confirmPassword || !email) {
+    if (!staffId || !role || !email) {
       toast.error("All fields are required!");
       return;
     }
 
-    if (password !== confirmPassword) {
-      toast.error("Passwords do not match!");
-      return;
-    }
+    const password = generateRandomPassword();
+    setGeneratedPassword(password);
 
     try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
       await setDoc(doc(db, "users", user.uid), {
@@ -53,12 +50,8 @@ const StaffAccountForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
         address: "",
       });
 
-      toast.success("Staff account created successfully!");
-      setStaffId("");
-      setRole("");
-      setPassword("");
-      setConfirmPassword("");
-      setEmail("");
+      setAccountCreated(true);
+      toast.success("Staff account created successfully! Copy the password below.");
     } catch (error: any) {
       let errorMessage = "Account creation failed. Please try again.";
 
@@ -73,6 +66,17 @@ const StaffAccountForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
       toast.error(errorMessage);
     }
   };
+
+  const copyToClipboard = () => {
+    const textArea = document.createElement("textarea");
+    textArea.value = generatedPassword;
+    document.body.appendChild(textArea);
+    textArea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textArea);
+    alert("Copied to clipboard!");
+  };
+  
 
   return (
     <div className={`${styles.formWrapper} ${isVisible ? styles.visible : ""}`}>
@@ -90,6 +94,7 @@ const StaffAccountForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
             placeholder="Staff ID"
           />
         </div>
+
         <div className={`${styles.inputContainer} ${styles.ic1}`}>
           <input
             type="email"
@@ -114,53 +119,24 @@ const StaffAccountForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
           </select>
         </div>
 
-        {/* Password Input with Toggle */}
-        <div className={`${styles.inputContainer} ${styles.ic1} ${styles.passwordWrapper}`}>
-          <input
-            type={showPassword ? "text" : "password"}
-            className={styles.input}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Password"
-          />
-          <button
-            type="button"
-            className={styles.eyeIcon}
-            onClick={() => setShowPassword(!showPassword)}
-          >
-            {showPassword ? <FaEyeSlash size={20} /> : <FaEye size={20} />}
-          </button>
-        </div>
-
-        {/* Confirm Password Input with Toggle */}
-        <div className={`${styles.inputContainer} ${styles.ic1} ${styles.passwordWrapper}`}>
-          <input
-            type={showConfirmPassword ? "text" : "password"}
-            className={styles.input}
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            placeholder="Confirm Password"
-          />
-          <button
-            type="button"
-            className={styles.eyeIcon}
-            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-          >
-            {showConfirmPassword ? <FaEyeSlash size={20} /> : <FaEye size={20} />}
-          </button>
-        </div>
+        {/* Display Generated Password After Account Creation */}
+        {accountCreated && (
+          <div className={styles.generatedPasswordContainer}>
+            <div className={styles.generatedPassword}>
+              <span>{generatedPassword}</span>
+              <button onClick={copyToClipboard} className={styles.copyButton}>
+                <FaCopy size={18} />
+              </button>
+            </div>
+            <p className={styles.passwordNote}>Copy this password and share it with the staff.</p>
+          </div>
+        )}
 
         <div className={styles.buttonContainer}>
-          <button
-            className={`${styles.button} ${styles.cancelButton}`}
-            onClick={onClose}
-          >
+          <button className={`${styles.button} ${styles.cancelButton}`} onClick={onClose}>
             Cancel
           </button>
-          <button
-            className={`${styles.button} ${styles.submitButton}`}
-            onClick={handleSubmit}
-          >
+          <button className={`${styles.button} ${styles.submitButton}`} onClick={handleSubmit}>
             Submit
           </button>
         </div>

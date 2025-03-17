@@ -22,38 +22,40 @@ const Login = () => {
     }, 2000);
   }, []);
 
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-  
-    try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
-  
-      const userRef = doc(db, "users", user.uid);
-      const userSnap = await getDoc(userRef);
-  
-      if (userSnap.exists()) {
-        const userData = userSnap.data();
-        console.log("User Data:", userData);
-  
-        // Check if this is the user's first login
-        if (userData.isFirstLogin) {
-          toast.success("Login successful! Redirecting to Change Password...");
-          setTimeout(() => {
-            router.push("/change-password");  
-          }, 2000);
-          return;
-        }
-  
-        // Normal role-based redirection
-        toast.success("Login successful! Redirecting...", { autoClose: 2000 });
-  
+const handleLogin = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setLoading(true);
+
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+
+    // Get user data from Firestore
+    const userRef = doc(db, "users", user.uid);
+    const userSnap = await getDoc(userRef);
+
+    if (userSnap.exists()) {
+      const userData = userSnap.data();
+      console.log("User Data:", userData);
+
+      // Check if this is the user's first login
+      if (userData.isFirstLogin) {
+        toast.success("Login successful! Redirecting to Change Password...");
         setTimeout(() => {
+          router.push("/change-password");  
+        }, 2000);
+        return;
+      }
+
+      // Redirecting Based on Role
+      toast.success("Login successful! Redirecting...", { autoClose: 2000 });
+
+      setTimeout(() => {
+        if (userData.role === "Admin") {
+          router.push("/admin/AdminDashboard"); // Admin Dashboard
+        } else {
+          // Redirect staff to their dashboards
           switch (userData.role) {
-            case "Admin":
-              router.push("/admin/AdminDashboard");
-              break;
             case "Repairer":
               router.push("/repairer/RepairerDashboard");
               break;
@@ -66,17 +68,19 @@ const Login = () => {
             default:
               toast.error("Invalid role. Contact Admin.");
           }
-        }, 2000);
-      } else {
-        toast.error("User not found in Firestore.");
-      }
-    } catch (error: any) {
-      toast.error("Invalid email or password.");
-      console.error("Login Error:", error.message);
-    } finally {
-      setLoading(false);
+        }
+      }, 2000);
+    } else {
+      toast.error("User not found in Firestore.");
     }
-  };
+  } catch (error: any) {
+    toast.error("Invalid email or password.");
+    console.error("Login Error:", error.message);
+  } finally {
+    setLoading(false);
+  }
+};
+
   
 
   return (
