@@ -106,7 +106,7 @@ const Login = () => {
                 required
               />
               <span
-                className={styles.eyeIcon}
+                className={`${styles.eyeIcon} ${styles.passwordWrapper} `}
                 onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? <FaEyeSlash /> : <FaEye />}

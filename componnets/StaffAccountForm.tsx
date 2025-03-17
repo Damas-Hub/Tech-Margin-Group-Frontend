@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { FaEye, FaEyeSlash } from "react-icons/fa"; // Imported the correct icons
 import { auth, db } from "../src/firebaseConfig";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { collection, doc, setDoc, serverTimestamp } from "firebase/firestore";
@@ -14,11 +15,13 @@ const StaffAccountForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const [email, setEmail] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
   useEffect(() => {
     setIsVisible(true);
   }, []);
 
-  // Handle form submission
   const handleSubmit = async () => {
     if (!staffId || !role || !password || !confirmPassword || !email) {
       toast.error("All fields are required!");
@@ -31,7 +34,6 @@ const StaffAccountForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     }
 
     try {
-      // Create user in Firebase Authentication with default password
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         email,
@@ -39,13 +41,12 @@ const StaffAccountForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
       );
       const user = userCredential.user;
 
-      // Save staff details in Firestore
       await setDoc(doc(db, "users", user.uid), {
-        uid: user.uid, // Store Firebase Authentication User ID
+        uid: user.uid,
         staff_id: staffId,
         email: email,
         role,
-        isFirstLogin: true, // Mark that they need to change the password
+        isFirstLogin: true,
         createdAt: serverTimestamp(),
         name: "",
         phone: "",
@@ -59,7 +60,17 @@ const StaffAccountForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
       setConfirmPassword("");
       setEmail("");
     } catch (error: any) {
-      toast.error("Failed to create account: " + error.message);
+      let errorMessage = "Account creation failed. Please try again.";
+
+      if (error.code === "auth/email-already-in-use") {
+        errorMessage = "This email is already associated with an account.";
+      } else if (error.code === "auth/weak-password") {
+        errorMessage = "Password is too weak. Use a stronger one.";
+      } else if (error.code === "auth/invalid-email") {
+        errorMessage = "Invalid email format. Please check and try again.";
+      }
+
+      toast.error(errorMessage);
     }
   };
 
@@ -103,24 +114,40 @@ const StaffAccountForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
           </select>
         </div>
 
-        <div className={`${styles.inputContainer} ${styles.ic1}`}>
+        {/* Password Input with Toggle */}
+        <div className={`${styles.inputContainer} ${styles.ic1} ${styles.passwordWrapper}`}>
           <input
-            type="password"
+            type={showPassword ? "text" : "password"}
             className={styles.input}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Password"
           />
+          <button
+            type="button"
+            className={styles.eyeIcon}
+            onClick={() => setShowPassword(!showPassword)}
+          >
+            {showPassword ? <FaEyeSlash size={20} /> : <FaEye size={20} />}
+          </button>
         </div>
 
-        <div className={`${styles.inputContainer} ${styles.ic1}`}>
+        {/* Confirm Password Input with Toggle */}
+        <div className={`${styles.inputContainer} ${styles.ic1} ${styles.passwordWrapper}`}>
           <input
-            type="password"
+            type={showConfirmPassword ? "text" : "password"}
             className={styles.input}
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             placeholder="Confirm Password"
           />
+          <button
+            type="button"
+            className={styles.eyeIcon}
+            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+          >
+            {showConfirmPassword ? <FaEyeSlash size={20} /> : <FaEye size={20} />}
+          </button>
         </div>
 
         <div className={styles.buttonContainer}>
