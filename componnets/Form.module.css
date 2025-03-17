@@ -89,7 +89,7 @@
 }
 
 .input:not(:focus) ~ .iLabel {
-  color: #808097;
+  color: transparent ;
 }
 
 .input:focus ~ .iLabel {
