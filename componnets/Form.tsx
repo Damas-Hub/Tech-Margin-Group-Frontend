@@ -40,7 +40,7 @@ const Form: React.FC<{ onClose: () => void }> = ({ onClose }) => {
       const docSnap = await getDoc(userDocRef);
 
       if (docSnap.exists()) {
-        console.log("✅ Staff Found in Firestore:", docSnap.data());
+        console.log("Staff Found in Firestore:", docSnap.data());
 
          
         await updateDoc(userDocRef, {
@@ -52,11 +52,11 @@ const Form: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 
         toast.success("Profile updated successfully!");
       } else {
-        console.error("❌ Staff ID not found in Firestore:", staff_id);
+        console.error("Staff ID not found in Firestore:", staff_id);
         toast.error("Staff profile not found. Please check the ID.");
       }
     } catch (error: any) {
-      console.error("❌ Error updating staff profile:", error.message);
+      console.error("Error updating staff profile:", error.message);
       toast.error("Error updating profile. Check console for details.");
     } finally {
       setLoading(false);

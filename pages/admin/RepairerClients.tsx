@@ -20,7 +20,9 @@ interface Client {
   problem: string;
   date: string | Timestamp;
   status: string;
+  searchTerm?: string; // <-- Make it optional
 }
+
 
 // Function to safely format Firestore Timestamp to a readable date
 const formatDate = (date: string | Timestamp): string => {
@@ -30,7 +32,11 @@ const formatDate = (date: string | Timestamp): string => {
   return date; // If it's already a string, return as is
 };
 
-const RepairerClients: React.FC = () => {
+interface RepairerClientsProps {
+  searchTerm: string;
+}
+
+const RepairerClients: React.FC<RepairerClientsProps> = ({ searchTerm }) => {
   const [clients, setClients] = useState<Client[]>([]);
 
   // Fetch clients from Firestore on component mount
@@ -68,7 +74,13 @@ const RepairerClients: React.FC = () => {
       }
     }
   };
-
+  const filteredItems = clients.filter((item) =>
+    Object.values(item).some((value) =>
+      (typeof value === "string" ? value : String(value ?? ""))
+        .toLowerCase()
+        .includes((searchTerm ?? "").toLowerCase())
+    )
+  );
   return (
     <div className={styles.storeWrapper}>
       <ToastContainer position="top-right" autoClose={3000} />
@@ -86,8 +98,8 @@ const RepairerClients: React.FC = () => {
           </tr>
         </thead>
         <tbody>
-          {clients.length > 0 ? (
-            clients.map((client) => (
+        {filteredItems.length > 0 ? (
+              filteredItems.map((client) =>  (
               <tr key={client.id}>
                 <td>{client.name}</td>
                 <td>{client.itemBrought}</td>

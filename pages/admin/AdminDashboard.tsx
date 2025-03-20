@@ -17,6 +17,7 @@ import Store from "./Store";
 import Message from "./Message";
 import Staffs from "./Staffs";
 import Home from "./Home";
+import RepairerClients from "./RepairerClients";
 
 const AdminDashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -46,6 +47,11 @@ const AdminDashboard = () => {
       label: "Staffs",
       icon: <Users className="w-7 h-7" />,
       component: <Staffs />,
+    },
+    {
+      label: "RepairerClients",
+      icon: <Users className="w-7 h-7" />,
+      component: <RepairerClients searchTerm={searchTerm}  />,
     },
   ];
 
