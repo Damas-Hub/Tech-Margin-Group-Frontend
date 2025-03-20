@@ -19,13 +19,13 @@ const Store: React.FC<StoreProps> = ({ searchTerm }) => {
     { serialNo: 10, name: "Router", quantity: 5, price: "$80" },
   ];
 
-  const filteredItems = items.filter((item) =>
-    Object.values(item).some((value) =>
-      typeof value === "string" && searchTerm
-        ? value.toLowerCase().includes(searchTerm.toLowerCase())
-        : false
-    )
-  );
+  // const filteredItems = items.filter((item) =>
+  //   Object.values(item).some((value) =>
+  //     typeof value === "string" && searchTerm
+  //       ? value.toLowerCase().includes(searchTerm.toLowerCase())
+  //       : false
+  //   )
+  // );
   
   
 
@@ -42,8 +42,8 @@ const Store: React.FC<StoreProps> = ({ searchTerm }) => {
           </tr>
         </thead>
         <tbody>
-          {filteredItems.length > 0 ? (
-            filteredItems.map((item) => (
+          {items.length > 0 ? (
+            items.map((item) => (
               <tr key={item.serialNo}>
                 <td>{item.serialNo}</td>
                 <td>{item.name}</td>
