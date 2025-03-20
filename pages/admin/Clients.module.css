@@ -9,8 +9,8 @@
 }
 
 .storeTable {
-  width: 90%;
-  max-width: 900px;
+  width: 100%;
+  /* max-width: 900px; */
   border-collapse: collapse;
   background: white;
   border-radius: 10px;
@@ -24,9 +24,34 @@
   text-align: left;
   border-bottom: 1px solid #ddd;
 }
-
+.input {
+  background-color: #303245;
+  border-radius: 5px;
+  border: 0;
+  box-sizing: border-box;
+  color: #eee;
+  font-size: 18px;
+  height: 100%;
+  outline: 0;
+  padding: 20px 40px;
+  margin: 5px;
+  margin-left: 3rem;
+}
+.inputdate {
+  background-color: #303245;
+  border-radius: 5px;
+  border: 0;
+  box-sizing: border-box;
+  color: #eee;
+  font-size: 18px;
+  height: 100%;
+  outline: 0;
+  padding: 16px 16px;
+  margin: 5px;
+  margin-left: 3rem;
+}
 .storeTable th {
-  background-color: #56021F;
+  background-color: #56021f;
   color: white;
   font-weight: bold;
 }
@@ -36,10 +61,10 @@
 }
 
 .addButton {
-  background-color: #56021F;
+  background-color: #56021f;
   color: white;
   border: none;
-  padding: 10px 15px;
+  padding: 15px 30px;
   cursor: pointer;
   border-radius: 5px;
   font-size: 16px;
@@ -48,16 +73,6 @@
 
 .addButton:hover {
   background-color: #92062d;
-}
-
-.cancelButton {
-  background-color: #ddd;
-  color: black;
-  border: none;
-  padding: 10px 15px;
-  cursor: pointer;
-  border-radius: 5px;
-  font-size: 16px;
 }
 
 .cancelButton:hover {
@@ -108,6 +123,6 @@
 
 .buttonGroup {
   display: flex;
-  justify-content: space-between;
+  justify-content: right;
   margin-top: 15px;
 }

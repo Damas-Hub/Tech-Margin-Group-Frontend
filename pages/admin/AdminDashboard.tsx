@@ -9,7 +9,7 @@ import {
   Users,
 } from "lucide-react";
 import { useRouter } from "next/router";
-import toast, { Toaster } from "react-hot-toast"; // ✅ Import toast
+import toast, { Toaster } from "react-hot-toast";  
 import styles from "./AdminDashboard.module.css";
 import Clients from "./Clients";
 import Store from "./Store";
@@ -49,15 +49,15 @@ const AdminDashboard = () => {
   ];
 
   const handleLogout = () => {
-    toast.success("Logged out successfully!", { duration: 3000 }); // ✅ Show toast
+    toast.success("Logged out successfully!", { duration: 3000 });  
     setTimeout(() => {
-      router.push("/login"); // ✅ Redirect after showing toast
+      router.push("/login");  
     }, 2000);
   };
 
   return (
     <div className="flex h-screen">
-      <Toaster /> {/* ✅ Add this so toasts can be displayed */}
+      <Toaster /> 
       
       {/* Sidebar */}
       <div
