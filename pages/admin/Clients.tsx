@@ -11,7 +11,6 @@ import {
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styles from "./Clients.module.css";
-import RepairerClients from "./RepairerClients";
 
 interface Client {
   id: string;
@@ -120,7 +119,7 @@ const ClientForm: React.FC<ClientFormProps> = ({ searchTerm }) => {
         </thead>
         <tbody>
   {filteredItems.length > 0 ? (
-    filteredItems.map((client) => ( // Use filteredItems here
+    filteredItems.map((client) => (  
       <tr key={client.id}>
         <td>{client.name}</td>
         <td>{client.itemBrought}</td>
@@ -138,7 +137,6 @@ const ClientForm: React.FC<ClientFormProps> = ({ searchTerm }) => {
 </tbody>
 
       </table>
-      {/* <RepairerClients /> */}
     </div>
   );
 };
