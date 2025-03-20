@@ -38,7 +38,7 @@ const RepairerClients: React.FC = () => {
           itemBrought: data.itemBrought || "",
           phoneNumber: data.phoneNumber || "",
           problem: data.problem || "",
-          date: formatDate(data.date), // Ensure the date is correctly formatted
+          date: formatDate(data.date), 
           status: data.status || "Not Done",
         };
       });
