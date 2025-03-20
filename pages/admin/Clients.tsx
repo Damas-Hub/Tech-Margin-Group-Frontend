@@ -83,9 +83,12 @@ const ClientForm: React.FC<ClientFormProps> = ({ searchTerm }) => {
   };
   const filteredItems = clients.filter((item) =>
     Object.values(item).some((value) =>
-      String(value ?? "").toLowerCase().includes((searchTerm ?? "").toLowerCase())
+      (typeof value === "string" ? value : String(value ?? ""))
+        .toLowerCase()
+        .includes((searchTerm ?? "").toLowerCase())
     )
   );
+  
   
   return (
     <div className={styles.storeWrapper}>
