@@ -5,6 +5,7 @@ import { auth } from "../src/firebaseConfig";
 import { sendPasswordResetEmail } from "firebase/auth";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Image from "next/image";
 
 const ForgotPassword: React.FC = () => {
   const router = useRouter();
@@ -30,12 +31,15 @@ const ForgotPassword: React.FC = () => {
     <div className={styles.container}>
       <ToastContainer position="top-right" autoClose={3000} />
       <div className={styles.imageContainer}>
-        <img
-          src="https://images.pexels.com/photos/7534378/pexels-photo-7534378.jpeg"
-          alt="Forgot Password"
-          className={styles.image}
-        />
-      </div>
+  <Image
+    src="https://images.pexels.com/photos/7534378/pexels-photo-7534378.jpeg"
+    alt="Forgot Password"
+    className={styles.image}
+    width={500}  
+    height={300}  
+    layout="responsive"  
+  />
+</div>
 
       <div className={styles.formWrapper}>
         <div className={styles.form}>

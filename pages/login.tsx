@@ -14,11 +14,11 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [pageLoading, setPageLoading] = useState(true); // Page loading state
+  const [pageLoading, setPageLoading] = useState(true);  
 
   useEffect(() => {
     setTimeout(() => {
-      setPageLoading(false); // Hide preloader after 2 seconds
+      setPageLoading(false);  
     }, 2000);
   }, []);
 
