@@ -41,9 +41,14 @@ const ChangePassword = () => {
       setTimeout(() => {
         router.push("/login");
       }, 2000);
-    } catch (error: any) {
-      toast.error("Failed to change password. Try again.");
-      console.error("Password Change Error:", error.message);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        toast.error(`Failed to change password: ${error.message}`);
+        console.error("Password Change Error:", error.message);
+      } else {
+        toast.error("An unexpected error occurred.");
+        console.error("Unknown error:", error);
+      }
     } finally {
       setLoading(false);
     }

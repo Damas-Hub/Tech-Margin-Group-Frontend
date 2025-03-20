@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { db } from "../../src/firebaseConfig";
-import { collection, onSnapshot, doc, updateDoc, Timestamp } from "firebase/firestore";
+import {
+  collection,
+  onSnapshot,
+  doc,
+  updateDoc,
+  Timestamp,
+} from "firebase/firestore";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styles from "./Clients.module.css";
@@ -38,7 +44,7 @@ const RepairerClients: React.FC = () => {
           itemBrought: data.itemBrought || "",
           phoneNumber: data.phoneNumber || "",
           problem: data.problem || "",
-          date: formatDate(data.date), 
+          date: formatDate(data.date),
           status: data.status || "Not Done",
         };
       });
@@ -52,9 +58,14 @@ const RepairerClients: React.FC = () => {
     try {
       await updateDoc(doc(db, "clients", clientId), { status: newStatus });
       toast.success("Status updated successfully!");
-    } catch (error: any) {
-      console.error("Error updating status:", error.message);
-      toast.error("Failed to update status.");
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error("Error updating status:", error.message);
+        toast.error("Failed to update status.");
+      } else {
+        console.error("An unknown error occurred", error);
+        toast.error("An unexpected error occurred.");
+      }
     }
   };
 
@@ -83,13 +94,21 @@ const RepairerClients: React.FC = () => {
                 <td>{client.phoneNumber}</td>
                 <td>{client.problem}</td>
                 <td>{formatDate(client.date)}</td>
-                <td className={client.status === "Resolved" ? styles.resolved : styles.notDone}>
+                <td
+                  className={
+                    client.status === "Resolved"
+                      ? styles.resolved
+                      : styles.notDone
+                  }
+                >
                   {client.status}
                 </td>
                 <td>
                   <select
                     value={client.status}
-                    onChange={(e) => handleStatusChange(client.id, e.target.value)}
+                    onChange={(e) =>
+                      handleStatusChange(client.id, e.target.value)
+                    }
                     className={styles.input}
                   >
                     <option value="Not Done">Not Done</option>

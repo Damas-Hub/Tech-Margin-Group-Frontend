@@ -21,9 +21,14 @@ const ForgotPassword: React.FC = () => {
       await sendPasswordResetEmail(auth, email);
       toast.success("Password reset email sent! Check your inbox.");
       setTimeout(() => router.push("/login"), 4000);
-    } catch (error: any) {
-      toast.error("Failed to send reset email. Check the email provided.");
-      console.error(error);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        toast.error(`Failed to send reset email: ${error.message}`);
+        console.error(error.message);
+      } else {
+        toast.error("An unexpected error occurred.");
+        console.error("Unknown error:", error);
+      }
     }
   };
 
@@ -31,15 +36,15 @@ const ForgotPassword: React.FC = () => {
     <div className={styles.container}>
       <ToastContainer position="top-right" autoClose={3000} />
       <div className={styles.imageContainer}>
-  <Image
-    src="https://images.pexels.com/photos/7534378/pexels-photo-7534378.jpeg"
-    alt="Forgot Password"
-    className={styles.image}
-    width={500}  
-    height={300}  
-    layout="responsive"  
-  />
-</div>
+        <Image
+          src="https://images.pexels.com/photos/7534378/pexels-photo-7534378.jpeg"
+          alt="Forgot Password"
+          className={styles.image}
+          width={500}
+          height={300}
+          layout="responsive"
+        />
+      </div>
 
       <div className={styles.formWrapper}>
         <div className={styles.form}>

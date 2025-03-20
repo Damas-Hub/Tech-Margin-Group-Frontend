@@ -74,8 +74,10 @@ const ClientForm: React.FC<ClientFormProps> = ({ searchTerm }) => {
         status: "Not Done",
       });
     } catch (error) {
+      console.error("Error saving data:", error);  
       toast.error("Error saving data. Try again.");
-    } finally {
+    }
+     finally {
       setLoading(false);
     }
   };

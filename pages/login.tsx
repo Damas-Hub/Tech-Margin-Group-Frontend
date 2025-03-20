@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { auth, db } from "../src/firebaseConfig";
-import { doc, getDoc, getDocs, collection, query, where } from "firebase/firestore";
+import {
+  doc,
+  getDoc,
+  getDocs,
+  collection,
+  query,
+  where,
+} from "firebase/firestore";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import styles from "../componnets/Login.module.css";
 import { ToastContainer, toast } from "react-toastify";
@@ -14,13 +21,6 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [pageLoading, setPageLoading] = useState(true);  
-
-  useEffect(() => {
-    setTimeout(() => {
-      setPageLoading(false);  
-    }, 2000);
-  }, []);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,7 +28,10 @@ const Login = () => {
 
     try {
       // Step 1: Find the email associated with the entered staff ID
-      const userQuery = query(collection(db, "users"), where("staff_id", "==", staffId));
+      const userQuery = query(
+        collection(db, "users"),
+        where("staff_id", "==", staffId)
+      );
       const querySnapshot = await getDocs(userQuery);
 
       if (querySnapshot.empty) {
@@ -41,7 +44,11 @@ const Login = () => {
       const userEmail = userData.email; // Retrieve associated email
 
       // Step 2: Log in using email & password
-      const userCredential = await signInWithEmailAndPassword(auth, userEmail, password);
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        userEmail,
+        password
+      );
       const user = userCredential.user;
 
       // Get user data from Firestore
@@ -55,7 +62,7 @@ const Login = () => {
         if (userData.isFirstLogin) {
           toast.success("Login successful! Redirecting to Change Password...");
           setTimeout(() => {
-            router.push("/change-password");  
+            router.push("/change-password");
           }, 2000);
           return;
         }
@@ -83,9 +90,14 @@ const Login = () => {
       } else {
         toast.error("User not found in Firestore.");
       }
-    } catch (error: any) {
-      toast.error("Invalid Staff ID or Password.");
-      console.error("Login Error:", error.message);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        toast.error("Invalid Staff ID or Password.");
+        console.error("Login Error:", error.message);
+      } else {
+        toast.error("An unexpected error occurred.");
+        console.error("Unknown error:", error);
+      }
     } finally {
       setLoading(false);
     }
@@ -127,7 +139,11 @@ const Login = () => {
             <span
               className={styles.forgotPassword}
               onClick={() => router.push("/forgot-password")}
-              style={{ cursor: "pointer", color: "blue", textDecoration: "underline" }}
+              style={{
+                cursor: "pointer",
+                color: "blue",
+                textDecoration: "underline",
+              }}
             >
               Forgot Password?
             </span>
