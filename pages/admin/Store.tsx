@@ -5,7 +5,7 @@ interface StoreProps {
   searchTerm: string;
 }
 
-const Store: React.FC<StoreProps> = ({ searchTerm }) => {
+const Store: React.FC<StoreProps> = () => {
   const items = [
     { serialNo: 1, name: "Laptop", quantity: 5, price: "$800" },
     { serialNo: 2, name: "Smartphone", quantity: 10, price: "$600" },
@@ -26,8 +26,6 @@ const Store: React.FC<StoreProps> = ({ searchTerm }) => {
   //       : false
   //   )
   // );
-  
-  
 
   return (
     <div className={styles.storeWrapper}>
