@@ -23,7 +23,6 @@ interface Client {
   searchTerm?: string; // <-- Make it optional
 }
 
-
 // Function to safely format Firestore Timestamp to a readable date
 const formatDate = (date: string | Timestamp): string => {
   if (date instanceof Timestamp) {
@@ -98,8 +97,8 @@ const RepairerClients: React.FC<RepairerClientsProps> = ({ searchTerm }) => {
           </tr>
         </thead>
         <tbody>
-        {filteredItems.length > 0 ? (
-              filteredItems.map((client) =>  (
+          {filteredItems.length > 0 ? (
+            filteredItems.map((client) => (
               <tr key={client.id}>
                 <td>{client.name}</td>
                 <td>{client.itemBrought}</td>
