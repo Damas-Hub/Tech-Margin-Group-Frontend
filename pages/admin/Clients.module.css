@@ -35,7 +35,7 @@
 }
 .inputdate {
   flex: 1;
-  min-width: 200px; /* Ensures responsiveness */
+  min-width: 200px; 
   background-color: #303245;
   border-radius: 5px;
   border: 0;
@@ -98,9 +98,7 @@
 
 .formContainer input,
 .formContainer select {
-  width: 100%;
   padding: 12px;
-  /* margin: 8px 0; */
   border: 1px solid #ddd;
   border-radius: 5px;
 }

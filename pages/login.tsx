@@ -51,8 +51,8 @@ const Login = () => {
       );
       const user = userCredential.user;
 
-      // Get user data from Firestore
-      const userRef = doc(db, "users", user.uid);
+      // Fetch the same document found in the first query
+      const userRef = doc(db, "users", querySnapshot.docs[0].id);
       const userSnap = await getDoc(userRef);
 
       if (userSnap.exists()) {
