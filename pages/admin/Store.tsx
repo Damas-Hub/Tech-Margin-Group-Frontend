@@ -21,9 +21,10 @@ const Store: React.FC<StoreProps> = ({ searchTerm }) => {
 
   const filteredItems = items.filter((item) =>
     Object.values(item).some((value) =>
-      value.toString().toLowerCase().includes(searchTerm.toLowerCase())
+      String(value ?? "").toLowerCase().includes((searchTerm ?? "").toLowerCase())
     )
   );
+  
 
   return (
     <div className={styles.storeWrapper}>

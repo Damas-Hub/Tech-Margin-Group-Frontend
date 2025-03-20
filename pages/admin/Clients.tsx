@@ -83,9 +83,10 @@ const ClientForm: React.FC<ClientFormProps> = ({ searchTerm }) => {
   };
   const filteredItems = clients.filter((item) =>
     Object.values(item).some((value) =>
-      String(value).toLowerCase().includes(searchTerm.toLowerCase())
+      String(value ?? "").toLowerCase().includes((searchTerm ?? "").toLowerCase())
     )
   );
+  
   return (
     <div className={styles.storeWrapper}>
       <ToastContainer position="top-right" autoClose={3000} />
