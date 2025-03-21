@@ -1,0 +1,50 @@
+.notificationModal {
+    position: absolute;
+    top: 50px; /* Adjust to position under the bell icon */
+    right: 0;
+    width: 280px;
+    background-color: white;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    z-index: 1000;
+  }
+  
+  .notificationHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    background-color: #f8f9fa;
+  }
+  
+  .notificationContent {
+    max-height: 250px;
+    overflow-y: auto;
+  }
+  
+  .notificationItem {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    transition: background 0.2s ease-in-out;
+  }
+  
+  .notificationItem:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .notificationMessage {
+    font-size: 14px;
+    color: #333;
+  }
+  
+  .notificationTimestamp {
+    font-size: 12px;
+    color: #777;
+    margin-top: 4px;
+  }
+  

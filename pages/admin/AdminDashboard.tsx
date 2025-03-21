@@ -18,6 +18,7 @@ import Message from "./Message";
 import Staffs from "./Staffs";
 import Home from "./Home";
 import RepairerClients from "./RepairerClients";
+import NotificationModal from "@/componnets/NotificationModal";
 
 const AdminDashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -136,7 +137,7 @@ const AdminDashboard = () => {
             </div>
 
             <div className="flex items-center space-x-12 ml-auto">
-              <Bell className="w-7 h-7 cursor-pointer text-red-600" />
+              <NotificationModal staffRole="Repairer" className="w-7 h-7 cursor-pointer text-red-600" />
               <Image
                 src="https://cdn.vectorstock.com/i/1000v/31/40/mechanic-logo-vector-44593140.jpg"
                 alt="Logo"

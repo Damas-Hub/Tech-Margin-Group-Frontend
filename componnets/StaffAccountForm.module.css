@@ -16,6 +16,13 @@
   font-weight: 600;
   margin-top: 30px;
 }
+.titlee {
+  color: #eee;
+  font-family: sans-serif;
+  font-size: 36px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
 .passwordWrapper {
   position: relative;
   display: flex;
@@ -24,7 +31,7 @@
 
 .passwordWrapper .input {
   width: 100%;
-  padding-right: 40px;  
+  padding-right: 40px;
 }
 .generatedPasswordContainer {
   margin-top: 15px;
@@ -113,6 +120,19 @@
   color: #eee;
   font-size: 18px;
   height: 100%;
+  outline: 0;
+  padding: 4px 20px 0;
+  width: 100%;
+}
+.inputr {
+  background-color: #303245;
+  border-radius: 12px;
+  border: 0;
+  box-sizing: border-box;
+  color: #eee;
+  font-size: 18px;
+  margin-bottom: 2rem;
+  height: 150px;
   outline: 0;
   padding: 4px 20px 0;
   width: 100%;
