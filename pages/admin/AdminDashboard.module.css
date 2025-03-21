@@ -1,5 +1,5 @@
-  .sidebar {
-  background-color:  #56021F;
+.sidebar {
+  background-color: #56021f;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
   display: flex;
@@ -10,16 +10,16 @@
 .sidebarContent {
   display: flex;
   flex-direction: column;
-  flex-grow: 1; 
+  flex-grow: 1;
 }
 
 .sidebarClosed {
-  width: 2.5rem;
+  width: 3.5rem;
   /* margin-top: 1.2rem; */
 }
 
 .sidebarOpen {
-  width: 12rem;
+  width: 14rem;
   /* margin-top: 1.2rem; */
 }
 
@@ -59,18 +59,19 @@
 }
 
 .header {
-  background-color:  #56021F;
+  background-color: #56021f;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   padding: 0.5rem;
   height: 6rem;
-  /* border-radius: 10px; */
+  /* border-bottom-left-radius: 20px; */
+  /* border-bottom-right-radius: 20px; */
 }
 
 .searchWrapper {
   position: relative;
-  max-width: 30rem;
+  max-width: 35rem;
   flex: 1;
-  margin-top: -0.8rem;
+  margin-top: -0.5rem;
 }
 
 .searchInput {

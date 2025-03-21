@@ -10,7 +10,7 @@ import {
   Users,
 } from "lucide-react";
 import { useRouter } from "next/router";
-import toast, { Toaster } from "react-hot-toast";  
+import toast, { Toaster } from "react-hot-toast";
 import styles from "./AdminDashboard.module.css";
 import Clients from "./Clients";
 import Store from "./Store";
@@ -51,7 +51,7 @@ const AdminDashboard = () => {
     {
       label: "RepairerClients",
       icon: <Users className="w-7 h-7" />,
-      component: <RepairerClients searchTerm={searchTerm}  />,
+      component: <RepairerClients searchTerm={searchTerm} />,
     },
   ];
 

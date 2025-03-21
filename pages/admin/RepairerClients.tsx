@@ -20,7 +20,7 @@ interface Client {
   problem: string;
   date: string | Timestamp;
   status: string;
-  searchTerm?: string; // <-- Make it optional
+  searchTerm?: string;  
 }
 
 // Function to safely format Firestore Timestamp to a readable date
@@ -120,7 +120,7 @@ const RepairerClients: React.FC<RepairerClientsProps> = ({ searchTerm }) => {
                     onChange={(e) =>
                       handleStatusChange(client.id, e.target.value)
                     }
-                    className={styles.input}
+                    className={styles.inputdate}
                   >
                     <option value="Not Done">Not Done</option>
                     <option value="In Progress">In Progress</option>
