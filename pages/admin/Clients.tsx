@@ -18,7 +18,7 @@ interface Client {
 
 const ClientForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const [loading, setLoading] = useState(false);
-  const [clients, setClients] = useState<Client[]>([]); // Explicitly typed array
+  const [clients, setClients] = useState<Client[]>([]);   
   const [formData, setFormData] = useState<Omit<Client, "id">>({
     name: "",
     itemBrought: "",
@@ -32,16 +32,16 @@ const ClientForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, "clients"), (snapshot) => {
       const clientData: Client[] = snapshot.docs.map((doc) => {
-        const data = doc.data() as Omit<Client, "id">; // Exclude id from the type
+        const data = doc.data() as Omit<Client, "id">;  
         return {
-          id: doc.id, // Assign the Firestore ID separately
-          ...data, // Spread the rest of the data
+          id: doc.id,  
+          ...data,  
         };
       });
       setClients(clientData);
     });
 
-    return () => unsubscribe(); // Cleanup on unmount
+    return () => unsubscribe();  
   }, []);
 
   const handleChange = (
@@ -49,8 +49,8 @@ const ClientForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-  const items: Client[] = []; // Define the items array
-  const searchTerm = ""; // Define the searchTerm variable
+  const items: Client[] = [];  
+  const searchTerm = "";  
 
   const filteredItems = items.filter((item) =>
     Object.values(item).some((value) =>
