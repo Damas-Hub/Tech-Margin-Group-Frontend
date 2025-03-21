@@ -5,7 +5,6 @@ import { db } from "../src/firebaseConfig"
 
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import styles from "./StaffAccountForm.module.css";
-import MessageList from "./MessageList";
 
 interface MessageFormProps {
   isVisible: boolean;
@@ -60,6 +59,7 @@ const MessageForm: React.FC<MessageFormProps> = ({ isVisible, onClose }) => {
             onChange={(e) => setRecipient(e.target.value)}
           >
             <option value="">Select Recipient</option>
+            <option value="Admin">Admin</option>
             <option value="Secretary">Secretary</option>
             <option value="Repairer">Repairer</option>
             <option value="Store Keeper">Store Keeper</option>
@@ -82,7 +82,7 @@ const MessageForm: React.FC<MessageFormProps> = ({ isVisible, onClose }) => {
           </button>
         </div>
       </div>
-      <MessageList recipient={recipient} />
+      {/* <MessageList recipient={recipient} /> */}
     </div>
   );
 };

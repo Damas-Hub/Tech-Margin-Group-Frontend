@@ -55,7 +55,7 @@ const AdminDashboard = () => {
       component: <RepairerClients searchTerm={searchTerm} />,
     },
   ];
-
+  const userRole = "Admin";
   const handleLogout = () => {
     toast.success("Logged out successfully!", { duration: 3000 });
     setTimeout(() => {
@@ -137,7 +137,11 @@ const AdminDashboard = () => {
             </div>
 
             <div className="flex items-center space-x-12 ml-auto">
-              <NotificationModal staffRole="Repairer" className="w-7 h-7 cursor-pointer text-red-600" />
+              <NotificationModal
+                staffRole={userRole}
+                className="w-7 h-7 cursor-pointer text-red-600"
+              />
+
               <Image
                 src="https://cdn.vectorstock.com/i/1000v/31/40/mechanic-logo-vector-44593140.jpg"
                 alt="Logo"
