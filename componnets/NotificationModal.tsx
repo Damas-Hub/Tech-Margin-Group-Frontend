@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styles from "./NotificationModal.module.css";
-import { db } from "../src/firebaseConfig"; // Adjust this path based on your Firebase setup
+import { db } from "../src/firebaseConfig";
 import {
   collection,
   query,
@@ -20,19 +20,19 @@ interface Message {
   id: string;
   message: string;
   recipient: string;
-  timestamp: string;
+  sender: string; // Add sender field
+  timestamp: number;
   read: boolean;
 }
 
-const NotificationModal: React.FC<NotificationModalProps> = ({
-  staffRole,
-  className,
-}) => {
+const NotificationModal: React.FC<NotificationModalProps> = ({ staffRole, className }) => {
   const [notifications, setNotifications] = useState<Message[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const unreadCount = notifications.filter((msg) => !msg.read).length;
 
   useEffect(() => {
+    if (!staffRole) return;
+
     const messagesRef = collection(db, "messages");
     const q = query(messagesRef, where("recipient", "==", staffRole));
 
@@ -40,6 +40,7 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
       const newMessages: Message[] = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
+        timestamp: doc.data().timestamp?.toMillis?.() || Date.now(),
       })) as Message[];
       setNotifications(newMessages);
     });
@@ -48,11 +49,10 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
   }, [staffRole]);
 
   const markAsRead = async () => {
-    notifications.forEach(async (msg) => {
-      if (!msg.read) {
-        const msgRef = doc(db, "messages", msg.id);
-        await updateDoc(msgRef, { read: true });
-      }
+    const unreadMessages = notifications.filter((msg) => !msg.read);
+    unreadMessages.forEach(async (msg) => {
+      const msgRef = doc(db, "messages", msg.id);
+      await updateDoc(msgRef, { read: true });
     });
   };
 
@@ -67,10 +67,8 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
 
   return (
     <div className="relative">
-      <div
-        className={clsx("cursor-pointer relative", className)}
-        onClick={toggleModal}
-      >
+      {/* Notification Bell */}
+      <div className={clsx("cursor-pointer relative", className)} onClick={toggleModal}>
         <Bell className="w-7 h-7 text-red-600" />
         {unreadCount > 0 && (
           <span className="absolute -top-2 -right-2 bg-red-500 text-red font-extrabold text-xs w-5 h-5 flex items-center justify-center rounded-full">
@@ -79,6 +77,7 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
         )}
       </div>
 
+      {/* Notification Modal */}
       {isOpen && (
         <div className={styles.notificationModal}>
           <div className={styles.notificationHeader}>
@@ -90,7 +89,7 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
               notifications.map((msg) => (
                 <div key={msg.id} className={styles.notificationItem}>
                   <span className={styles.notificationMessage}>
-                    {msg.message}
+                    <strong>From {msg.sender}:</strong> {msg.message}
                   </span>
                   <span className={styles.notificationTimestamp}>
                     {new Date(msg.timestamp).toLocaleString()}
