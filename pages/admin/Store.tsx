@@ -10,7 +10,6 @@ interface StoreItem {
   name: string;
   quantity: number;
   price: string;
-  searchTerm: string;
 }
 
 interface StoreProps {
@@ -20,6 +19,7 @@ interface StoreProps {
 const Store: React.FC<StoreProps> = ({ searchTerm }) => {
   const [items, setItems] = useState<StoreItem[]>([]);
   const [newItem, setNewItem] = useState({ name: "", quantity: "", price: "" });
+  const [showModal, setShowModal] = useState(false); // Modal state
 
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, "store"), (snapshot) => {
@@ -47,6 +47,7 @@ const Store: React.FC<StoreProps> = ({ searchTerm }) => {
       });
       toast.success("Item added successfully");
       setNewItem({ name: "", quantity: "", price: "" });
+      setShowModal(false); // Close modal after adding
     } catch (error) {
       toast.error("Error adding item");
     }
@@ -63,36 +64,52 @@ const Store: React.FC<StoreProps> = ({ searchTerm }) => {
   return (
     <div className={styles.storeWrapper}>
       <ToastContainer position="top-right" autoClose={3000} />
-      {/* Input Form */}
-      <div className={styles.inputForm}>
-        <input
-          type="text"
-          name="name"
-          placeholder="Item Name"
-          value={newItem.name}
-          onChange={handleChange}
-          className={styles.input}
-        />
-        <input
-          type="number"
-          name="quantity"
-          placeholder="Quantity"
-          value={newItem.quantity}
-          onChange={handleChange}
-          className={styles.input}
-        />
-        <input
-          type="text"
-          name="price"
-          placeholder="Price"
-          value={newItem.price}
-          onChange={handleChange}
-          className={styles.input}
-        />
-        <button className={styles.addButtonn} onClick={addItem}>
-          Add Item
-        </button>
-      </div>
+
+      {/* Add Client Button */}
+      <button className={styles.addClientButton} onClick={() => setShowModal(true)}>
+        Add Item
+      </button>
+
+      {/* Modal */}
+      {showModal && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modalContent}>
+            <h2>Add Item</h2>
+            <input
+              type="text"
+              name="name"
+              placeholder="Client Name"
+              value={newItem.name}
+              onChange={handleChange}
+              className={styles.modalInput}
+            />
+            <input
+              type="number"
+              name="quantity"
+              placeholder="Quantity"
+              value={newItem.quantity}
+              onChange={handleChange}
+              className={styles.modalInput}
+            />
+            <input
+              type="text"
+              name="price"
+              placeholder="Price"
+              value={newItem.price}
+              onChange={handleChange}
+              className={styles.modalInput}
+            />
+            <div className={styles.buttonGroup}>
+              <button className={styles.cancelButton} onClick={() => setShowModal(false)}>
+                Cancel
+              </button>
+              <button className={styles.addButton} onClick={addItem}>
+                Add
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Store Table */}
       <table className={styles.storeTable}>
@@ -112,7 +129,7 @@ const Store: React.FC<StoreProps> = ({ searchTerm }) => {
                 <td>{index + 1}</td>
                 <td>{store.name}</td>
                 <td>{store.quantity}</td>
-                <td>{store.price}</td>
+                <td>GH₵{Number(store.price).toFixed(2)}</td>
                 <td>
                   <button className={styles.addButton}>Request Item</button>
                 </td>

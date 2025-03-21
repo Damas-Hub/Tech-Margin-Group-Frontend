@@ -1,5 +1,5 @@
 .storeWrapper {
-  padding: 20px;
+  padding: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -21,12 +21,12 @@
 .storeTable th,
 .storeTable td {
   padding: 14px;
-  text-align: left;
+  text-align: center;
   border-bottom: 1px solid #ddd;
 }
 .input {
   flex: 1;
-  min-width: 200px;
+  min-width: 300px;
   background-color: #303245;
   border-radius: 5px;
   padding: 10px;
@@ -35,17 +35,7 @@
   font-size: 18px;
   margin: 10px;
 }
-.inputdate {
-  flex: 1;
-  min-width: 200px;
-  background-color: #303245;
-  border-radius: 5px;
-  border: 0;
-  color: #eee;
-  font-size: 18px;
-  padding: 10px;
-  margin: 5px;
-}
+
 .storeTable th {
   background-color: #56021f;
   color: white;
@@ -61,7 +51,7 @@
   color: white;
   border: none;
   white-space: nowrap;
-  width: 30%;
+  width: 40%;
   padding: 10px 20px;
   cursor: pointer;
   border-radius: 5px;
@@ -81,6 +71,9 @@
 }
 
 .addButton:hover {
+  background-color: #92062d;
+}
+.addButtonn:hover {
   background-color: #92062d;
 }
 
@@ -130,3 +123,93 @@
   justify-content: center;
   padding: 10px;
 }
+/* Modal Overlay */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Modal Box */
+.modalContent {
+  background: rgb(211, 208, 208);
+  padding: 20px;
+  border-radius: 10px;
+  width: 400px;
+  text-align: center;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Modal Inputs */
+.modalInput {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+/* Button Group */
+.buttonGroup {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+/* Cancel Button */
+.cancelButton {
+  background-color: #bbb;
+  color: black;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: all 0.3s;
+}
+
+/* Add Button */
+.addButton {
+  background-color: #56021f;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: all 0.3s;
+}
+
+/* Button Hover Effects */
+.cancelButton:hover {
+  background-color: #999;
+}
+
+.addButton:hover {
+  background-color: #92062d;
+}
+
+/* Add Client Button */
+.addClientButton {
+  background-color: #56021f;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: all 0.3s;
+}
+
+.addClientButton:hover {
+  background-color: #92062d;
+}
+
