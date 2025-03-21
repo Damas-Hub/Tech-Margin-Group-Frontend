@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { auth, db } from "../src/firebaseConfig";
 import {
@@ -10,7 +10,7 @@ import {
   where,
 } from "firebase/firestore";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import styles from "../componnets/Login.module.css";
+import styles from ".././componnets/Login.module.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
@@ -27,23 +27,52 @@ const Login = () => {
     setLoading(true);
 
     try {
-      // Step 1: Find the email associated with the entered staff ID
-      const userQuery = query(
-        collection(db, "users"),
+      let userEmail: string | null = null;
+      let userRole: string | null = null;
+      let userCollection: "staffs" | "users" | null = null;
+      let userId: string | null = null;
+      let isFirstLogin = false;
+
+      // 🔍 Step 1: Check in "staffs" collection first
+      const staffQuery = query(
+        collection(db, "staffs"),
         where("staff_id", "==", staffId)
       );
-      const querySnapshot = await getDocs(userQuery);
+      const staffSnapshot = await getDocs(staffQuery);
 
-      if (querySnapshot.empty) {
+      if (!staffSnapshot.empty) {
+        const staffData = staffSnapshot.docs[0].data();
+        userEmail = staffData.email;
+        userRole = staffData.role;
+        userCollection = "staffs";
+        userId = staffSnapshot.docs[0].id;
+        isFirstLogin = staffData.isFirstLogin ?? true; // Default to true if missing
+      } else {
+        // 🔍 Step 2: If not found in "staffs", check "users" (Admin)
+        const adminQuery = query(
+          collection(db, "users"),
+          where("staff_id", "==", staffId)
+        );
+        const adminSnapshot = await getDocs(adminQuery);
+
+        if (!adminSnapshot.empty) {
+          const adminData = adminSnapshot.docs[0].data();
+          userEmail = adminData.email;
+          userRole = adminData.role;
+          userCollection = "users";
+          userId = adminSnapshot.docs[0].id;
+          isFirstLogin = false; // Admin doesn't need to change password
+        }
+      }
+
+      // 🚨 Step 3: Ensure user was found
+      if (!userEmail || !userId || !userCollection) {
         toast.error("Invalid Staff ID!");
         setLoading(false);
         return;
       }
 
-      const userData = querySnapshot.docs[0].data();
-      const userEmail = userData.email; // Retrieve associated email
-
-      // Step 2: Log in using email & password
+      // 🔐 Step 4: Sign in with Email & Password
       const userCredential = await signInWithEmailAndPassword(
         auth,
         userEmail,
@@ -51,45 +80,28 @@ const Login = () => {
       );
       const user = userCredential.user;
 
-      // Fetch the same document found in the first query
-      const userRef = doc(db, "users", querySnapshot.docs[0].id);
+      // 🔄 Fetch user data from Firestore
+      const userRef = doc(db, userCollection, userId);
       const userSnap = await getDoc(userRef);
 
-      if (userSnap.exists()) {
-        const userData = userSnap.data();
-        console.log("User Data:", userData);
-
-        if (userData.isFirstLogin) {
-          toast.success("Login successful! Redirecting to Change Password...");
-          setTimeout(() => {
-            router.push("/change-password");
-          }, 2000);
-          return;
-        }
-
-        toast.success("Login successful! Redirecting...", { autoClose: 2000 });
-        setTimeout(() => {
-          if (userData.role === "Admin") {
-            router.push("/admin/AdminDashboard");
-          } else {
-            switch (userData.role) {
-              case "Repairer":
-                router.push("/repairer/RepairerDashboard");
-                break;
-              case "Secretary":
-                router.push("/secretary/SecretaryDashboard");
-                break;
-              case "Store Keeper":
-                router.push("/store/StoreKeeperDashboard");
-                break;
-              default:
-                toast.error("Invalid role. Contact Admin.");
-            }
-          }
-        }, 2000);
-      } else {
+      if (!userSnap.exists()) {
         toast.error("User not found in Firestore.");
+        return;
       }
+
+      // 🔄 Step 5: Redirect if First Login (Staff Only)
+      if (userCollection === "staffs" && isFirstLogin) {
+        toast.success("Login successful! Redirecting to Change Password...");
+        setTimeout(() => {
+          router.push("/change-password");
+        }, 2000);
+        return;
+      }
+
+      // 🔄 Step 6: Redirect Based on Role
+      toast.success("Login successful! Redirecting...", { autoClose: 2000 });
+
+      setTimeout(() => roleRedirect(userRole), 2000);
     } catch (error: unknown) {
       if (error instanceof Error) {
         toast.error("Invalid Staff ID or Password.");
@@ -100,6 +112,25 @@ const Login = () => {
       }
     } finally {
       setLoading(false);
+    }
+  };
+
+  // 🚀 Function to handle role-based redirects
+  const roleRedirect = (role: string | null) => {
+    if (role === "Admin") {
+      router.push("/admin/AdminDashboard");
+    } else {
+      const rolePaths: { [key: string]: string } = {
+        Repairer: "/repairer/RepairerDashboard",
+        Secretary: "/secretary/SecretaryDashboard",
+        "Store Keeper": "/store/StoreKeeperDashboard",
+      };
+
+      if (role && rolePaths[role]) {
+        router.push(rolePaths[role]);
+      } else {
+        toast.error("Invalid role. Contact Admin.");
+      }
     }
   };
 
@@ -130,7 +161,7 @@ const Login = () => {
                 required
               />
               <span
-                className={`${styles.eyeIcon} ${styles.passwordWrapper}`}
+                className={styles.eyeIcon}
                 onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? <FaEyeSlash /> : <FaEye />}

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { db } from "../../src/firebaseConfig";
 import { collection, addDoc, onSnapshot } from "firebase/firestore";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import styles from "./Store.module.css";
 
 interface StoreItem {
@@ -33,13 +35,21 @@ const Store: React.FC<StoreProps> = ({ searchTerm }) => {
   };
 
   const addItem = async () => {
-    if (!newItem.name || !newItem.quantity || !newItem.price) return;
-    await addDoc(collection(db, "store"), {
-      name: newItem.name,
-      quantity: Number(newItem.quantity),
-      price: newItem.price,
-    });
-    setNewItem({ name: "", quantity: "", price: "" });
+    if (!newItem.name || !newItem.quantity || !newItem.price) {
+      toast.error("Please fill all fields");
+      return;
+    }
+    try {
+      await addDoc(collection(db, "store"), {
+        name: newItem.name,
+        quantity: Number(newItem.quantity),
+        price: newItem.price,
+      });
+      toast.success("Item added successfully");
+      setNewItem({ name: "", quantity: "", price: "" });
+    } catch (error) {
+      toast.error("Error adding item");
+    }
   };
 
   const filteredItems = items.filter((item) =>
@@ -52,6 +62,7 @@ const Store: React.FC<StoreProps> = ({ searchTerm }) => {
 
   return (
     <div className={styles.storeWrapper}>
+      <ToastContainer position="top-right" autoClose={3000} />
       {/* Input Form */}
       <div className={styles.inputForm}>
         <input
@@ -61,7 +72,6 @@ const Store: React.FC<StoreProps> = ({ searchTerm }) => {
           value={newItem.name}
           onChange={handleChange}
           className={styles.input}
-
         />
         <input
           type="number"
@@ -70,7 +80,6 @@ const Store: React.FC<StoreProps> = ({ searchTerm }) => {
           value={newItem.quantity}
           onChange={handleChange}
           className={styles.input}
-
         />
         <input
           type="text"
@@ -79,7 +88,6 @@ const Store: React.FC<StoreProps> = ({ searchTerm }) => {
           value={newItem.price}
           onChange={handleChange}
           className={styles.input}
-
         />
         <button className={styles.addButtonn} onClick={addItem}>
           Add Item

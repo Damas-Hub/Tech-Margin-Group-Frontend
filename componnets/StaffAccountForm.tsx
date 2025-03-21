@@ -13,16 +13,15 @@ const StaffAccountForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const [role, setRole] = useState("");
   const [email, setEmail] = useState("");
   const [generatedPassword, setGeneratedPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
   const [accountCreated, setAccountCreated] = useState(false);
 
   useEffect(() => {
     setIsVisible(true);
   }, []);
 
-  // Function to generate a random password
+  // Function to generate a secure random password (at least 8 characters)
   const generateRandomPassword = () => {
-    return Math.random().toString(36).slice(-8); // Generates an 8-character password
+    return Math.random().toString(36).slice(-10) + "Aa1!"; // Ensures 8+ characters & complexity
   };
 
   const handleSubmit = async () => {
@@ -31,14 +30,18 @@ const StaffAccountForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
       return;
     }
 
-    const password = generateRandomPassword();
+    const password = generateRandomPassword(); // Generate password first
     setGeneratedPassword(password);
 
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       const user = userCredential.user;
 
-      await setDoc(doc(db, "users", user.uid), {
+      await setDoc(doc(db, "staffs", user.uid), {
         uid: user.uid,
         staff_id: staffId,
         email: email,
@@ -51,7 +54,9 @@ const StaffAccountForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
       });
 
       setAccountCreated(true);
-      toast.success("Staff account created successfully! Copy the password below.");
+      toast.success(
+        "Staff account created successfully! Copy the password below."
+      );
     } catch (error: any) {
       let errorMessage = "Account creation failed. Please try again.";
 
@@ -76,7 +81,6 @@ const StaffAccountForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     document.body.removeChild(textArea);
     alert("Copied to clipboard!");
   };
-  
 
   return (
     <div className={`${styles.formWrapper} ${isVisible ? styles.visible : ""}`}>
@@ -128,15 +132,23 @@ const StaffAccountForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                 <FaCopy size={18} />
               </button>
             </div>
-            <p className={styles.passwordNote}>Copy this password and share it with the staff.</p>
+            <p className={styles.passwordNote}>
+              Copy this password and share it with the staff.
+            </p>
           </div>
         )}
 
         <div className={styles.buttonContainer}>
-          <button className={`${styles.button} ${styles.cancelButton}`} onClick={onClose}>
+          <button
+            className={`${styles.button} ${styles.cancelButton}`}
+            onClick={onClose}
+          >
             Cancel
           </button>
-          <button className={`${styles.button} ${styles.submitButton}`} onClick={handleSubmit}>
+          <button
+            className={`${styles.button} ${styles.submitButton}`}
+            onClick={handleSubmit}
+          >
             Submit
           </button>
         </div>
