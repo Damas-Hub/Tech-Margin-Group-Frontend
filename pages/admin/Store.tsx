@@ -1,34 +1,92 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { db } from "../../src/firebaseConfig";
+import { collection, addDoc, onSnapshot } from "firebase/firestore";
 import styles from "./Store.module.css";
+
+interface StoreItem {
+  id?: string;
+  name: string;
+  quantity: number;
+  price: string;
+  searchTerm: string;
+}
 
 interface StoreProps {
   searchTerm: string;
 }
 
-const Store: React.FC<StoreProps> = () => {
-  const items = [
-    { serialNo: 1, name: "Laptop", quantity: 5, price: "$800" },
-    { serialNo: 2, name: "Smartphone", quantity: 10, price: "$600" },
-    { serialNo: 3, name: "Tablet", quantity: 7, price: "$300" },
-    { serialNo: 4, name: "Headphones", quantity: 15, price: "$150" },
-    { serialNo: 5, name: "Camera", quantity: 3, price: "$500" },
-    { serialNo: 6, name: "Smartwatch", quantity: 8, price: "$200" },
-    { serialNo: 7, name: "Monitor", quantity: 4, price: "$250" },
-    { serialNo: 8, name: "Printer", quantity: 2, price: "$100" },
-    { serialNo: 9, name: "Speaker", quantity: 6, price: "$120" },
-    { serialNo: 10, name: "Router", quantity: 5, price: "$80" },
-  ];
+const Store: React.FC<StoreProps> = ({ searchTerm }) => {
+  const [items, setItems] = useState<StoreItem[]>([]);
+  const [newItem, setNewItem] = useState({ name: "", quantity: "", price: "" });
 
-  // const filteredItems = items.filter((item) =>
-  //   Object.values(item).some((value) =>
-  //     typeof value === "string" && searchTerm
-  //       ? value.toLowerCase().includes(searchTerm.toLowerCase())
-  //       : false
-  //   )
-  // );
+  useEffect(() => {
+    const unsubscribe = onSnapshot(collection(db, "store"), (snapshot) => {
+      setItems(
+        snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() } as StoreItem))
+      );
+    });
+    return () => unsubscribe();
+  }, []);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewItem({ ...newItem, [e.target.name]: e.target.value });
+  };
+
+  const addItem = async () => {
+    if (!newItem.name || !newItem.quantity || !newItem.price) return;
+    await addDoc(collection(db, "store"), {
+      name: newItem.name,
+      quantity: Number(newItem.quantity),
+      price: newItem.price,
+    });
+    setNewItem({ name: "", quantity: "", price: "" });
+  };
+
+  const filteredItems = items.filter((item) =>
+    Object.values(item).some((value) =>
+      (typeof value === "string" ? value : String(value ?? ""))
+        .toLowerCase()
+        .includes((searchTerm ?? "").toLowerCase())
+    )
+  );
 
   return (
     <div className={styles.storeWrapper}>
+      {/* Input Form */}
+      <div className={styles.inputForm}>
+        <input
+          type="text"
+          name="name"
+          placeholder="Item Name"
+          value={newItem.name}
+          onChange={handleChange}
+          className={styles.input}
+
+        />
+        <input
+          type="number"
+          name="quantity"
+          placeholder="Quantity"
+          value={newItem.quantity}
+          onChange={handleChange}
+          className={styles.input}
+
+        />
+        <input
+          type="text"
+          name="price"
+          placeholder="Price"
+          value={newItem.price}
+          onChange={handleChange}
+          className={styles.input}
+
+        />
+        <button className={styles.addButtonn} onClick={addItem}>
+          Add Item
+        </button>
+      </div>
+
+      {/* Store Table */}
       <table className={styles.storeTable}>
         <thead>
           <tr>
@@ -40,13 +98,13 @@ const Store: React.FC<StoreProps> = () => {
           </tr>
         </thead>
         <tbody>
-          {items.length > 0 ? (
-            items.map((item) => (
-              <tr key={item.serialNo}>
-                <td>{item.serialNo}</td>
-                <td>{item.name}</td>
-                <td>{item.quantity}</td>
-                <td>{item.price}</td>
+          {filteredItems.length > 0 ? (
+            filteredItems.map((store: StoreItem, index: number) => (
+              <tr key={store.id}>
+                <td>{index + 1}</td>
+                <td>{store.name}</td>
+                <td>{store.quantity}</td>
+                <td>{store.price}</td>
                 <td>
                   <button className={styles.addButton}>Request Item</button>
                 </td>
@@ -55,7 +113,7 @@ const Store: React.FC<StoreProps> = () => {
           ) : (
             <tr>
               <td colSpan={5} className={styles.noResults}>
-                No matching items found
+                No items found
               </td>
             </tr>
           )}
