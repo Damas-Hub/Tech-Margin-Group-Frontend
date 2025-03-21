@@ -2,7 +2,15 @@ import React, { useEffect, useState } from "react";
 import { FaEye, FaEyeSlash, FaCopy } from "react-icons/fa";
 import { auth, db } from "../src/firebaseConfig";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { collection, doc, setDoc, serverTimestamp } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  setDoc,
+  serverTimestamp,
+  query,
+  where,
+  getDocs,
+} from "firebase/firestore";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styles from "./StaffAccountForm.module.css";
@@ -13,20 +21,48 @@ const StaffAccountForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const [role, setRole] = useState("");
   const [email, setEmail] = useState("");
   const [generatedPassword, setGeneratedPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
   const [accountCreated, setAccountCreated] = useState(false);
 
   useEffect(() => {
     setIsVisible(true);
   }, []);
 
-  // Function to generate a random password
   const generateRandomPassword = () => {
-    return Math.random().toString(36).slice(-8); // Generates an 8-character password
+    return Math.random().toString(36).slice(-10) + "Aa1!";
+  };
+
+  const generateStaffId = async (role: string): Promise<string> => {
+    if (role === "Special Assignment") return staffId; // Manual input
+
+    const rolePrefixes: { [key: string]: string } = {
+      Secretary: "Secretary",
+      Repairer: "Repairer",
+      "Store Keeper": "StoreKeeper",
+    };
+
+    const prefix = rolePrefixes[role];
+    if (!prefix) return "";
+
+    const staffCollection = collection(db, "staffs");
+    const q = query(staffCollection, where("role", "==", role));
+    const querySnapshot = await getDocs(q);
+
+    let maxNumber = 0;
+    querySnapshot.forEach((doc) => {
+      const id = doc.data().staff_id;
+      const match = id.match(/\d+$/);
+      if (match) {
+        const num = parseInt(match[0], 10);
+        if (num > maxNumber) maxNumber = num;
+      }
+    });
+
+    const nextNumber = (maxNumber + 1).toString().padStart(3, "0");
+    return `${prefix}${nextNumber}`;
   };
 
   const handleSubmit = async () => {
-    if (!staffId || !role || !email) {
+    if (!role || !email || (role === "Special Assignment" && !staffId)) {
       toast.error("All fields are required!");
       return;
     }
@@ -38,10 +74,12 @@ const StaffAccountForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      await setDoc(doc(db, "users", user.uid), {
+      const newStaffId = await generateStaffId(role);
+
+      await setDoc(doc(db, "staffs", user.uid), {
         uid: user.uid,
-        staff_id: staffId,
-        email: email,
+        staff_id: newStaffId,
+        email,
         role,
         isFirstLogin: true,
         createdAt: serverTimestamp(),
@@ -50,6 +88,7 @@ const StaffAccountForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
         address: "",
       });
 
+      setStaffId(newStaffId);
       setAccountCreated(true);
       toast.success("Staff account created successfully! Copy the password below.");
     } catch (error: any) {
@@ -66,7 +105,6 @@ const StaffAccountForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
       toast.error(errorMessage);
     }
   };
-
   const copyToClipboard = () => {
     const textArea = document.createElement("textarea");
     textArea.value = generatedPassword;
@@ -76,7 +114,6 @@ const StaffAccountForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     document.body.removeChild(textArea);
     alert("Copied to clipboard!");
   };
-  
 
   return (
     <div className={`${styles.formWrapper} ${isVisible ? styles.visible : ""}`}>
@@ -128,15 +165,23 @@ const StaffAccountForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                 <FaCopy size={18} />
               </button>
             </div>
-            <p className={styles.passwordNote}>Copy this password and share it with the staff.</p>
+            <p className={styles.passwordNote}>
+              Copy this password and share it with the staff.
+            </p>
           </div>
         )}
 
         <div className={styles.buttonContainer}>
-          <button className={`${styles.button} ${styles.cancelButton}`} onClick={onClose}>
+          <button
+            className={`${styles.button} ${styles.cancelButton}`}
+            onClick={onClose}
+          >
             Cancel
           </button>
-          <button className={`${styles.button} ${styles.submitButton}`} onClick={handleSubmit}>
+          <button
+            className={`${styles.button} ${styles.submitButton}`}
+            onClick={handleSubmit}
+          >
             Submit
           </button>
         </div>

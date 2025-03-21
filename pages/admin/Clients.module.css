@@ -9,8 +9,8 @@
 }
 
 .storeTable {
-  width: 90%;
-  max-width: 900px;
+  width: 100%;
+  /* max-width: 900px; */
   border-collapse: collapse;
   background: white;
   border-radius: 10px;
@@ -21,12 +21,31 @@
 .storeTable th,
 .storeTable td {
   padding: 14px;
-  text-align: left;
+  text-align: center;
   border-bottom: 1px solid #ddd;
 }
-
+.input {
+  flex: 1;
+  min-width: 200px;
+  background-color: #303245;
+  border-radius: 5px;
+  border: 0;
+  color: #eee;
+  font-size: 18px;
+}
+.inputdate {
+  flex: 1;
+  min-width: 200px; 
+  background-color: #303245;
+  border-radius: 5px;
+  border: 0;
+  color: #eee;
+  font-size: 18px;
+  padding: 10px;
+  margin: 5px;
+}
 .storeTable th {
-  background-color: #56021F;
+  background-color: #56021f;
   color: white;
   font-weight: bold;
 }
@@ -36,10 +55,11 @@
 }
 
 .addButton {
-  background-color: #56021F;
+  background-color: #56021f;
   color: white;
   border: none;
-  padding: 10px 15px;
+   width: 20%;
+  padding: 10px 20px;
   cursor: pointer;
   border-radius: 5px;
   font-size: 16px;
@@ -48,16 +68,6 @@
 
 .addButton:hover {
   background-color: #92062d;
-}
-
-.cancelButton {
-  background-color: #ddd;
-  color: black;
-  border: none;
-  padding: 10px 15px;
-  cursor: pointer;
-  border-radius: 5px;
-  font-size: 16px;
 }
 
 .cancelButton:hover {
@@ -81,16 +91,6 @@
   color: gray;
 }
 
-.formContainer {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  width: 80%;
-  max-width: 500px;
-  margin-bottom: 20px;
-}
-
 .formContainer h2 {
   text-align: center;
   color: #333;
@@ -98,16 +98,22 @@
 
 .formContainer input,
 .formContainer select {
-  width: 100%;
-  padding: 10px;
-  margin: 8px 0;
+  padding: 12px;
   border: 1px solid #ddd;
   border-radius: 5px;
-  font-size: 14px;
 }
 
 .buttonGroup {
   display: flex;
-  justify-content: space-between;
+  justify-content: right;
   margin-top: 15px;
 }
+.inputContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+

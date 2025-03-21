@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React, { useState } from "react";
 import {
   Search,
@@ -9,13 +10,14 @@ import {
   Users,
 } from "lucide-react";
 import { useRouter } from "next/router";
-import toast, { Toaster } from "react-hot-toast"; // ✅ Import toast
+import toast, { Toaster } from "react-hot-toast";
 import styles from "./AdminDashboard.module.css";
 import Clients from "./Clients";
 import Store from "./Store";
 import Message from "./Message";
 import Staffs from "./Staffs";
 import Home from "./Home";
+import RepairerClients from "./RepairerClients";
 
 const AdminDashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -46,19 +48,24 @@ const AdminDashboard = () => {
       icon: <Users className="w-7 h-7" />,
       component: <Staffs />,
     },
+    {
+      label: "RepairerClients",
+      icon: <Users className="w-7 h-7" />,
+      component: <RepairerClients searchTerm={searchTerm} />,
+    },
   ];
 
   const handleLogout = () => {
-    toast.success("Logged out successfully!", { duration: 3000 }); // ✅ Show toast
+    toast.success("Logged out successfully!", { duration: 3000 });
     setTimeout(() => {
-      router.push("/login"); // ✅ Redirect after showing toast
+      router.push("/login");
     }, 2000);
   };
 
   return (
     <div className="flex h-screen">
-      <Toaster /> {/* ✅ Add this so toasts can be displayed */}
-      
+      <Toaster />
+
       {/* Sidebar */}
       <div
         className={`${styles.sidebar} ${
@@ -96,7 +103,10 @@ const AdminDashboard = () => {
             ))}
           </nav>
           <div className={styles.logout}>
-            <button className={styles.sidebarMenuItem} onClick={() => setShowLogoutModal(true)}>
+            <button
+              className={styles.sidebarMenuItem}
+              onClick={() => setShowLogoutModal(true)}
+            >
               <LogOut className="w-7 h-7" />
               <span
                 className={`${styles.sidebarMenuText} ${
@@ -124,11 +134,14 @@ const AdminDashboard = () => {
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
+
             <div className="flex items-center space-x-12 ml-auto">
               <Bell className="w-7 h-7 cursor-pointer text-red-600" />
-              <img
-                src="https://tinyurl.com/2ccmosk6"
+              <Image
+                src="https://cdn.vectorstock.com/i/1000v/31/40/mechanic-logo-vector-44593140.jpg"
                 alt="Logo"
+                width={35}
+                height={35}
                 className="w-12 h-12 rounded-full"
               />
             </div>
@@ -157,7 +170,7 @@ const AdminDashboard = () => {
                 className="bg-red-600 text-white px-4 py-2 rounded-lg"
                 onClick={() => {
                   setShowLogoutModal(false);
-                  handleLogout(); // ✅ Show toast + Redirect
+                  handleLogout();
                 }}
               >
                 Yes
