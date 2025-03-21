@@ -2,7 +2,15 @@ import React, { useEffect, useState } from "react";
 import { FaEye, FaEyeSlash, FaCopy } from "react-icons/fa";
 import { auth, db } from "../src/firebaseConfig";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { collection, doc, setDoc, serverTimestamp } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  setDoc,
+  serverTimestamp,
+  query,
+  where,
+  getDocs,
+} from "firebase/firestore";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styles from "./StaffAccountForm.module.css";
@@ -19,32 +27,59 @@ const StaffAccountForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     setIsVisible(true);
   }, []);
 
-  // Function to generate a secure random password (at least 8 characters)
   const generateRandomPassword = () => {
-    return Math.random().toString(36).slice(-10) + "Aa1!"; // Ensures 8+ characters & complexity
+    return Math.random().toString(36).slice(-10) + "Aa1!";
+  };
+
+  const generateStaffId = async (role: string): Promise<string> => {
+    if (role === "Special Assignment") return staffId; // Manual input
+
+    const rolePrefixes: { [key: string]: string } = {
+      Secretary: "Secretary",
+      Repairer: "Repairer",
+      "Store Keeper": "StoreKeeper",
+    };
+
+    const prefix = rolePrefixes[role];
+    if (!prefix) return "";
+
+    const staffCollection = collection(db, "staffs");
+    const q = query(staffCollection, where("role", "==", role));
+    const querySnapshot = await getDocs(q);
+
+    let maxNumber = 0;
+    querySnapshot.forEach((doc) => {
+      const id = doc.data().staff_id;
+      const match = id.match(/\d+$/);
+      if (match) {
+        const num = parseInt(match[0], 10);
+        if (num > maxNumber) maxNumber = num;
+      }
+    });
+
+    const nextNumber = (maxNumber + 1).toString().padStart(3, "0");
+    return `${prefix}${nextNumber}`;
   };
 
   const handleSubmit = async () => {
-    if (!staffId || !role || !email) {
+    if (!role || !email || (role === "Special Assignment" && !staffId)) {
       toast.error("All fields are required!");
       return;
     }
 
-    const password = generateRandomPassword(); // Generate password first
+    const password = generateRandomPassword();
     setGeneratedPassword(password);
 
     try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
+
+      const newStaffId = await generateStaffId(role);
 
       await setDoc(doc(db, "staffs", user.uid), {
         uid: user.uid,
-        staff_id: staffId,
-        email: email,
+        staff_id: newStaffId,
+        email,
         role,
         isFirstLogin: true,
         createdAt: serverTimestamp(),
@@ -53,10 +88,9 @@ const StaffAccountForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
         address: "",
       });
 
+      setStaffId(newStaffId);
       setAccountCreated(true);
-      toast.success(
-        "Staff account created successfully! Copy the password below."
-      );
+      toast.success("Staff account created successfully! Copy the password below.");
     } catch (error: any) {
       let errorMessage = "Account creation failed. Please try again.";
 
@@ -71,7 +105,6 @@ const StaffAccountForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
       toast.error(errorMessage);
     }
   };
-
   const copyToClipboard = () => {
     const textArea = document.createElement("textarea");
     textArea.value = generatedPassword;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { db } from "../src/firebaseConfig";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { collection, query, where, getDocs, updateDoc, doc } from "firebase/firestore";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styles from "./Form.module.css";
@@ -36,14 +36,19 @@ const Form: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 
     try {
       setLoading(true);
-      const userDocRef = doc(db, "users", staff_id);
-      const docSnap = await getDoc(userDocRef);
 
-      if (docSnap.exists()) {
-        console.log("Staff Found in Firestore:", docSnap.data());
+      // 🔹 Query Firestore to find staff where staff_id matches
+      const staffsRef = collection(db, "staffs");
+      const q = query(staffsRef, where("staff_id", "==", staff_id));
+      const querySnapshot = await getDocs(q);
 
-         
-        await updateDoc(userDocRef, {
+      if (!querySnapshot.empty) {
+        // 🔹 Get the first document (assuming staff_id is unique)
+        const staffDoc = querySnapshot.docs[0];
+        const staffDocRef = doc(db, "staffs", staffDoc.id);
+
+        // 🔹 Update the staff profile
+        await updateDoc(staffDocRef, {
           fullName,
           address,
           phoneNumber,
@@ -57,7 +62,7 @@ const Form: React.FC<{ onClose: () => void }> = ({ onClose }) => {
       }
     } catch (error: any) {
       console.error("Error updating staff profile:", error.message);
-      toast.error("Error updating profile. Check console for details.");
+      toast.error(`Error updating profile: ${error.message}`);
     } finally {
       setLoading(false);
     }
@@ -67,13 +72,13 @@ const Form: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     <div className={`${styles.formWrapper} ${isVisible ? styles.visible : ""}`}>
       <ToastContainer position="top-right" autoClose={3000} />
       <div className={`${styles.form} ${isVisible ? styles.formVisible : ""}`}>
-        <div className={styles.title}>Welcome</div>
-        <div className={styles.subtitle}>Let's Complete Your Profile!</div>
+        <div className={styles.title}>Admin Panel</div>
+        <div className={styles.subtitle}>Update Staff Profile</div>
 
         <form onSubmit={handleSubmit}>
           <div className={`${styles.inputContainer} ${styles.ic1}`}>
             <input
-              placeholder="Staff ID"
+              placeholder="Staff ID (Enter manually)"
               type="text"
               name="staff_id"
               value={formData.staff_id}
@@ -110,7 +115,7 @@ const Form: React.FC<{ onClose: () => void }> = ({ onClose }) => {
           <div className={`${styles.inputContainer} ${styles.ic1}`}>
             <input
               placeholder="Phone Number"
-              type="number"
+              type="tel"
               name="phoneNumber"
               value={formData.phoneNumber}
               onChange={handleChange}
@@ -132,18 +137,10 @@ const Form: React.FC<{ onClose: () => void }> = ({ onClose }) => {
           </div>
 
           <div className={styles.buttonContainer}>
-            <button
-              className={`${styles.button} ${styles.cancelButton}`}
-              type="button"
-              onClick={onClose}
-            >
+            <button className={`${styles.button} ${styles.cancelButton}`} type="button" onClick={onClose}>
               Cancel
             </button>
-            <button
-              className={`${styles.button} ${styles.submitButton}`}
-              type="submit"
-              disabled={loading}
-            >
+            <button className={`${styles.button} ${styles.submitButton}`} type="submit" disabled={loading}>
               {loading ? "Saving..." : "Submit"}
             </button>
           </div>
