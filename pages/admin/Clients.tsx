@@ -210,7 +210,7 @@ const ClientForm: React.FC<ClientFormProps> = ({ searchTerm }) => {
             ) : (
               <tr>
                 <td colSpan={6} className={styles.noResults}>
-                  No Clients Available
+                  No Clients With that Details
                 </td>
               </tr>
             )}
