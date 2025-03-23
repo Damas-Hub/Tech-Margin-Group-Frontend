@@ -7,9 +7,9 @@ const Message = () => {
 
   return (
     <div>
-      {isFormOpen && <StaffAccountForm onClose={() => setIsFormOpen(false)} />}
+      {/* {isFormOpen && <StaffAccountForm onClose={() => setIsFormOpen(false)} />} */}
 
-        {/* {<MessageForm isVisible={isFormOpen} onClose={() => setIsFormOpen(false)} />} */}
+        {<MessageForm isVisible={isFormOpen} onClose={() => setIsFormOpen(false)} />}
     </div>
   );
 };

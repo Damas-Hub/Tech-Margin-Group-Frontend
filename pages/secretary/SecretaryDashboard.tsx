@@ -50,7 +50,7 @@ const SecretaryDashboard = () => {
       component: <RepairerClients searchTerm={searchTerm} />,
     },
   ];
-  const userRole = "Admin";
+  const userRole = "Secretary";
   const handleLogout = () => {
     toast.success("Logged out successfully!", { duration: 3000 });
     setTimeout(() => {

@@ -1,9 +1,11 @@
 import Form from "@/componnets/Form";
 import StaffProfile from "@/componnets/StaffProfile";
+import StaffAccountForm from "@/componnets/StaffAccountForm"; // Import the form
 import React, { useState } from "react";
 
 const Staffs = () => {
-  const [showModal, setShowModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [showAddStaffModal, setShowAddStaffModal] = useState(false);
 
   const staffMembers = [
     {
@@ -47,23 +49,37 @@ const Staffs = () => {
         margin: "0 auto",
       }}
     >
-      <button
-        onClick={() => setShowModal(true)}
-        style={{
-          position: "absolute",
-          top: "10px",
-          right: "0px",
-          padding: "10px 20px",
-          backgroundColor: "#007bff",
-          color: "white",
-          border: "none",
-          borderRadius: "5px",
-          cursor: "pointer",
-        }}
-      >
-        Edit Profile
-      </button>
+      {/* Buttons for editing profile and adding staff */}
+      <div style={{ display: "flex", justifyContent: "flex-end", gap: "10px" }}>
+        <button
+          onClick={() => setShowEditModal(true)}
+          style={{
+            padding: "10px 20px",
+            backgroundColor: "#007bff",
+            color: "white",
+            border: "none",
+            borderRadius: "5px",
+            cursor: "pointer",
+          }}
+        >
+          Edit Profile
+        </button>
+        <button
+          onClick={() => setShowAddStaffModal(true)}
+          style={{
+            padding: "10px 20px",
+            backgroundColor: "#28a745",
+            color: "white",
+            border: "none",
+            borderRadius: "5px",
+            cursor: "pointer",
+          }}
+        >
+          Add Staff
+        </button>
+      </div>
 
+      {/* Staff List */}
       <div
         style={{
           display: "grid",
@@ -78,7 +94,8 @@ const Staffs = () => {
         ))}
       </div>
 
-      {showModal && (
+      {/* Edit Profile Modal */}
+      {showEditModal && (
         <div
           style={{
             position: "fixed",
@@ -94,7 +111,29 @@ const Staffs = () => {
           }}
         >
           <div>
-            <Form onClose={() => setShowModal(false)} />
+            <Form onClose={() => setShowEditModal(false)} />
+          </div>
+        </div>
+      )}
+
+      {/* Add Staff Modal */}
+      {showAddStaffModal && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            zIndex: 1000,
+          }}
+        >
+          <div>
+            <StaffAccountForm onClose={() => setShowAddStaffModal(false)} />
           </div>
         </div>
       )}
