@@ -1,12 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { db } from "../../src/firebaseConfig";
-import { collection, addDoc, onSnapshot } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  onSnapshot,
+  updateDoc,
+  doc,
+  serverTimestamp,
+} from "firebase/firestore";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styles from "./Store.module.css";
 
 interface StoreItem {
-  id?: string;
+  id: string;
   name: string;
   quantity: number;
   price: string;
@@ -14,12 +21,17 @@ interface StoreItem {
 
 interface StoreProps {
   searchTerm: string;
+  staffRole: string;
 }
 
-const Store: React.FC<StoreProps> = ({ searchTerm }) => {
+const Store: React.FC<StoreProps> = ({ searchTerm, staffRole }) => {
   const [items, setItems] = useState<StoreItem[]>([]);
   const [newItem, setNewItem] = useState({ name: "", quantity: "", price: "" });
-  const [showModal, setShowModal] = useState(false); // Modal state
+  const [showModal, setShowModal] = useState(false);
+  const [requestItem, setRequestItem] = useState<StoreItem | null>(null);
+  const [requestQuantity, setRequestQuantity] = useState<number>(1);
+  const [editItem, setEditItem] = useState<StoreItem | null>(null);
+  const [editQuantity, setEditQuantity] = useState<number>(0);
 
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, "store"), (snapshot) => {
@@ -47,9 +59,64 @@ const Store: React.FC<StoreProps> = ({ searchTerm }) => {
       });
       toast.success("Item added successfully");
       setNewItem({ name: "", quantity: "", price: "" });
-      setShowModal(false); // Close modal after adding
+      setShowModal(false);
     } catch (error) {
       toast.error("Error adding item");
+    }
+  };
+
+  const requestItemHandler = (item: StoreItem) => {
+    setRequestItem(item);
+    setRequestQuantity(1);
+  };
+
+  const confirmRequest = async () => {
+    if (!requestItem) return;
+    if (requestQuantity > requestItem.quantity) {
+      toast.error("Not enough stock available!");
+      return;
+    }
+    try {
+      const itemRef = doc(db, "store", requestItem.id);
+      await updateDoc(itemRef, {
+        quantity: requestItem.quantity - requestQuantity,
+      });
+
+      await addDoc(collection(db, "notifications"), {
+        recipient: "Store Keeper",
+        message: `${staffRole} requested ${requestQuantity} of ${requestItem.name}.`,
+        timestamp: serverTimestamp(),
+        read: false,
+      });
+
+      toast.success("Request sent successfully!");
+      setRequestItem(null);
+    } catch (error) {
+      toast.error("Failed to request item");
+    }
+  };
+
+  const editItemHandler = (item: StoreItem) => {
+    setEditItem(item);
+    setEditQuantity(0);
+  };
+
+  const confirmEdit = async () => {
+    if (!editItem) return;
+    if (editQuantity <= 0) {
+      toast.error("Please enter a valid quantity to add.");
+      return;
+    }
+    try {
+      const itemRef = doc(db, "store", editItem.id);
+      await updateDoc(itemRef, {
+        quantity: editItem.quantity + editQuantity,
+      });
+
+      toast.success("Stock updated successfully!");
+      setEditItem(null);
+    } catch (error) {
+      toast.error("Failed to update stock");
     }
   };
 
@@ -65,12 +132,10 @@ const Store: React.FC<StoreProps> = ({ searchTerm }) => {
     <div className={styles.storeWrapper}>
       <ToastContainer position="top-right" autoClose={3000} />
 
-      {/* Add Client Button */}
       <button className={styles.addClientButton} onClick={() => setShowModal(true)}>
         Add Item
       </button>
 
-      {/* Modal */}
       {showModal && (
         <div className={styles.modalOverlay}>
           <div className={styles.modalContent}>
@@ -78,7 +143,7 @@ const Store: React.FC<StoreProps> = ({ searchTerm }) => {
             <input
               type="text"
               name="name"
-              placeholder="Client Name"
+              placeholder="Item Name"
               value={newItem.name}
               onChange={handleChange}
               className={styles.modalInput}
@@ -111,7 +176,6 @@ const Store: React.FC<StoreProps> = ({ searchTerm }) => {
         </div>
       )}
 
-      {/* Store Table */}
       <table className={styles.storeTable}>
         <thead>
           <tr>
@@ -119,7 +183,7 @@ const Store: React.FC<StoreProps> = ({ searchTerm }) => {
             <th>Item Name</th>
             <th>Quantity</th>
             <th>Price</th>
-            <th>Action</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -131,7 +195,19 @@ const Store: React.FC<StoreProps> = ({ searchTerm }) => {
                 <td>{store.quantity}</td>
                 <td>GH₵{Number(store.price).toFixed(2)}</td>
                 <td>
-                  <button className={styles.addButton}>Request Item</button>
+                  <button
+                    className={styles.addButton}
+                    onClick={() => requestItemHandler(store)}
+                    disabled={store.quantity === 0}
+                  >
+                    Request Item
+                  </button>
+                  <button
+                    className={styles.addButtonnn}
+                    onClick={() => editItemHandler(store)}
+                  >
+                    Edit
+                  </button>
                 </td>
               </tr>
             ))
@@ -144,6 +220,54 @@ const Store: React.FC<StoreProps> = ({ searchTerm }) => {
           )}
         </tbody>
       </table>
+
+      {requestItem && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modalContent}>
+            <h2>Request {requestItem.name}</h2>
+            <p>Available: {requestItem.quantity}</p>
+            <input
+              type="number"
+              min="1"
+              max={requestItem.quantity}
+              value={requestQuantity}
+              onChange={(e) => setRequestQuantity(Number(e.target.value))}
+              className={styles.modalInput}
+            />
+            <div className={styles.buttonGroup}>
+              <button className={styles.cancelButton} onClick={() => setRequestItem(null)}>
+                Cancel
+              </button>
+              <button className={styles.addButton} onClick={confirmRequest}>
+                Confirm
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {editItem && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modalContent}>
+            <h2>Edit {editItem.name} Stock</h2>
+            <input
+              type="number"
+              min="1"
+              value={editQuantity}
+              onChange={(e) => setEditQuantity(Number(e.target.value))}
+              className={styles.modalInput}
+            />
+            <div className={styles.buttonGroup}>
+              <button className={styles.cancelButton} onClick={() => setEditItem(null)}>
+                Cancel
+              </button>
+              <button className={styles.addButton} onClick={confirmEdit}>
+                Update
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -8,7 +8,6 @@ import {
   onSnapshot,
   updateDoc,
   doc,
-  orderBy,
 } from "firebase/firestore";
 import { Bell, X } from "lucide-react";
 
@@ -21,15 +20,12 @@ interface Message {
   id: string;
   message: string;
   recipient: string;
-  sender: string;
+  sender: string; 
   timestamp: number;
   read: boolean;
 }
 
-const NotificationModal: React.FC<NotificationModalProps> = ({
-  staffRole,
-  className,
-}) => {
+const NotificationModal: React.FC<NotificationModalProps> = ({ staffRole, className }) => {
   const [notifications, setNotifications] = useState<Message[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const unreadCount = notifications.filter((msg) => !msg.read).length;
@@ -38,22 +34,14 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
     if (!staffRole) return;
 
     const messagesRef = collection(db, "messages");
-    const q = query(messagesRef, where("recipient", "==", staffRole), orderBy("timestamp", "desc"));
+    const q = query(messagesRef, where("recipient", "==", staffRole));
 
     const unsubscribe = onSnapshot(q, (snapshot) => {
-      const newMessages: Message[] = snapshot.docs.map((doc) => {
-        const data = doc.data();
-        return {
-          id: doc.id,
-          message: data.message,
-          recipient: data.recipient,
-          sender: data.sender,
-          read: data.read,
-          timestamp: data.timestamp?.toMillis() || 0, // Ensure correct timestamp format
-        };
-      });
-
-      console.log("Fetched messages:", newMessages); // Debugging line
+      const newMessages: Message[] = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+        timestamp: doc.data().timestamp?.toMillis?.() || Date.now(),
+      })) as Message[];
       setNotifications(newMessages);
     });
 
@@ -62,10 +50,10 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
 
   const markAsRead = async () => {
     const unreadMessages = notifications.filter((msg) => !msg.read);
-    for (const msg of unreadMessages) {
+    unreadMessages.forEach(async (msg) => {
       const msgRef = doc(db, "messages", msg.id);
       await updateDoc(msgRef, { read: true });
-    }
+    });
   };
 
   const toggleModal = () => {
@@ -83,7 +71,7 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
       <div className={clsx("cursor-pointer relative", className)} onClick={toggleModal}>
         <Bell className="w-7 h-7 text-red-600" />
         {unreadCount > 0 && (
-          <span className="absolute -top-2 -right-2 bg-red-500 text-white font-extrabold text-xs w-5 h-5 flex items-center justify-center rounded-full">
+          <span className="absolute -top-2 -right-2 bg-red-500 text-red font-extrabold text-xs w-5 h-5 flex items-center justify-center rounded-full">
             {unreadCount}
           </span>
         )}

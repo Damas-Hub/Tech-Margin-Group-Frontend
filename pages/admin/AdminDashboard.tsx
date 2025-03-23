@@ -32,7 +32,7 @@ const AdminDashboard = () => {
     {
       label: "Store",
       icon: <ShoppingBag className="w-7 h-7" />,
-      component: <Store searchTerm={searchTerm} />,
+      component: <Store searchTerm={searchTerm} staffRole="Repairer" />,
     },
     {
       label: "Clients",
