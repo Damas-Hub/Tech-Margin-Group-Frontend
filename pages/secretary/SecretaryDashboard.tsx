@@ -14,7 +14,7 @@ import toast, { Toaster } from "react-hot-toast";
 import styles from "../../pages/admin/AdminDashboard.module.css";
 import Clients from "../../pages/admin/Clients";
 import Message from "../../pages/admin/Message";
-import Staffs from "../../pages/admin/Staffs";
+import Staffs from "../../pages/secretary/Staffs";
 import Home from "../../pages/admin/Home";
 import RepairerClients from "../../pages/admin/RepairerClients";
 import NotificationModal from "@/componnets/NotificationModal";
@@ -44,11 +44,7 @@ const SecretaryDashboard = () => {
       icon: <Users className="w-7 h-7" />,
       component: <Staffs />,
     },
-    {
-      label: "RepairerClients",
-      icon: <Users className="w-7 h-7" />,
-      component: <RepairerClients searchTerm={searchTerm} />,
-    },
+    
   ];
   const userRole = "Secretary";
   const handleLogout = () => {
