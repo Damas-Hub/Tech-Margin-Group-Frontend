@@ -1,0 +1,51 @@
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  .title {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .messageBox {
+    padding: 15px;
+    background: rgba(218, 224, 240, 1);
+    border-radius: 5px;
+  }
+  
+  .message {
+    font-size: 18px;
+    margin-top: 10px;
+  }
+  
+  .timestamp {
+    font-size: 14px;
+    color: gray;
+    margin-top: 10px;
+  }
+  
+  .backButton {
+    margin-top: 20px;
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background: #007bff;
+    color: white;
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .backButton:hover {
+    background: #0056b3;
+  }
+  

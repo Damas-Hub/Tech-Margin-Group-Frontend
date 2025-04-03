@@ -10,6 +10,7 @@ import {
   doc,
 } from "firebase/firestore";
 import { Bell, X } from "lucide-react";
+import { useRouter } from "next/router";
 
 interface NotificationModalProps {
   staffRole: string;
@@ -29,7 +30,7 @@ const NotificationModal: React.FC<NotificationModalProps> = ({ staffRole, classN
   const [notifications, setNotifications] = useState<Message[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const unreadCount = notifications.filter((msg) => !msg.read).length;
-
+const router = useRouter();
   useEffect(() => {
     if (!staffRole) return;
 
@@ -88,9 +89,20 @@ const NotificationModal: React.FC<NotificationModalProps> = ({ staffRole, classN
             {notifications.length > 0 ? (
               notifications.map((msg) => (
                 <div key={msg.id} className={styles.notificationItem}>
-                  <span className={styles.notificationMessage}>
-                    <strong>From {msg.sender}:</strong> {msg.message}
-                  </span>
+                 <span 
+  className={styles.notificationMessage} 
+  onClick={() =>
+    router.push(
+      `/NotificationMessage?sender=${encodeURIComponent(msg.sender)}&message=${encodeURIComponent(msg.message)}&timestamp=${msg.timestamp}`
+    )
+  }
+  
+
+  style={{ cursor: "pointer", textDecoration: "underline" }}
+>
+  <strong>From {msg.sender}:</strong> {msg.message}
+</span>
+
                   <span className={styles.notificationTimestamp}>
                     {new Date(msg.timestamp).toLocaleString()}
                   </span>

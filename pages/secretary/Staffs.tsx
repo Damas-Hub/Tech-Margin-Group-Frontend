@@ -100,7 +100,6 @@ const Staffs = () => {
           </div>
         </div>
       )}
-
     </div>
   );
 };

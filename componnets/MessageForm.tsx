@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { db } from "../src/firebaseConfig"
+import { db } from "../src/firebaseConfig";
 
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import styles from "./StaffAccountForm.module.css";
-import MessageList from "./MessageList";
+import NotificationMessage from "../pages/NotificationMessage";
 
 interface MessageFormProps {
   isVisible: boolean;
@@ -83,7 +83,7 @@ const MessageForm: React.FC<MessageFormProps> = ({ isVisible, onClose }) => {
           </button>
         </div>
       </div>
-      <MessageList recipient={recipient} />
+      {/* <NotificationMessage /> */}
     </div>
   );
 };
