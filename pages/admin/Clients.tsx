@@ -58,7 +58,9 @@ const ClientForm: React.FC<ClientFormProps> = ({ searchTerm }) => {
   }, []);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
   ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -111,7 +113,10 @@ const ClientForm: React.FC<ClientFormProps> = ({ searchTerm }) => {
     <div className={styles.storeWrapper}>
       <ToastContainer position="top-right" autoClose={3000} />
 
-      <button className={styles.addClientButton} onClick={() => setShowModal(true)}>
+      <button
+        className={styles.addClientButton}
+        onClick={() => setShowModal(true)}
+      >
         Add Client
       </button>
 
@@ -147,8 +152,7 @@ const ClientForm: React.FC<ClientFormProps> = ({ searchTerm }) => {
                 onChange={handleChange}
                 required
               />
-              <input
-                type="text-area"
+              <textarea
                 name="problem"
                 placeholder="Problem"
                 className={styles.modalInput}
@@ -156,6 +160,7 @@ const ClientForm: React.FC<ClientFormProps> = ({ searchTerm }) => {
                 onChange={handleChange}
                 required
               />
+
               <input
                 type="date"
                 name="date"
@@ -175,10 +180,18 @@ const ClientForm: React.FC<ClientFormProps> = ({ searchTerm }) => {
                 <option value="Resolved">Resolved</option>
               </select>
               <div className={styles.buttonGroup}>
-                <button type="button" className={styles.cancelButton} onClick={() => setShowModal(false)}>
+                <button
+                  type="button"
+                  className={styles.cancelButton}
+                  onClick={() => setShowModal(false)}
+                >
                   Cancel
                 </button>
-                <button type="submit" disabled={loading} className={styles.addButton}>
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className={styles.addButton}
+                >
                   {loading ? "Saving..." : "Add Client"}
                 </button>
               </div>
