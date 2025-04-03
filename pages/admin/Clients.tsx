@@ -21,7 +21,6 @@ interface Client {
   problem: string;
   date: string | Timestamp;
   status: string;
-  searchTerm: string;
 }
 
 interface ClientFormProps {
@@ -32,6 +31,7 @@ const ClientForm: React.FC<ClientFormProps> = ({ searchTerm }) => {
   const [loading, setLoading] = useState(false);
   const [clientsLoading, setClientsLoading] = useState(true);
   const [clients, setClients] = useState<Client[]>([]);
+  const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     itemBrought: "",
@@ -90,6 +90,7 @@ const ClientForm: React.FC<ClientFormProps> = ({ searchTerm }) => {
         date: new Date().toISOString().split("T")[0],
         status: "Not Done",
       });
+      setShowModal(false);
     } catch (error) {
       console.error("Error saving data:", error);
       toast.error("Error saving data. Try again.");
@@ -109,69 +110,82 @@ const ClientForm: React.FC<ClientFormProps> = ({ searchTerm }) => {
   return (
     <div className={styles.storeWrapper}>
       <ToastContainer position="top-right" autoClose={3000} />
-      <div className={styles.formContainer}>
-        <h2>Add Client Details</h2>
 
-        <form onSubmit={handleSubmit} className={styles.inputContainer}>
-          <input
-            type="text"
-            name="name"
-            className={styles.input}
-            placeholder="Customer Name"
-            value={formData.name}
-            onChange={handleChange}
-            required
-          />
-          <input
-            type="text"
-            className={styles.input}
-            name="itemBrought"
-            placeholder="Item Brought"
-            value={formData.itemBrought}
-            onChange={handleChange}
-            required
-          />
-          <input
-            type="tel"
-            name="phoneNumber"
-            className={styles.input}
-            placeholder="Phone Number"
-            value={formData.phoneNumber}
-            onChange={handleChange}
-            required
-          />
-          <input
-            type="text"
-            name="problem"
-            placeholder="Problem"
-            className={styles.input}
-            value={formData.problem}
-            onChange={handleChange}
-            required
-          />
-          <input
-            type="date"
-            name="date"
-            className={styles.inputdate}
-            value={formData.date}
-            onChange={handleChange}
-            required
-          />
-          <select
-            name="status"
-            value={formData.status}
-            onChange={handleChange}
-            className={styles.input}
-          >
-            <option value="Not Done">Not Done</option>
-            <option value="In Progress">In Progress</option>
-            <option value="Resolved">Resolved</option>
-          </select>
-          <button type="submit" disabled={loading} className={styles.addButton}>
-            {loading ? "Saving..." : "Add Client"}
-          </button>
-        </form>
-      </div>
+      <button className={styles.addClientButton} onClick={() => setShowModal(true)}>
+        Add Client
+      </button>
+
+      {showModal && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modalContent}>
+            <h2>Add Client Details</h2>
+            <form onSubmit={handleSubmit} className={styles.modalForm}>
+              <input
+                type="text"
+                name="name"
+                className={styles.modalInput}
+                placeholder="Customer Name"
+                value={formData.name}
+                onChange={handleChange}
+                required
+              />
+              <input
+                type="text"
+                className={styles.modalInput}
+                name="itemBrought"
+                placeholder="Item Brought"
+                value={formData.itemBrought}
+                onChange={handleChange}
+                required
+              />
+              <input
+                type="tel"
+                name="phoneNumber"
+                className={styles.modalInput}
+                placeholder="Phone Number"
+                value={formData.phoneNumber}
+                onChange={handleChange}
+                required
+              />
+              <input
+                type="text-area"
+                name="problem"
+                placeholder="Problem"
+                className={styles.modalInput}
+                value={formData.problem}
+                onChange={handleChange}
+                required
+              />
+              <input
+                type="date"
+                name="date"
+                className={styles.modalInput}
+                value={formData.date}
+                onChange={handleChange}
+                required
+              />
+              <select
+                name="status"
+                value={formData.status}
+                onChange={handleChange}
+                className={styles.modalInput}
+              >
+                <option value="Not Done">Not Done</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Resolved">Resolved</option>
+              </select>
+              <div className={styles.buttonGroup}>
+                <button type="button" className={styles.cancelButton} onClick={() => setShowModal(false)}>
+                  Cancel
+                </button>
+                <button type="submit" disabled={loading} className={styles.addButton}>
+                  {loading ? "Saving..." : "Add Client"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
 
       <h2 className={styles.clientListTitle}>Client List</h2>
 
@@ -210,7 +224,7 @@ const ClientForm: React.FC<ClientFormProps> = ({ searchTerm }) => {
             ) : (
               <tr>
                 <td colSpan={6} className={styles.noResults}>
-                  No Clients With that Details
+                  No Clients Found
                 </td>
               </tr>
             )}
