@@ -4,8 +4,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { db } from "../src/firebaseConfig";
 
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
-import styles from "./StaffAccountForm.module.css";
-import NotificationMessage from "../pages/NotificationMessage";
+import styles from "./MessageForm.module.css";
 
 interface MessageFormProps {
   isVisible: boolean;
