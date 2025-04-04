@@ -73,7 +73,7 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
 
   const openMessage = (message: Message) => {
     setSelectedMessage(message);
-    setIsNotificationOpen(false); // Close the notification modal
+    setIsNotificationOpen(false); // This closes the notification list
     markAsRead(message);
   };
 
@@ -97,65 +97,57 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
       </div>
 
       {/* Notification List Modal */}
+       
       {isNotificationOpen && !selectedMessage && (
-        <div className={styles.notificationContainer}>
-          <div className={styles.notificationModal}>
-            <div className={styles.notificationHeader}>
-              <span>Notifications</span>
-              <X className="cursor-pointer" onClick={toggleNotificationModal} />
+  <div className={styles.notificationContainer}>
+    <div className={styles.notificationModal}>
+      <div className={styles.notificationHeader}>
+        <span>Notifications</span>
+        <X size={18} onClick={toggleNotificationModal} />
+      </div>
+      <div className={styles.notificationContent}>
+        {notifications.length > 0 ? (
+          notifications.map((msg) => (
+            <div
+              key={msg.id}
+              className={`${styles.notificationItem} ${!msg.read ? styles.unreadItem : ''}`}
+              onClick={() => openMessage(msg)}
+            >
+              <div className={styles.messagePreview}>
+                {!msg.read && <span className={styles.greenDot} />}
+                <div className={styles.messageContent}>
+                  <span className={styles.sender}>From {msg.sender}</span>
+                  <p className={styles.messageText}>{msg.message}</p>
+                </div>
+              </div>
+              <span className={styles.notificationTimestamp}>
+                {new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+              </span>
             </div>
-            <div className={styles.notificationContent}>
-              {notifications.length > 0 ? (
-                notifications.map((msg) => (
-                  <div
-                    key={msg.id}
-                    className={styles.notificationItem}
-                    onClick={() => openMessage(msg)}
-                  >
-                    <span className={styles.notificationMessage}>
-                      {!msg.read && (
-                        <span className="bg-green-500 w-3 h-3 rounded-full flex-shrink-0 mr-2"></span>
-                      )}
-                      <strong>From {msg.sender}:</strong>{" "}
-                      {msg.message.length > 50
-                        ? msg.message.substring(0, 50) + "..."
-                        : msg.message}
-                    </span>
+          ))
+        ) : (
+          <p className={styles.noNotifications}>No new notifications</p>
+        )}
+      </div>
+    </div>
+  </div>
+)}
 
-                    <span className={styles.notificationTimestamp}>
-                      {new Date(msg.timestamp).toLocaleString()}
-                    </span>
-                  </div>
-                ))
-              ) : (
-                <p className="text-center text-sm p-3">No new notifications</p>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Message Modal (Only This One Stays Open) */}
-      {/* Message Modal (Full Display) */}
-      {selectedMessage && (
-        <div className={styles.notificationContainer}>
-          <div className={styles.messageModal}>
-            <div className={styles.messageHeader}>
-              <span>Message Details</span>
-              <X className="cursor-pointer" onClick={closeMessage} />
-            </div>
-            <div className={styles.messageContent}>
-              <p>
-                <strong>From:</strong> {selectedMessage.sender}
-              </p>
-              <p className={styles.fullMessage}>{selectedMessage.message}</p>
-              <p className={styles.timestamp}>
-                {new Date(selectedMessage.timestamp).toLocaleString()}
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
+{selectedMessage && (
+  <div className={styles.notificationContainer}>
+    <div className={styles.messageModal}>
+      <div className={styles.messageHeader}>
+        <span>Message Details</span>
+        <X size={18} onClick={closeMessage} />
+      </div>
+      <p><strong>From:</strong> {selectedMessage.sender}</p>
+      <p className={styles.fullMessage}>{selectedMessage.message}</p>
+      <p className={styles.messageTimestamp}>
+        {new Date(selectedMessage.timestamp).toLocaleString()}
+      </p>
+    </div>
+  </div>
+)}
     </div>
   );
 };

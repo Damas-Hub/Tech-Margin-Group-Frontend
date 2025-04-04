@@ -133,7 +133,7 @@ if (staffSnap.exists()) {
         <div className={styles.buttonContainer}>
           <button
             className={`${styles.button} ${styles.cancelButton}`}
-            onClick={onClose}
+            // onClick={onClose}
           >
             Cancel
           </button>
