@@ -10,7 +10,6 @@ import {
   doc,
 } from "firebase/firestore";
 import { Bell, X } from "lucide-react";
-import { useRouter } from "next/router";
 
 interface NotificationModalProps {
   staffRole: string;
@@ -21,16 +20,18 @@ interface Message {
   id: string;
   message: string;
   recipient: string;
-  sender: string; 
+  sender: string;
   timestamp: number;
   read: boolean;
 }
 
 const NotificationModal: React.FC<NotificationModalProps> = ({ staffRole, className }) => {
   const [notifications, setNotifications] = useState<Message[]>([]);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+  const [selectedMessage, setSelectedMessage] = useState<Message | null>(null);
+  
   const unreadCount = notifications.filter((msg) => !msg.read).length;
-const router = useRouter();
+
   useEffect(() => {
     if (!staffRole) return;
 
@@ -49,27 +50,38 @@ const router = useRouter();
     return () => unsubscribe();
   }, [staffRole]);
 
-  const markAsRead = async () => {
-    const unreadMessages = notifications.filter((msg) => !msg.read);
-    unreadMessages.forEach(async (msg) => {
-      const msgRef = doc(db, "messages", msg.id);
+  const markAsRead = async (message: Message) => {
+    if (!message.read) {
+      const msgRef = doc(db, "messages", message.id);
       await updateDoc(msgRef, { read: true });
-    });
+
+      setNotifications((prev) =>
+        prev.map((msg) =>
+          msg.id === message.id ? { ...msg, read: true } : msg
+        )
+      );
+    }
   };
 
-  const toggleModal = () => {
-    setIsOpen(!isOpen);
-    if (!isOpen) markAsRead();
+  const toggleNotificationModal = () => {
+    setIsNotificationOpen(!isNotificationOpen);
+    setSelectedMessage(null); // Reset to show notification list
   };
 
-  function clsx(...classes: (string | undefined)[]): string {
-    return classes.filter(Boolean).join(" ");
-  }
+  const openMessage = (message: Message) => {
+    setSelectedMessage(message);
+    setIsNotificationOpen(false); // Close the notification modal
+    markAsRead(message);
+  };
+
+  const closeMessage = () => {
+    setSelectedMessage(null); // Close only the message modal
+  };
 
   return (
     <div className="relative">
       {/* Notification Bell */}
-      <div className={clsx("cursor-pointer relative", className)} onClick={toggleModal}>
+      <div className={`cursor-pointer relative ${className}`} onClick={toggleNotificationModal}>
         <Bell className="w-7 h-7 text-red-600" />
         {unreadCount > 0 && (
           <span className="absolute -top-2 -right-2 bg-red-500 text-red font-extrabold text-xs w-5 h-5 flex items-center justify-center rounded-full">
@@ -78,39 +90,53 @@ const router = useRouter();
         )}
       </div>
 
-      {/* Notification Modal */}
-      {isOpen && (
-        <div className={styles.notificationModal}>
-          <div className={styles.notificationHeader}>
-            <span>Notifications</span>
-            <X className="cursor-pointer" onClick={toggleModal} />
+      {/* Notification List Modal */}
+      {isNotificationOpen && !selectedMessage && (
+        <div className={styles.notificationContainer}>
+          <div className={styles.notificationModal}>
+            <div className={styles.notificationHeader}>
+              <span>Notifications</span>
+              <X className="cursor-pointer" onClick={toggleNotificationModal} />
+            </div>
+            <div className={styles.notificationContent}>
+              {notifications.length > 0 ? (
+                notifications.map((msg) => (
+                  <div 
+                    key={msg.id} 
+                    className={styles.notificationItem} 
+                    onClick={() => openMessage(msg)} 
+                    style={{ cursor: "pointer" }}
+                  >
+                    <span className={styles.notificationMessage}>
+                      <strong>From {msg.sender}:</strong> {msg.message}
+                    </span>
+                    {!msg.read && <span className={styles.greenDot}></span>}
+                    <span className={styles.notificationTimestamp}>
+                      {new Date(msg.timestamp).toLocaleString()}
+                    </span>
+                  </div>
+                ))
+              ) : (
+                <p className="text-center text-sm p-3">No new notifications</p>
+              )}
+            </div>
           </div>
-          <div className={styles.notificationContent}>
-            {notifications.length > 0 ? (
-              notifications.map((msg) => (
-                <div key={msg.id} className={styles.notificationItem}>
-                 <span 
-  className={styles.notificationMessage} 
-  onClick={() =>
-    router.push(
-      `/NotificationMessage?sender=${encodeURIComponent(msg.sender)}&message=${encodeURIComponent(msg.message)}&timestamp=${msg.timestamp}`
-    )
-  }
-  
+        </div>
+      )}
 
-  style={{ cursor: "pointer", textDecoration: "underline" }}
->
-  <strong>From {msg.sender}:</strong> {msg.message}
-</span>
-
-                  <span className={styles.notificationTimestamp}>
-                    {new Date(msg.timestamp).toLocaleString()}
-                  </span>
-                </div>
-              ))
-            ) : (
-              <p className="text-center text-sm p-3">No new notifications</p>
-            )}
+      {/* Message Modal (Only This One Stays Open) */}
+      {selectedMessage && (
+        <div className={styles.notificationContainer}>
+          <div className={styles.messageModal}>
+            <div className={styles.messageHeader}>
+              <span>Message Details</span>
+              <X className="cursor-pointer" onClick={closeMessage} />
+            </div>
+            <div className={styles.messageContent}>
+              <p><strong>From:</strong> {selectedMessage.sender}</p>
+              <p>{selectedMessage.message}</p>
+              <p className={styles.timestamp}>{new Date(selectedMessage.timestamp).toLocaleString()}</p>
+            </div>
           </div>
         </div>
       )}
