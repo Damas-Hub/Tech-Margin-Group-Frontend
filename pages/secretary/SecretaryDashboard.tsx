@@ -16,7 +16,6 @@ import Clients from "../../pages/admin/Clients";
 import Message from "../../pages/admin/Message";
 import Staffs from "../../pages/secretary/Staffs";
 import Home from "../../pages/admin/Home";
-import RepairerClients from "../../pages/admin/RepairerClients";
 import NotificationModal from "@/componnets/NotificationModal";
 
 const SecretaryDashboard = () => {

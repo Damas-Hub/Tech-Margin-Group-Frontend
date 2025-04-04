@@ -2,7 +2,13 @@ import React, { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { db, auth } from "../src/firebaseConfig";
-import { collection, addDoc, serverTimestamp, doc, getDoc } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  serverTimestamp,
+  doc,
+  getDoc,
+} from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 import styles from "./MessageForm.module.css";
 
@@ -14,52 +20,18 @@ interface MessageFormProps {
 const MessageForm: React.FC<MessageFormProps> = ({ isVisible, onClose }) => {
   const [message, setMessage] = useState("");
   const [recipient, setRecipient] = useState("");
-  const [senderRole, setSenderRole] = useState("");
 
   useEffect(() => {
-    const fetchSenderRole = async () => {
-      onAuthStateChanged(auth, async (user) => {
-        if (user) {
-          console.log("Authenticated UID:", user.uid); // Check if correct user is logged in
-    
-          try {
-            // Try to fetch from 'staffs' collection first
-            const staffRef = doc(db, "staffs", user.uid);
-            const staffSnap = await getDoc(staffRef);
-    
-            if (staffSnap.exists()) {
-              const role = staffSnap.data().role;
-              console.log("Role found in staffs:", role);
-              setSenderRole(role); // Set the correct role
-              return;
-            }
-    
-            // If not found in staffs, check 'users' collection
-            const adminRef = doc(db, "users", user.uid);
-            const adminSnap = await getDoc(adminRef);
-    
-            if (adminSnap.exists()) {
-              const role = adminSnap.data().role || "Admin";
-              console.log("Role found in users:", role);
-              setSenderRole(role);
-              return;
-            }
-    
-            console.error("User role not found in both collections");
-            toast.error("Your role could not be determined. Contact Admin.");
-          } catch (error) {
-            console.error("Error fetching sender role:", error);
-            toast.error("Failed to fetch sender role.");
-          }
-        } else {
-          console.error("No authenticated user found");
-        }
-      });
-    };
-    
-    
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        console.log("🔥 Logged in user UID:", user.uid);
+        console.log("🔥 Logged in email:", user.email);
+      } else {
+        console.log("❌ No user is logged in.");
+      }
+    });
 
-    fetchSenderRole();
+    return () => unsubscribe();
   }, []);
 
   const handleSubmit = async () => {
@@ -68,16 +40,53 @@ const MessageForm: React.FC<MessageFormProps> = ({ isVisible, onClose }) => {
       return;
     }
 
-    if (!senderRole) {
-      toast.error("Could not determine sender role. Try again.");
+    const user = auth.currentUser;
+
+    if (!user) {
+      toast.error("No authenticated user.");
       return;
     }
 
+    console.log("✅ Logged in UID:", user.uid);
+
     try {
+    // Determine the sender's role
+let senderRole = "";
+
+const staffRef = doc(db, "staffs", user.uid);
+const staffSnap = await getDoc(staffRef);
+
+if (staffSnap.exists()) {
+  senderRole = staffSnap.data().role;
+  console.log("🔍 Role found in STAFFS:", senderRole);
+} else {
+  const adminRef = doc(db, "users", user.uid);
+  const adminSnap = await getDoc(adminRef);
+
+  if (adminSnap.exists()) {
+    const adminRole = adminSnap.data().role;
+    if (adminRole === "Admin") {
+      senderRole = "Admin";
+      console.log("👑 Role found in USERS:", senderRole);
+    } else {
+      console.warn("❌ Role in USERS is not Admin.");
+      toast.error("Your role is not authorized to send messages.");
+      return;
+    }
+  } else {
+    console.warn("❌ User not found in STAFFS or USERS.");
+    toast.error("Your role could not be determined.");
+    return;
+  }
+}
+
+
+      // Save the message
       await addDoc(collection(db, "messages"), {
         message,
         recipient,
-        sender: senderRole,  
+        sender: senderRole,
+        senderUid: user.uid,
         timestamp: serverTimestamp(),
         read: false,
       });
@@ -86,7 +95,7 @@ const MessageForm: React.FC<MessageFormProps> = ({ isVisible, onClose }) => {
       setMessage("");
       setRecipient("");
     } catch (error) {
-      console.error("Error sending message: ", error);
+      console.error("🔥 Error sending message:", error);
       toast.error("Failed to send message.");
     }
   };

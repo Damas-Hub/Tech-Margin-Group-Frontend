@@ -74,30 +74,40 @@
     border-bottom: 1px solid #ddd;
   }
   
-  .notificationContent {
-    max-height: 300px;
-    overflow-y: auto;
+  .messageContent {
+    white-space: normal;  
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;  
   }
   
   .notificationItem {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px;
+    padding: 8px;
     border-bottom: 1px solid #ddd;
-    position: relative;
+    cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%; /* Ensure it doesn't break layout */
   }
-  
   .notificationMessage {
-    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    max-width: 80%; /* Limit message width to fit in modal */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    gap: 5px;
   }
-  
   .greenDot {
     width: 8px;
     height: 8px;
     background-color: green;
     border-radius: 50%;
-    margin-left: 10px;
+    margin-right: 5px; /* Adjust spacing */
   }
   
   .messageContent {
