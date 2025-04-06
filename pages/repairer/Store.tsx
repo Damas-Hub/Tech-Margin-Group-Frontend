@@ -10,7 +10,7 @@ import {
 } from "firebase/firestore";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import styles from "./Store.module.css";
+import styles from "../admin/Store.module.css";
 
 interface StoreItem {
   id: string;
@@ -132,47 +132,7 @@ const Store: React.FC<StoreProps> = ({ searchTerm, staffRole }) => {
     <div className={styles.storeWrapper}>
       <ToastContainer position="top-right" autoClose={3000} />
 
-      <button className={styles.addClientButton} onClick={() => setShowModal(true)}>
-        Add Item
-      </button>
-
-      {showModal && (
-        <div className={styles.modalOverlay}>
-          <div className={styles.modalContent}>
-            <h2>Add Item</h2>
-            <input
-              type="text"
-              name="name"
-              placeholder="Item Name"
-              value={newItem.name}
-              onChange={handleChange}
-              className={styles.modalInput}
-            />
-            <input
-              type="number"
-              name="quantity"
-              placeholder="Quantity"
-              value={newItem.quantity}
-              onChange={handleChange}
-              className={styles.modalInput}
-            />
-            <input
-              type="text"
-              name="price"
-              placeholder="Price"
-              value={newItem.price}
-              onChange={handleChange}
-              className={styles.modalInput}
-            />
-            <div className={styles.buttonGroup}>
-              <button className={styles.cancelButton} onClick={() => setShowModal(false)}>
-                Cancel
-              </button>
-              
-            </div>
-          </div>
-        </div>
-      )}
+      
 
       <table className={styles.storeTable}>
         <thead>
@@ -200,12 +160,7 @@ const Store: React.FC<StoreProps> = ({ searchTerm, staffRole }) => {
                   >
                     Request Item
                   </button>
-                  <button
-                    className={styles.addButtonnn}
-                    onClick={() => editItemHandler(store)}
-                  >
-                    Edit
-                  </button>
+                  
                 </td>
               </tr>
             ))
@@ -233,7 +188,10 @@ const Store: React.FC<StoreProps> = ({ searchTerm, staffRole }) => {
               className={styles.modalInput}
             />
             <div className={styles.buttonGroup}>
-              <button className={styles.cancelButton} onClick={() => setRequestItem(null)}>
+              <button
+                className={styles.cancelButton}
+                onClick={() => setRequestItem(null)}
+              >
                 Cancel
               </button>
               <button className={styles.addButton} onClick={confirmRequest}>
@@ -256,7 +214,10 @@ const Store: React.FC<StoreProps> = ({ searchTerm, staffRole }) => {
               className={styles.modalInput}
             />
             <div className={styles.buttonGroup}>
-              <button className={styles.cancelButton} onClick={() => setEditItem(null)}>
+              <button
+                className={styles.cancelButton}
+                onClick={() => setEditItem(null)}
+              >
                 Cancel
               </button>
               <button className={styles.addButton} onClick={confirmEdit}>
