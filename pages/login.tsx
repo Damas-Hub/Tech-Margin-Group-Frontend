@@ -48,7 +48,7 @@ const Login = () => {
         userId = staffSnapshot.docs[0].id;
         isFirstLogin = staffData.isFirstLogin ?? true; // Default to true if missing
       } else {
-        // 🔍 Step 2: If not found in "staffs", check "users" (Admin)
+  
         const adminQuery = query(
           collection(db, "users"),
           where("staff_id", "==", staffId)

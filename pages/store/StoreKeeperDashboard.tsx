@@ -15,9 +15,9 @@ import styles from "../admin/AdminDashboard.module.css";
 
 import NotificationModal from "@/componnets/NotificationModal";
 import Home from "../admin/Home";
-import Store from "../admin/Store";
 import Staffs from "../secretary/Staffs";
 import Message from "../admin/Message";
+import Store from "./Store";
 
 const StoreKeeperDashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);

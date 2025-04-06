@@ -10,7 +10,7 @@ import {
 } from "firebase/firestore";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import styles from "./Store.module.css";
+import styles from "../admin/Store.module.css";
 
 interface StoreItem {
   id: string;
@@ -195,13 +195,7 @@ const Store: React.FC<StoreProps> = ({ searchTerm, staffRole }) => {
                 <td>{store.quantity}</td>
                 <td>GH₵{Number(store.price).toFixed(2)}</td>
                 <td>
-                  <button
-                    className={styles.addButton}
-                    onClick={() => requestItemHandler(store)}
-                    disabled={store.quantity === 0}
-                  >
-                    Request Item
-                  </button>
+                 
                   <button
                     className={styles.addButtonnn}
                     onClick={() => editItemHandler(store)}
@@ -221,31 +215,7 @@ const Store: React.FC<StoreProps> = ({ searchTerm, staffRole }) => {
         </tbody>
       </table>
 
-      {requestItem && (
-        <div className={styles.modalOverlay}>
-          <div className={styles.modalContent}>
-            <h2>Request {requestItem.name}</h2>
-            <p>Available: {requestItem.quantity}</p>
-            <input
-              type="number"
-              min="1"
-              max={requestItem.quantity}
-              value={requestQuantity}
-              onChange={(e) => setRequestQuantity(Number(e.target.value))}
-              className={styles.modalInput}
-            />
-            <div className={styles.buttonGroup}>
-              <button className={styles.cancelButton} onClick={() => setRequestItem(null)}>
-                Cancel
-              </button>
-              <button className={styles.addButton} onClick={confirmRequest}>
-                Confirm
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
+    
       {editItem && (
         <div className={styles.modalOverlay}>
           <div className={styles.modalContent}>
