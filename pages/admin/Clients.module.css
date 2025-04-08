@@ -145,7 +145,11 @@
   z-index: 1000;
   animation: fadeIn 0.3s ease-in-out;
 }
-
+.addClientButton,
+.addButton,
+.cancelButton {
+  transition: transform 0.2s ease, background-color 0.3s ease;
+}
 /* Modal Content */
 .modalContent {
   background: #ffffff;
