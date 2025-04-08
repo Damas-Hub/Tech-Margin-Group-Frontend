@@ -134,14 +134,25 @@ const Store: React.FC<StoreProps> = ({ searchTerm, staffRole }) => {
       toast.error("Invalid request quantity.");
       return;
     }
-
+  
     try {
+      // Decrease the store quantity
       const itemRef = doc(db, "store", requestItem.id);
       await updateDoc(itemRef, {
         quantity: requestItem.quantity - requestQuantity,
         updatedAt: serverTimestamp(),
       });
+  
+// Add store id when requesting an item
+await addDoc(collection(db, "requestedItems"), {
+  name: requestItem.name,
+  quantityRequested: requestQuantity,
+  status: "pending",
+  storeId: requestItem.id,  // Store the store item's id
+  createdAt: serverTimestamp(),
+});
 
+  
       toast.success(`Successfully requested ${requestQuantity} of ${requestItem.name}.`);
       setRequestItem(null);
     } catch (error) {
@@ -149,7 +160,7 @@ const Store: React.FC<StoreProps> = ({ searchTerm, staffRole }) => {
       toast.error("Failed to process request. Please try again.");
     }
   }
-
+  
   return (
     <motion.div 
       className={styles.storeWrapper}

@@ -113,24 +113,36 @@ const Store: React.FC<StoreProps> = ({ searchTerm, staffRole }) => {
   }
 
   async function confirmRequest(event: React.MouseEvent<HTMLButtonElement, MouseEvent>): Promise<void> {
-    event.preventDefault();
-    if (!requestItem || requestQuantity < 1 || requestQuantity > requestItem.quantity) {
-      toast.error("Invalid request quantity.");
-      return;
-    }
-
-    try {
-      const itemRef = doc(db, "store", requestItem.id);
-      await updateDoc(itemRef, {
-        quantity: requestItem.quantity - requestQuantity,
-      });
-      toast.success(`Successfully requested ${requestQuantity} of ${requestItem.name}.`);
-      setRequestItem(null); // Close the modal
-    } catch (error) {
-      console.error("Error requesting item: ", error);
-      toast.error("Failed to request item. Please try again.");
-    }
-  }
+     if (!requestItem || requestQuantity < 1 || requestQuantity > requestItem.quantity) {
+       toast.error("Invalid request quantity.");
+       return;
+     }
+   
+     try {
+       // Decrease the store quantity
+       const itemRef = doc(db, "store", requestItem.id);
+       await updateDoc(itemRef, {
+         quantity: requestItem.quantity - requestQuantity,
+         updatedAt: serverTimestamp(),
+       });
+   
+ // Add store id when requesting an item
+ await addDoc(collection(db, "requestedItems"), {
+   name: requestItem.name,
+   quantityRequested: requestQuantity,
+   status: "pending",
+   storeId: requestItem.id,  // Store the store item's id
+   createdAt: serverTimestamp(),
+ });
+ 
+   
+       toast.success(`Successfully requested ${requestQuantity} of ${requestItem.name}.`);
+       setRequestItem(null);
+     } catch (error) {
+       console.error("Error processing request:", error);
+       toast.error("Failed to process request. Please try again.");
+     }
+   }
 
   async function confirmEdit(event: React.MouseEvent<HTMLButtonElement, MouseEvent>): Promise<void> {
     event.preventDefault();

@@ -18,6 +18,7 @@ import Home from "../admin/Home";
 import Staffs from "../secretary/Staffs";
 import Message from "../admin/Message";
 import Store from "./Store";
+import RequestedItems from "./RequestedItem";
 
 const StoreKeeperDashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -43,6 +44,11 @@ const StoreKeeperDashboard = () => {
       label: "Staffs",
       icon: <Users className="w-7 h-7" />,
       component: <Staffs />,
+    },
+    {
+      label: "RequestedItem",
+      icon: <Users className="w-7 h-7" />,
+      component: <RequestedItems />,
     },
   ];
   const userRole = "Store Keeper";
