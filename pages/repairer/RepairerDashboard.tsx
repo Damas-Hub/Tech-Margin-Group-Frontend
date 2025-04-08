@@ -1,19 +1,18 @@
-// /pages/repairer/RepairerDashboard.tsx
 import Image from "next/image";
 import React, { useState } from "react";
 import {
-  Search,
-  Bell,
-  Menu,
-  LogOut,
-  MessageCircle,
-  ShoppingBag,
-  Users,
-} from "lucide-react";
+  FiSearch,
+  FiBell,
+  FiMenu,
+  FiLogOut,
+  FiMessageCircle,
+  FiShoppingBag,
+  FiUsers,
+} from "react-icons/fi";
 import { useRouter } from "next/router";
 import toast, { Toaster } from "react-hot-toast";
 import styles from "../admin/AdminDashboard.module.css";
-        
+
 import NotificationModal from "@/componnets/NotificationModal";
 import Message from "../admin/Message";
 import RepairerClients from "../admin/RepairerClients";
@@ -29,30 +28,31 @@ const RepairerDashboard = () => {
   const router = useRouter();
 
   const menuItems = [
-    { label: "Home", icon: <Users className="w-7 h-7" />, component: <Home /> },
+    { label: "Home", icon: <FiUsers className="w-7 h-7" />, component: <Home /> },
     {
       label: "Store",
-      icon: <ShoppingBag className="w-7 h-7" />,
+      icon: <FiShoppingBag className="w-7 h-7" />,
       component: <Store searchTerm={searchTerm} staffRole="Repairer" />,
     },
-    
     {
       label: "Messages",
-      icon: <MessageCircle className="w-7 h-7" />,
+      icon: <FiMessageCircle className="w-7 h-7" />,
       component: <Message />,
     },
     {
       label: "Staffs",
-      icon: <Users className="w-7 h-7" />,
+      icon: <FiUsers className="w-7 h-7" />,
       component: <Staffs />,
     },
     {
       label: "RepairerClients",
-      icon: <Users className="w-7 h-7" />,
+      icon: <FiUsers className="w-7 h-7" />,
       component: <RepairerClients searchTerm={searchTerm} />,
     },
   ];
+
   const userRole = "Repairer";
+
   const handleLogout = () => {
     toast.success("Logged out successfully!", { duration: 3000 });
     setTimeout(() => {
@@ -75,7 +75,7 @@ const RepairerDashboard = () => {
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
             className={styles.menu}
           >
-            <Menu className="w-8 h-8" />
+            <FiMenu className="w-8 h-8" />
           </button>
         </div>
 
@@ -105,7 +105,7 @@ const RepairerDashboard = () => {
               className={styles.sidebarMenuItem}
               onClick={() => setShowLogoutModal(true)}
             >
-              <LogOut className="w-7 h-7" />
+              <FiLogOut className="w-7 h-7" />
               <span
                 className={`${styles.sidebarMenuText} ${
                   !isSidebarOpen && "hidden"
@@ -123,7 +123,7 @@ const RepairerDashboard = () => {
         <header className={styles.header}>
           <div className="flex items-center justify-between p-4">
             <div className={styles.searchWrapper}>
-              <Search className={styles.searchIcon} />
+              <FiSearch className={styles.searchIcon} />
               <input
                 type="text"
                 placeholder="Search..."

@@ -72,9 +72,7 @@ const Form: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     <div className={`${styles.formWrapper} ${isVisible ? styles.visible : ""}`}>
       <ToastContainer position="top-right" autoClose={3000} />
       <div className={`${styles.form} ${isVisible ? styles.formVisible : ""}`}>
-        <div className={styles.title}>Admin Panel</div>
-        <div className={styles.subtitle}>Update Staff Profile</div>
-
+        <div className={styles.title}>Update Staff Profile</div>
         <form onSubmit={handleSubmit}>
           <div className={`${styles.inputContainer} ${styles.ic1}`}>
             <input

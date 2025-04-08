@@ -217,29 +217,61 @@
 .clientListTitle{
   margin-top: 1rem;
 }
+/* Loading spinner styles */
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  width: 100%;
+}
+
+.loadingSpinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #56021f;
+  border-radius: 50%;
+  margin-bottom: 15px;
+}
+
+ 
+
+/* Status colors */
+.resolved {
+  color: green;
+  font-weight: bold;
+}
+
+.notDone {
+  color: #d32f2f;
+  font-weight: bold;
+}
+
+/* Select input styling */
+.inputdate {
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  background-color: #56021f;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.inputdate:focus {
+  outline: none;
+  border-color: #56021f;
+  box-shadow: 0 0 0 2px rgba(86, 2, 31, 0.2);
+}
+
+/* No results styling */
+.noResults {
+  text-align: center;
+  padding: 20px;
+  font-size: 16px;
+  color: #666;
+}
+
 /* Animations */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes slideIn {
-  from {
-    transform: translateY(-20px);
-  }
-  to {
-    transform: translateY(0);
-  }
-}
-
-/* Responsive Design */
-@media (max-width: 500px) {
-  .modalContent {
-    width: 90%;
-    padding: 15px;
-  }
-}
+ 
