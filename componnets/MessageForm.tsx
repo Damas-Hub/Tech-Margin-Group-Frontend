@@ -147,7 +147,7 @@ const MessageForm: React.FC<MessageFormProps> = ({ isVisible, onClose }) => {
             <div className={styles.buttonContainer}>
               <button
                 className={`${styles.button} ${styles.cancelButton}`}
-                onClick={onClose}
+                // onClick={onClose}
               >
                 Cancel
               </button>

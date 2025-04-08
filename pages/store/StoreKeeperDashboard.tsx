@@ -45,7 +45,7 @@ const StoreKeeperDashboard = () => {
       component: <Staffs />,
     },
   ];
-  const userRole = "StoreKeeper";
+  const userRole = "Store Keeper";
   const handleLogout = () => {
     toast.success("Logged out successfully!", { duration: 3000 });
     setTimeout(() => {
