@@ -5,7 +5,7 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
-  color: rgb(60, 145, 230);
+  color: whitesmoke;
 }
 .sidebarContent {
   display: flex;
@@ -45,11 +45,11 @@
   transition: background-color 0.2s ease;
 }
 .memu {
-  color: rgb(60, 145, 230);
+  color: #b05858;
   margin-left: -10px;
 }
 .sidebarMenuItem:hover {
-  background-color: #f1f5f9;
+  background-color: #B05858;
 }
 
 /* Main Content Styles */
