@@ -156,3 +156,28 @@
   border-radius: 5px;
   cursor: pointer;
 }
+
+@media (max-width: 768px) {
+  .sidebar {
+    display: none; /* Hide sidebar on small screens */
+  }
+
+  .sidebarOpen {
+    width: 0; /* No space for the sidebar when open on small screens */
+  }
+
+  .sidebarClosed {
+    width: 0; /* Hide the closed sidebar on small screens */
+  }
+
+  .mainContent {
+    flex: 1;
+    margin-left: 0; /* No margin for main content when sidebar is hidden */
+  }
+}
+
+@media (min-width: 769px) {
+  .sidebar {
+    display: flex; /* Always show the sidebar on larger screens */
+  }
+}
