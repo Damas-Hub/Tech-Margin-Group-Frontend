@@ -150,7 +150,7 @@ const RequestedItems: React.FC = () => {
                 <td>{item.status}</td>
                 <td>
                   {item.status === "pending" && !loading ? (
-                    <>
+                    <div className={styles.actionButtons}>
                       <motion.button
                         className={styles.addButton}
                         onClick={() => handleApprove(item)}
@@ -167,7 +167,7 @@ const RequestedItems: React.FC = () => {
                       >
                         Reject
                       </motion.button>
-                    </>
+                    </div>
                   ) : (
                     loading && (
                       <Spinner size="40" color="gray" aria-label="loading" />

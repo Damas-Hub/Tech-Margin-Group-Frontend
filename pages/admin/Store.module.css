@@ -24,6 +24,9 @@
   text-align: center;
   border-bottom: 1px solid #ddd;
 }
+.actionButtons{
+  gap: 2rem;
+}
 
 .input {
   flex: 1;
@@ -51,6 +54,7 @@
   background-color: #56021f;
   color: white;
   border: none;
+  width: 35%;
   white-space: nowrap;
   padding: 10px 20px;
   cursor: pointer;

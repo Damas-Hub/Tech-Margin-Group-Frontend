@@ -75,12 +75,12 @@ const ProtectedRoute = ({ children, allowedRoles }: Props) => {
           alignItems: "center",
           backgroundColor: "#f3f4f6",
           flexDirection: "column",
-          color: "#333",
+          color: "#56021f",
         }}
       >
         <div
           style={{
-            border: "4px solid #f3f3f3",
+            border: "4px solid #56021f",
             borderTop: "4px solid #007bff",
             borderRadius: "50%",
             width: "40px",
