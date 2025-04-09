@@ -200,7 +200,8 @@ await addDoc(collection(db, "requestedItems"), {
                 <motion.tr
                   key={store.id}
                   variants={itemVariants}
-                  whileHover={{ scale: 1.01, backgroundColor: "rgba(86, 2, 31, 0.03)" }}
+                  whileHover={{ scale: 1.01 }}
+                  className={`${styles.row} ${store.quantity > 0 ? styles.hoverBackground : ""}`}
                   transition={{ type: "spring", stiffness: 300 }}
                 >
                   <td>{index + 1}</td>
