@@ -1,9 +1,6 @@
 import Image from "next/image";
 import React, { useState } from "react";
-import {
-  FiSearch,
-  FiMenu,
-} from "react-icons/fi";
+import { FiSearch, FiMenu } from "react-icons/fi";
 import { useRouter } from "next/router";
 import toast, { Toaster } from "react-hot-toast";
 import styles from "./AdminDashboard.module.css";
@@ -84,106 +81,122 @@ const AdminDashboard = () => {
 
   return (
     <>
-     <ProtectedRoute allowedRoles={["Admin"]}>
-      <NetworkBanner />
-      <div className="flex h-screen">
-        <Toaster />
-        {/* Sidebar */}
-        <div
-          className={`${styles.sidebar} ${
-            isSidebarOpen ? styles.sidebarOpen : styles.sidebarClosed
-          }`}
-        >
-          <div className={styles.sidebarHeader}>
-            <button
-              onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-              className={styles.menu}
-            >
-              <FiMenu className="w-8 h-8" />
-            </button>
-          </div>
+      <ProtectedRoute allowedRoles={["Admin"]}>
+        <NetworkBanner />
+        <div className="flex h-screen">
+          <Toaster />
+          {/* Sidebar */}
+          <div
+            className={`${styles.sidebar} ${
+              isSidebarOpen ? styles.sidebarOpen : styles.sidebarClosed
+            }`}
+          >
+            <div className={styles.sidebarHeader}>
+              <button
+                onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+                className={styles.menu}
+              >
+                <FiMenu className="w-8 h-8" />
+              </button>
+            </div>
 
-          <div className={styles.sidebarContent}>
-            <nav>
-              {menuItems.map((item) => (
+            <div className={styles.sidebarContent}>
+              <nav>
+                {menuItems.map((item) => (
+                  <button
+                    key={item.label}
+                    className={`${styles.sidebarMenuItem} ${
+                      activePage === item.label ? "bg-[#B05858] " : ""
+                    }`}
+                    onClick={() => setActivePage(item.label)}
+                  >
+                    {item.icon}
+                    <span
+                      className={`${styles.sidebarMenuText} ${
+                        !isSidebarOpen && "hidden"
+                      }`}
+                    >
+                      {item.label}
+                    </span>
+                  </button>
+                ))}
+              </nav>
+              <div className={styles.logout}>
                 <button
-                  key={item.label}
-                  className={`${styles.sidebarMenuItem} ${
-                    activePage === item.label ? "bg-[#B05858] " : ""
-                  }`}
-                  onClick={() => setActivePage(item.label)}
+                  className={styles.sidebarMenuItem}
+                  onClick={() => setShowLogoutModal(true)}
                 >
-                  {item.icon}
+                  <FaSignOutAlt className="w-7 h-7" />
                   <span
                     className={`${styles.sidebarMenuText} ${
                       !isSidebarOpen && "hidden"
                     }`}
                   >
-                    {item.label}
+                    Logout
                   </span>
                 </button>
-              ))}
-            </nav>
-            <div className={styles.logout}>
-              <button
-                className={styles.sidebarMenuItem}
-                onClick={() => setShowLogoutModal(true)}
-              >
-                <FaSignOutAlt className="w-7 h-7" />
-                <span
-                  className={`${styles.sidebarMenuText} ${
-                    !isSidebarOpen && "hidden"
-                  }`}
-                >
-                  Logout
-                </span>
-              </button>
+              </div>
             </div>
+          </div>
+
+          {/* Main Content */}
+          <div className={styles.mainContent}>
+            <header className={styles.header}>
+              <div className="flex items-center justify-between p-4">
+                <div className={styles.searchWrapper}>
+                  <FiSearch className={styles.searchIcon} />
+                  <input
+                    type="text"
+                    placeholder="Search..."
+                    className={styles.searchInput}
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                  />
+                </div>
+
+                <div className="flex items-center space-x-12 ml-auto">
+                  <NotificationModal
+                    staffRole={userRole}
+                    className="w-7 h-7 cursor-pointer text-red-600"
+                  />
+
+                  <Image
+                    src="https://cdn.vectorstock.com/i/1000v/31/40/mechanic-logo-vector-44593140.jpg"
+                    alt="Logo"
+                    width={35}
+                    height={35}
+                    className="w-12 h-12 rounded-full"
+                  />
+                </div>
+              </div>
+            </header>
+
+            {/* Render Active Page */}
+            <main className={styles.contentArea}>
+              <div className={styles.contentCard}>
+                {menuItems.find((item) => item.label === activePage)
+                  ?.component || (
+                  <h2 className="text-2xl font-semibold">Page Not Found</h2>
+                )}
+              </div>
+            </main>
           </div>
         </div>
 
-        {/* Main Content */}
-        <div className={styles.mainContent}>
-          <header className={styles.header}>
-            <div className="flex items-center justify-between p-4">
-              <div className={styles.searchWrapper}>
-                <FiSearch className={styles.searchIcon} />
-                <input
-                  type="text"
-                  placeholder="Search..."
-                  className={styles.searchInput}
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
-              </div>
-
-              <div className="flex items-center space-x-12 ml-auto">
-                <NotificationModal
-                  staffRole={userRole}
-                  className="w-7 h-7 cursor-pointer text-red-600"
-                />
-
-                <Image
-                  src="https://cdn.vectorstock.com/i/1000v/31/40/mechanic-logo-vector-44593140.jpg"
-                  alt="Logo"
-                  width={35}
-                  height={35}
-                  className="w-12 h-12 rounded-full"
-                />
-              </div>
-            </div>
-          </header>
-
-          {/* Render Active Page */}
-          <main className={styles.contentArea}>
-            <div className={styles.contentCard}>
-              {menuItems.find((item) => item.label === activePage)
-                ?.component || (
-                <h2 className="text-2xl font-semibold">Page Not Found</h2>
-              )}
-            </div>
-          </main>
-        </div>
+        {/* Footer */}
+        <footer className="bg-[#56021f] text-white py-2 text-center fixed bottom-0 w-full">
+          <p className="text-sm">
+            &copy; {new Date().getFullYear()} TechMarginGroup. Developed by{" "}
+            <a
+              href="https://www.damashub.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-400 hover:underline"
+            >
+              DamasHub
+            </a>
+          </p>
+        </footer>
 
         {/* Logout Confirmation Modal */}
         {showLogoutModal && (
@@ -214,7 +227,6 @@ const AdminDashboard = () => {
             </div>
           </div>
         )}
-      </div>
       </ProtectedRoute>
     </>
   );

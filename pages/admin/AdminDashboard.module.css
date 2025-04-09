@@ -108,10 +108,10 @@
   /* padding: 0rem; */
 }
 .logout {
-  margin-top: auto;
+  margin-top: 11rem;
   padding: 0.4rem;
   color: red;
-  margin-left: -0.5rem;
+  margin-left: -0.8rem;
 }
 .modalOverlay {
   position: fixed;
