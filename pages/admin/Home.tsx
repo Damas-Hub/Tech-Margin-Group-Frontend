@@ -142,6 +142,4 @@ const Home: React.FC<HomeProps> = ({ staffRole }) => {
 };
 
 export default Home;
-function setUnreadCount(unread: number) {
-  throw new Error("Function not implemented.");
-}
+ 

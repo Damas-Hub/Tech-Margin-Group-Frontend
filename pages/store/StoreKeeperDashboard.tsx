@@ -1,16 +1,15 @@
-import Image from "next/image";
 import React, { useState } from "react";
 import {
-  Search,
-  Bell,
-  Menu,
-  LogOut,
-  MessageCircle,
-  ShoppingBag,
-  Users,
-} from "lucide-react";
+  FaSearch,
+  FaBars,
+  FaSignOutAlt,
+  FaRegCommentDots,
+  FaShoppingBag,
+  FaUsers,
+} from "react-icons/fa";
 import { useRouter } from "next/router";
 import toast, { Toaster } from "react-hot-toast";
+import Image from "next/image";
 import styles from "../admin/AdminDashboard.module.css";
 
 import NotificationModal from "@/componnets/NotificationModal";
@@ -28,29 +27,34 @@ const StoreKeeperDashboard = () => {
   const router = useRouter();
 
   const menuItems = [
-    { label: "Home", icon: <Users className="w-7 h-7" />, component: <Home /> },
+    {
+      label: "Home",
+      icon: <FaUsers className="w-7 h-7" />,
+      component: <Home staffRole="Store Keeper" />,
+    },
     {
       label: "Store",
-      icon: <ShoppingBag className="w-7 h-7" />,
+      icon: <FaShoppingBag className="w-7 h-7" />,
       component: <Store searchTerm={searchTerm} staffRole="Repairer" />,
     },
 
     {
       label: "Messages",
-      icon: <MessageCircle className="w-7 h-7" />,
+      icon: <FaRegCommentDots className="w-7 h-7" />,
       component: <Message />,
     },
     {
       label: "Staffs",
-      icon: <Users className="w-7 h-7" />,
+      icon: <FaUsers className="w-7 h-7" />,
       component: <Staffs />,
     },
     {
       label: "RequestedItem",
-      icon: <Users className="w-7 h-7" />,
+      icon: <FaUsers className="w-7 h-7" />,
       component: <RequestedItems />,
     },
   ];
+
   const userRole = "Store Keeper";
   const handleLogout = () => {
     toast.success("Logged out successfully!", { duration: 3000 });
@@ -74,7 +78,7 @@ const StoreKeeperDashboard = () => {
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
             className={styles.menu}
           >
-            <Menu className="w-8 h-8" />
+            <FaBars className="w-8 h-8" />
           </button>
         </div>
 
@@ -104,7 +108,7 @@ const StoreKeeperDashboard = () => {
               className={styles.sidebarMenuItem}
               onClick={() => setShowLogoutModal(true)}
             >
-              <LogOut className="w-7 h-7" />
+              <FaSignOutAlt className="w-7 h-7" />
               <span
                 className={`${styles.sidebarMenuText} ${
                   !isSidebarOpen && "hidden"
@@ -122,7 +126,7 @@ const StoreKeeperDashboard = () => {
         <header className={styles.header}>
           <div className="flex items-center justify-between p-4">
             <div className={styles.searchWrapper}>
-              <Search className={styles.searchIcon} />
+              <FaSearch className={styles.searchIcon} />
               <input
                 type="text"
                 placeholder="Search..."
@@ -137,13 +141,12 @@ const StoreKeeperDashboard = () => {
                 staffRole={userRole}
                 className="w-7 h-7 cursor-pointer text-red-600"
               />
-
               <Image
                 src="https://cdn.vectorstock.com/i/1000v/31/40/mechanic-logo-vector-44593140.jpg"
                 alt="Logo"
-                width={35}
-                height={35}
-                className="w-12 h-12 rounded-full"
+                width={48}
+                height={48}
+                className="rounded-full"
               />
             </div>
           </div>

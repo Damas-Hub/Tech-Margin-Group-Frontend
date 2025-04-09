@@ -4,8 +4,8 @@ import { collection, updateDoc, doc, serverTimestamp, onSnapshot, getDoc } from 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { motion } from "framer-motion"; // Import Framer Motion for animations
-import { TailSpin } from "react-loader-spinner"; // Import React Loader
 import styles from "../admin/Store.module.css";
+import Spinner from "@/componnets/Spinner";
 
 interface RequestedItem {
   id: string;
@@ -135,11 +135,10 @@ const RequestedItems: React.FC = () => {
                     </>
                   ) : (
                     loading && (
-                      <TailSpin
-                        height="40"
-                        width="40"
+                      <Spinner
+                        size="40"
                         color="gray"
-                        ariaLabel="loading"
+                        aria-label="loading"
                       />
                     )
                   )}

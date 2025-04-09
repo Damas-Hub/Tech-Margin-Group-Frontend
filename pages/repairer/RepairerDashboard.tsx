@@ -1,14 +1,15 @@
 import Image from "next/image";
 import React, { useState } from "react";
-import {
-  FiSearch,
-  FiBell,
-  FiMenu,
-  FiLogOut,
-  FiMessageCircle,
-  FiShoppingBag,
-  FiUsers,
-} from "react-icons/fi";
+import { 
+  FaSearch, 
+  FaBars, 
+  FaSignOutAlt, 
+  FaComments,
+  FaShoppingBag,
+  FaHome,
+  FaTools,
+  FaUserCog
+} from "react-icons/fa";
 import { useRouter } from "next/router";
 import toast, { Toaster } from "react-hot-toast";
 import styles from "../admin/AdminDashboard.module.css";
@@ -28,25 +29,25 @@ const RepairerDashboard = () => {
   const router = useRouter();
 
   const menuItems = [
-    { label: "Home", icon: <FiUsers className="w-7 h-7" />, component: <Home /> },
+    { label: "Home", icon: <FaHome className="w-6 h-6" />, component: <Home staffRole="Repairer" /> },
     {
       label: "Store",
-      icon: <FiShoppingBag className="w-7 h-7" />,
+      icon: <FaShoppingBag className="w-6 h-6" />,
       component: <Store searchTerm={searchTerm} staffRole="Repairer" />,
     },
     {
       label: "Messages",
-      icon: <FiMessageCircle className="w-7 h-7" />,
+      icon: <FaComments className="w-6 h-6" />,
       component: <Message />,
     },
     {
       label: "Staffs",
-      icon: <FiUsers className="w-7 h-7" />,
+      icon: <FaUserCog className="w-6 h-6" />,
       component: <Staffs />,
     },
     {
       label: "RepairerClients",
-      icon: <FiUsers className="w-7 h-7" />,
+      icon: <FaTools className="w-6 h-6" />,
       component: <RepairerClients searchTerm={searchTerm} />,
     },
   ];
@@ -75,7 +76,7 @@ const RepairerDashboard = () => {
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
             className={styles.menu}
           >
-            <FiMenu className="w-8 h-8" />
+            <FaBars className="w-7 h-7" />
           </button>
         </div>
 
@@ -105,7 +106,7 @@ const RepairerDashboard = () => {
               className={styles.sidebarMenuItem}
               onClick={() => setShowLogoutModal(true)}
             >
-              <FiLogOut className="w-7 h-7" />
+              <FaSignOutAlt className="w-6 h-6" />
               <span
                 className={`${styles.sidebarMenuText} ${
                   !isSidebarOpen && "hidden"
@@ -123,7 +124,7 @@ const RepairerDashboard = () => {
         <header className={styles.header}>
           <div className="flex items-center justify-between p-4">
             <div className={styles.searchWrapper}>
-              <FiSearch className={styles.searchIcon} />
+              <FaSearch className={styles.searchIcon} />
               <input
                 type="text"
                 placeholder="Search..."

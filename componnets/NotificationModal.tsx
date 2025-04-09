@@ -9,7 +9,8 @@ import {
   updateDoc,
   doc,
 } from "firebase/firestore";
-import { Bell, X } from "lucide-react";
+import { IoNotifications } from "react-icons/io5";
+import { AiOutlineClose } from "react-icons/ai";
 
 interface NotificationModalProps {
   staffRole: string;
@@ -94,9 +95,9 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
         className={`cursor-pointer relative ${className}`}
         onClick={toggleNotificationModal}
       >
-        <Bell className="w-7 h-7 text-red-600" />
+       <IoNotifications className="w-7 h-7 text-red-600" />
         {unreadCount > 0 && (
-          <span className="absolute -top-2 -right-2 bg-red-500 text-white font-bold text-xs w-5 h-5 flex items-center justify-center rounded-full">
+          <span className="absolute -top-2 -right-2 bg-red-500 text-red font-bold text-xs w-5 h-5 flex items-center justify-center rounded-full">
             {unreadCount}
           </span>
         )}
@@ -108,7 +109,7 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
           <div className={styles.notificationModal}>
             <div className={styles.notificationHeader}>
               <span>Notifications</span>
-              <X size={18} onClick={toggleNotificationModal} />
+              <AiOutlineClose size={18} onClick={toggleNotificationModal} />
             </div>
             <div className={styles.notificationContent}>
               {notifications.length > 0 ? (
@@ -149,7 +150,7 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
           <div className={styles.messageModal}>
             <div className={styles.messageHeader}>
               <span>Message Details</span>
-              <X size={18} onClick={closeMessage} />
+              <AiOutlineClose size={18} onClick={closeMessage} />
             </div>
             <p>
               <strong>From:</strong> {selectedMessage.sender}

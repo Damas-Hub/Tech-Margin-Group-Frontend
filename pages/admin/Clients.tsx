@@ -9,10 +9,10 @@ import {
   Timestamp,
 } from "firebase/firestore";
 import { toast, ToastContainer } from "react-toastify";
-import ScaleLoader from "react-spinners/ScaleLoader";
 import { motion, AnimatePresence } from "framer-motion";
 import "react-toastify/dist/ReactToastify.css";
 import styles from "./Clients.module.css";
+import Spinner from "@/componnets/Spinner";
 
 interface Client {
   id: string;
@@ -31,6 +31,7 @@ interface ClientFormProps {
 const ClientForm: React.FC<ClientFormProps> = ({ searchTerm }) => {
   const [loading, setLoading] = useState(false);
   const [clientsLoading, setClientsLoading] = useState(true);
+  const [delayedLoading, setDelayedLoading] = useState<boolean>(false);
   const [clients, setClients] = useState<Client[]>([]);
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({
@@ -41,6 +42,13 @@ const ClientForm: React.FC<ClientFormProps> = ({ searchTerm }) => {
     date: new Date().toISOString().split("T")[0],
     status: "Not Done",
   });
+  useEffect(() => {
+    const loadingTimeout = setTimeout(() => {
+      setDelayedLoading(true); // This will show the spinner after the delay
+    }, 500); // Delay for 300ms
+
+    return () => clearTimeout(loadingTimeout); // Clean up timeout on unmount
+  }, []);
 
   useEffect(() => {
     const clientQuery = query(
@@ -216,18 +224,9 @@ const ClientForm: React.FC<ClientFormProps> = ({ searchTerm }) => {
 
       <h2 className={styles.clientListTitle}>Client List</h2>
 
-      {clientsLoading ? (
+      {clientsLoading && delayedLoading ? (
         <div className={styles.loaderContainer}>
-      <ScaleLoader 
-  color="#56021f" 
-  speedMultiplier={0.01} 
-  height={40} 
-  width={4} 
-  margin={2} 
-/>
-
-
-        
+          <Spinner size="50px" color="#e74c3c" />
         </div>
       ) : (
         <table className={styles.storeTable}>

@@ -19,6 +19,7 @@ import Staffs from "./Staffs";
 import Home from "./Home";
 import RepairerClients from "./RepairerClients";
 import NotificationModal from "@/componnets/NotificationModal";
+import { FaHome, FaUsers } from "react-icons/fa";
 
 const AdminDashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -28,7 +29,11 @@ const AdminDashboard = () => {
   const router = useRouter();
 
   const menuItems = [
-    { label: "Home", icon: <FiUsers className="w-7 h-7" />, component: <Home /> },
+    {
+      label: "Home",
+      icon: <FaHome className="w-7 h-7" />,
+      component: <Home staffRole="Admin" />,
+    },
     {
       label: "Store",
       icon: <FiShoppingBag className="w-7 h-7" />,

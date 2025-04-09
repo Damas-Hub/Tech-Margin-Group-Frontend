@@ -1,14 +1,16 @@
 import Image from "next/image";
 import React, { useState } from "react";
-import {
-  Search,
-  Bell,
-  Menu,
-  LogOut,
-  MessageCircle,
-  ShoppingBag,
-  Users,
-} from "lucide-react";
+import { 
+  FaSearch, 
+  FaBell, 
+  FaBars, 
+  FaSignOutAlt, 
+  FaComments,
+  FaUsers,
+  FaHome,
+  FaUserTie,
+  FaIdCard
+} from "react-icons/fa";
 import { useRouter } from "next/router";
 import toast, { Toaster } from "react-hot-toast";
 import styles from "../../pages/admin/AdminDashboard.module.css";
@@ -26,26 +28,30 @@ const SecretaryDashboard = () => {
   const router = useRouter();
 
   const menuItems = [
-    { label: "Home", icon: <Users className="w-7 h-7" />, component: <Home /> },
-
+    {
+      label: "Home",
+      icon: <FaUsers className="w-7 h-7" />,
+      component: <Home staffRole="Secretary" />,
+    },
     {
       label: "Clients",
-      icon: <Users className="w-7 h-7" />,
+      icon: <FaUsers className="w-6 h-6" />,
       component: <Clients searchTerm={searchTerm} />,
     },
     {
       label: "Messages",
-      icon: <MessageCircle className="w-7 h-7" />,
+      icon: <FaComments className="w-6 h-6" />,
       component: <Message />,
     },
     {
       label: "Staffs",
-      icon: <Users className="w-7 h-7" />,
+      icon: <FaUserTie className="w-6 h-6" />,
       component: <Staffs />,
     },
-    
   ];
+
   const userRole = "Secretary";
+
   const handleLogout = () => {
     toast.success("Logged out successfully!", { duration: 3000 });
     setTimeout(() => {
@@ -68,7 +74,7 @@ const SecretaryDashboard = () => {
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
             className={styles.menu}
           >
-            <Menu className="w-8 h-8" />
+            <FaBars className="w-7 h-7" />
           </button>
         </div>
 
@@ -98,7 +104,7 @@ const SecretaryDashboard = () => {
               className={styles.sidebarMenuItem}
               onClick={() => setShowLogoutModal(true)}
             >
-              <LogOut className="w-7 h-7" />
+              <FaSignOutAlt className="w-6 h-6" />
               <span
                 className={`${styles.sidebarMenuText} ${
                   !isSidebarOpen && "hidden"
@@ -116,7 +122,7 @@ const SecretaryDashboard = () => {
         <header className={styles.header}>
           <div className="flex items-center justify-between p-4">
             <div className={styles.searchWrapper}>
-              <Search className={styles.searchIcon} />
+              <FaSearch className={styles.searchIcon} />
               <input
                 type="text"
                 placeholder="Search..."
@@ -131,6 +137,8 @@ const SecretaryDashboard = () => {
                 staffRole={userRole}
                 className="w-7 h-7 cursor-pointer text-red-600"
               />
+
+              <FaBell className="w-6 h-6 cursor-pointer" />
 
               <Image
                 src="https://cdn.vectorstock.com/i/1000v/31/40/mechanic-logo-vector-44593140.jpg"
