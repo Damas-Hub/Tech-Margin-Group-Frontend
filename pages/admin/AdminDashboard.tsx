@@ -19,7 +19,7 @@ import Staffs from "./Staffs";
 import Home from "./Home";
 import RepairerClients from "./RepairerClients";
 import NotificationModal from "@/componnets/NotificationModal";
-import { FaHome, FaUsers } from "react-icons/fa";
+import { FaHome, FaSignOutAlt, FaUsers } from "react-icons/fa";
 import NetworkBanner from "@/componnets/NetworkBanner";
 
 const AdminDashboard = () => {
@@ -117,7 +117,7 @@ const AdminDashboard = () => {
                 className={styles.sidebarMenuItem}
                 onClick={() => setShowLogoutModal(true)}
               >
-                <FiLogOut className="w-7 h-7" />
+                <FaSignOutAlt className="w-7 h-7" />
                 <span
                   className={`${styles.sidebarMenuText} ${
                     !isSidebarOpen && "hidden"
