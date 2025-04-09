@@ -3,7 +3,7 @@ import { db } from "../../src/firebaseConfig";
 import { collection, updateDoc, doc, serverTimestamp, onSnapshot, getDoc } from "firebase/firestore";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { motion } from "framer-motion"; // Import Framer Motion for animations
+import { motion } from "framer-motion";  
 import styles from "../admin/Store.module.css";
 import Spinner from "@/componnets/Spinner";
 
