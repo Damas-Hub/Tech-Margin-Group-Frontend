@@ -1,15 +1,15 @@
 import Image from "next/image";
 import React, { useState } from "react";
-import { 
-  FaSearch, 
-  FaBell, 
-  FaBars, 
-  FaSignOutAlt, 
+import {
+  FaSearch,
+  FaBell,
+  FaBars,
+  FaSignOutAlt,
   FaComments,
   FaUsers,
   FaHome,
   FaUserTie,
-  FaIdCard
+  FaIdCard,
 } from "react-icons/fa";
 import { useRouter } from "next/router";
 import toast, { Toaster } from "react-hot-toast";
@@ -84,7 +84,7 @@ const SecretaryDashboard = () => {
               <button
                 key={item.label}
                 className={`${styles.sidebarMenuItem} ${
-                  activePage === item.label ? "bg-gray-300" : ""
+                  activePage === item.label ? "bg-[#B05858]" : ""
                 }`}
                 onClick={() => setActivePage(item.label)}
               >
@@ -137,9 +137,6 @@ const SecretaryDashboard = () => {
                 staffRole={userRole}
                 className="w-7 h-7 cursor-pointer text-red-600"
               />
-
-              <FaBell className="w-6 h-6 cursor-pointer" />
-
               <Image
                 src="https://cdn.vectorstock.com/i/1000v/31/40/mechanic-logo-vector-44593140.jpg"
                 alt="Logo"
@@ -163,33 +160,33 @@ const SecretaryDashboard = () => {
 
       {/* Logout Confirmation Modal */}
       {showLogoutModal && (
-  <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-    <div className="bg-white p-8 rounded-xl shadow-xl text-center w-full max-w-md mx-4 min-h-[220px] flex flex-col justify-between">
-      <div>
-        <h2 className="text-xl font-semibold mb-6 text-gray-800">
-          Are you sure you want to log out?
-        </h2>
-      </div>
-      <div className="flex justify-center gap-6 mt-4">
-        <button
-          className="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg text-base font-medium transition-colors duration-200 flex-1 max-w-[160px]"
-          onClick={() => {
-            setShowLogoutModal(false);
-            handleLogout();
-          }}
-        >
-          Yes, Logout
-        </button>
-        <button
-          className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-6 py-3 rounded-lg text-base font-medium transition-colors duration-200 flex-1 max-w-[160px]"
-          onClick={() => setShowLogoutModal(false)}
-        >
-          Cancel
-        </button>
-      </div>
-    </div>
-  </div>
-)}
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="bg-white p-8 rounded-xl shadow-xl text-center w-full max-w-md mx-4 min-h-[220px] flex flex-col justify-between">
+            <div>
+              <h2 className="text-xl font-semibold mb-6 text-gray-800">
+                Are you sure you want to log out?
+              </h2>
+            </div>
+            <div className="flex justify-center gap-6 mt-4">
+              <button
+                className="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg text-base font-medium transition-colors duration-200 flex-1 max-w-[160px]"
+                onClick={() => {
+                  setShowLogoutModal(false);
+                  handleLogout();
+                }}
+              >
+                Yes, Logout
+              </button>
+              <button
+                className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-6 py-3 rounded-lg text-base font-medium transition-colors duration-200 flex-1 max-w-[160px]"
+                onClick={() => setShowLogoutModal(false)}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
