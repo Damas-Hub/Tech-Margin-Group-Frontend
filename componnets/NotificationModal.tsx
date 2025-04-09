@@ -60,7 +60,6 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
     return () => unsubscribe();
   }, [staffRole]);
 
-  // Merge and sort messages
   const notifications = [...unreadMessages, ...readMessages].sort(
     (a, b) => b.timestamp - a.timestamp
   );
