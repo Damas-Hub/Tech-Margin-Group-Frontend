@@ -24,6 +24,7 @@
   text-align: center;
   border-bottom: 1px solid #ddd;
 }
+
 .input {
   flex: 1;
   min-width: 300px;
@@ -57,8 +58,9 @@
   border-radius: 5px;
   font-size: 16px;
   transition: all 0.3s;
-  
+  margin-right: 5px;
 }
+
 .addButtonn {
   background-color: #56021f;
   color: white;
@@ -70,6 +72,7 @@
   border-radius: 5px;
   transition: all 0.3s;
 }
+
 .disabledHover:hover {
   pointer-events: none;
   opacity: 0.5;
@@ -84,16 +87,13 @@
   margin-left: 1rem;
   padding: 10px 20px;
   width: 30%;
-
   margin-right: 0.5rem;
   cursor: pointer;
   border-radius: 5px;
   transition: all 0.3s;
 }
 
-.addButton:hover {
-  background-color: #92062d;
-}
+.addButton:hover,
 .addButtonn:hover {
   background-color: #92062d;
 }
@@ -136,6 +136,7 @@
   justify-content: right;
   margin-top: 15px;
 }
+
 .inputContainer {
   display: flex;
   flex-wrap: wrap;
@@ -144,6 +145,7 @@
   justify-content: center;
   padding: 10px;
 }
+
 /* Modal Overlay */
 .modalOverlay {
   position: fixed;
@@ -155,16 +157,18 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1000;
 }
 
 /* Modal Box */
 .modalContent {
-  background: rgb(211, 208, 208);
-  padding: 20px;
-  border-radius: 10px;
-  width: 600px;
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 500px;
   text-align: center;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.2);
 }
 
 /* Modal Inputs */
@@ -178,7 +182,7 @@
 }
 
 /* Button Group */
-.buttonGroup {
+.modalButtonGroup {
   display: flex;
   justify-content: space-between;
   margin-top: 15px;
@@ -195,28 +199,6 @@
   border-radius: 5px;
   font-size: 16px;
   transition: all 0.3s;
-}
-
-/* Add Button */
-.addButton {
-  background-color: #56021f;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  width: 50%;
-  cursor: pointer;
-  border-radius: 5px;
-  font-size: 16px;
-  transition: all 0.3s;
-}
-
-/* Button Hover Effects */
-.cancelButton:hover {
-  background-color: #999;
-}
-
-.addButton:hover {
-  background-color: #92062d;
 }
 
 /* Add Client Button */
@@ -237,6 +219,7 @@
 .addClientButton:hover {
   background-color: #92062d;
 }
+
 /* Loading spinner styles */
 .loadingContainer {
   display: flex;
@@ -262,31 +245,7 @@
   100% { transform: rotate(360deg); }
 }
 
-/* Enhanced modal transitions */
-.modalOverlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-.modalContent {
-  background: white;
-  padding: 30px;
-  border-radius: 12px;
-  width: 90%;
-  max-width: 500px;
-  text-align: center;
-  box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.2);
-}
-
-/* Add smooth transitions for table rows */
+/* Table row hover effects */
 .storeTable tbody tr {
   transition: all 0.2s ease;
 }
@@ -294,6 +253,3 @@
 .storeTable tbody tr:hover {
   background-color: rgba(86, 2, 31, 0.05) !important;
 }
-
-
- 

@@ -105,7 +105,7 @@ const Home: React.FC<HomeProps> = ({ staffRole }) => {
       "Task In Progress",
       "Task Resolved",
     ],
-    StoreKeeper: [
+    "Store Keeper": [
       "Clients Total",
       "Items In Store",
       "Pending Item Requests",
