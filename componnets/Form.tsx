@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { db } from "../src/firebaseConfig";
-import { collection, query, where, getDocs, updateDoc, doc } from "firebase/firestore";
+import { db, auth } from "../src/firebaseConfig";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styles from "./Form.module.css";
@@ -8,16 +9,45 @@ import styles from "./Form.module.css";
 const Form: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [userUid, setUserUid] = useState("");
   const [formData, setFormData] = useState({
     staff_id: "",
     fullName: "",
+    email: "",
     address: "",
     phoneNumber: "",
     dateOfBirth: "",
   });
 
+  // 🔹 Fetch logged-in user data
   useEffect(() => {
     setIsVisible(true);
+
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        setUserUid(user.uid);
+
+        const staffRef = doc(db, "staffs", user.uid);
+        const staffSnap = await getDoc(staffRef);
+
+        if (staffSnap.exists()) {
+          const staffData = staffSnap.data();
+
+          setFormData({
+            staff_id: staffData.staff_id || "",
+            fullName: staffData.fullName || "",
+            email: staffData.email || user.email || "",
+            address: staffData.address || "",
+            phoneNumber: staffData.phoneNumber || "",
+            dateOfBirth: staffData.dateOfBirth || "",
+          });
+        } else {
+          toast.error("Staff record not found.");
+        }
+      }
+    });
+
+    return () => unsubscribe();
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,39 +57,25 @@ const Form: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const { staff_id, fullName, address, phoneNumber, dateOfBirth } = formData;
+    const { fullName, address, phoneNumber, dateOfBirth } = formData;
 
-    if (!staff_id || !fullName || !address || !phoneNumber || !dateOfBirth) {
+    if (!fullName || !address || !phoneNumber || !dateOfBirth) {
       toast.error("All fields are required!");
       return;
     }
 
     try {
       setLoading(true);
+      const staffRef = doc(db, "staffs", userUid);
 
-      // 🔹 Query Firestore to find staff where staff_id matches
-      const staffsRef = collection(db, "staffs");
-      const q = query(staffsRef, where("staff_id", "==", staff_id));
-      const querySnapshot = await getDocs(q);
+      await updateDoc(staffRef, {
+        fullName,
+        address,
+        phoneNumber,
+        dateOfBirth,
+      });
 
-      if (!querySnapshot.empty) {
-        // 🔹 Get the first document (assuming staff_id is unique)
-        const staffDoc = querySnapshot.docs[0];
-        const staffDocRef = doc(db, "staffs", staffDoc.id);
-
-        // 🔹 Update the staff profile
-        await updateDoc(staffDocRef, {
-          fullName,
-          address,
-          phoneNumber,
-          dateOfBirth,
-        });
-
-        toast.success("Profile updated successfully!");
-      } else {
-        console.error("Staff ID not found in Firestore:", staff_id);
-        toast.error("Staff profile not found. Please check the ID.");
-      }
+      toast.success("Profile updated successfully!");
     } catch (error: any) {
       console.error("Error updating staff profile:", error.message);
       toast.error(`Error updating profile: ${error.message}`);
@@ -74,21 +90,43 @@ const Form: React.FC<{ onClose: () => void }> = ({ onClose }) => {
       <div className={`${styles.form} ${isVisible ? styles.formVisible : ""}`}>
         <div className={styles.title}>Update Staff Profile</div>
         <form onSubmit={handleSubmit}>
+          {/* Staff ID - Read Only */}
+          {/* Staff ID - Read Only */}
           <div className={`${styles.inputContainer} ${styles.ic1}`}>
             <input
-              placeholder="Staff ID (Enter manually)"
+              id="staff_id"
               type="text"
               name="staff_id"
               value={formData.staff_id}
-              onChange={handleChange}
               className={styles.input}
-              required
+              readOnly
             />
+            <div className={styles.cut}></div>
+            <label htmlFor="staff_id" className={styles.iLabel}>
+              Staff ID
+            </label>
           </div>
 
+          {/* Email - Read Only */}
           <div className={`${styles.inputContainer} ${styles.ic1}`}>
             <input
-              placeholder="Full Name"
+              id="email"
+              type="email"
+              name="email"
+              value={formData.email}
+              className={styles.input}
+              readOnly
+            />
+            <div className={styles.cut}></div>
+            <label htmlFor="email" className={styles.iLabel}>
+              Email
+            </label>
+          </div>
+
+          {/* Full Name */}
+          <div className={`${styles.inputContainer} ${styles.ic1}`}>
+            <input
+              id="fullName"
               type="text"
               name="fullName"
               value={formData.fullName}
@@ -96,11 +134,16 @@ const Form: React.FC<{ onClose: () => void }> = ({ onClose }) => {
               className={styles.input}
               required
             />
+            <div className={styles.cut}></div>
+            <label htmlFor="fullName" className={styles.iLabel}>
+              Full Name
+            </label>
           </div>
 
+          {/* Address */}
           <div className={`${styles.inputContainer} ${styles.ic1}`}>
             <input
-              placeholder="Address"
+              id="address"
               type="text"
               name="address"
               value={formData.address}
@@ -108,11 +151,16 @@ const Form: React.FC<{ onClose: () => void }> = ({ onClose }) => {
               className={styles.input}
               required
             />
+            <div className={styles.cut}></div>
+            <label htmlFor="address" className={styles.iLabel}>
+              Address
+            </label>
           </div>
 
+          {/* Phone Number */}
           <div className={`${styles.inputContainer} ${styles.ic1}`}>
             <input
-              placeholder="Phone Number"
+              id="phoneNumber"
               type="tel"
               name="phoneNumber"
               value={formData.phoneNumber}
@@ -120,11 +168,16 @@ const Form: React.FC<{ onClose: () => void }> = ({ onClose }) => {
               className={styles.input}
               required
             />
+            <div className={styles.cut}></div>
+            <label htmlFor="phoneNumber" className={styles.iLabel}>
+              Phone Number
+            </label>
           </div>
 
+          {/* Date of Birth */}
           <div className={`${styles.inputContainer} ${styles.ic2}`}>
             <input
-              placeholder="Date of Birth"
+              id="dateOfBirth"
               type="date"
               name="dateOfBirth"
               value={formData.dateOfBirth}
@@ -132,13 +185,25 @@ const Form: React.FC<{ onClose: () => void }> = ({ onClose }) => {
               className={styles.input}
               required
             />
+            <div className={styles.cut}></div>
+            <label htmlFor="dateOfBirth" className={styles.iLabel}>
+              Date of Birth
+            </label>
           </div>
 
           <div className={styles.buttonContainer}>
-            <button className={`${styles.button} ${styles.cancelButton}`} type="button" onClick={onClose}>
+            <button
+              className={`${styles.button} ${styles.cancelButton}`}
+              type="button"
+              onClick={onClose}
+            >
               Cancel
             </button>
-            <button className={`${styles.button} ${styles.submitButton}`} type="submit" disabled={loading}>
+            <button
+              className={`${styles.button} ${styles.submitButton}`}
+              type="submit"
+              disabled={loading}
+            >
               {loading ? "Saving..." : "Submit"}
             </button>
           </div>

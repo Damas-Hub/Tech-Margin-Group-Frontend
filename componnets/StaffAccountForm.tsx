@@ -152,7 +152,6 @@ const StaffAccountForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
             <option value="Secretary">Secretary</option>
             <option value="Repairer">Repairer</option>
             <option value="Store Keeper">Store Keeper</option>
-            <option value="Special Assignment">Special Assignment</option>
           </select>
         </div>
 
