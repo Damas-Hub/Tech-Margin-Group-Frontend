@@ -10,7 +10,7 @@ import {
   getDoc,
 } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
-import { motion, AnimatePresence } from "framer-motion"; // 👈 Add this
+import { motion, AnimatePresence } from "framer-motion";
 import styles from "./MessageForm.module.css";
 
 interface MessageFormProps {
@@ -21,14 +21,28 @@ interface MessageFormProps {
 const MessageForm: React.FC<MessageFormProps> = ({ isVisible, onClose }) => {
   const [message, setMessage] = useState("");
   const [recipient, setRecipient] = useState("");
+  const [senderRole, setSenderRole] = useState("");
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        console.log("🔥 Logged in user UID:", user.uid);
-        console.log("🔥 Logged in email:", user.email);
-      } else {
-        console.log("❌ No user is logged in.");
+        let role = "";
+
+        const staffRef = doc(db, "staffs", user.uid);
+        const staffSnap = await getDoc(staffRef);
+
+        if (staffSnap.exists()) {
+          role = staffSnap.data().role;
+        } else {
+          const adminRef = doc(db, "users", user.uid);
+          const adminSnap = await getDoc(adminRef);
+          if (adminSnap.exists() && adminSnap.data().role === "Admin") {
+            role = "Admin";
+          }
+        }
+
+        setSenderRole(role);
+        console.log("🔐 Logged-in role:", role);
       }
     });
 
@@ -48,40 +62,7 @@ const MessageForm: React.FC<MessageFormProps> = ({ isVisible, onClose }) => {
       return;
     }
 
-    console.log("✅ Logged in UID:", user.uid);
-
     try {
-      // Determine the sender's role
-      let senderRole = "";
-
-      const staffRef = doc(db, "staffs", user.uid);
-      const staffSnap = await getDoc(staffRef);
-
-      if (staffSnap.exists()) {
-        senderRole = staffSnap.data().role;
-        console.log("🔍 Role found in STAFFS:", senderRole);
-      } else {
-        const adminRef = doc(db, "users", user.uid);
-        const adminSnap = await getDoc(adminRef);
-
-        if (adminSnap.exists()) {
-          const adminRole = adminSnap.data().role;
-          if (adminRole === "Admin") {
-            senderRole = "Admin";
-            console.log("👑 Role found in USERS:", senderRole);
-          } else {
-            console.warn("❌ Role in USERS is not Admin.");
-            toast.error("Your role is not authorized to send messages.");
-            return;
-          }
-        } else {
-          console.warn("❌ User not found in STAFFS or USERS.");
-          toast.error("Your role could not be determined.");
-          return;
-        }
-      }
-
-      // Save the message
       await addDoc(collection(db, "messages"), {
         message,
         recipient,
@@ -99,6 +80,10 @@ const MessageForm: React.FC<MessageFormProps> = ({ isVisible, onClose }) => {
       toast.error("Failed to send message.");
     }
   };
+
+  // All possible roles
+  const allRoles = ["Admin", "Secretary", "Repairer", "Store Keeper"];
+  const filteredRoles = allRoles.filter((role) => role !== senderRole);
 
   return (
     <AnimatePresence>
@@ -136,18 +121,18 @@ const MessageForm: React.FC<MessageFormProps> = ({ isVisible, onClose }) => {
                 onChange={(e) => setRecipient(e.target.value)}
               >
                 <option value="">Select Recipient</option>
-                <option value="Admin">Admin</option>
-                <option value="Secretary">Secretary</option>
-                <option value="Repairer">Repairer</option>
-                <option value="Store Keeper">Store Keeper</option>
-                <option value="Special Assignment">Special Assignment</option>
+                {filteredRoles.map((role) => (
+                  <option key={role} value={role}>
+                    {role}
+                  </option>
+                ))}
               </select>
             </div>
 
             <div className={styles.buttonContainer}>
               <button
                 className={`${styles.button} ${styles.cancelButton}`}
-                // onClick={onClose}
+                onClick={onClose}
               >
                 Cancel
               </button>

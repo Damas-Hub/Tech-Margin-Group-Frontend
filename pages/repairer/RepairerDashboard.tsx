@@ -86,7 +86,7 @@ const RepairerDashboard = () => {
               <button
                 key={item.label}
                 className={`${styles.sidebarMenuItem} ${
-                  activePage === item.label ? "bg-gray-300" : ""
+                  activePage === item.label ? "bg-[#B05858] " : ""
                 }`}
                 onClick={() => setActivePage(item.label)}
               >
