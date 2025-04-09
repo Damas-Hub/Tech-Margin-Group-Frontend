@@ -132,6 +132,8 @@ const Form: React.FC<{ onClose: () => void }> = ({ onClose }) => {
               value={formData.fullName}
               onChange={handleChange}
               className={styles.input}
+              placeholder="Enter your full name"
+
               required
             />
             <div className={styles.cut}></div>
@@ -149,6 +151,7 @@ const Form: React.FC<{ onClose: () => void }> = ({ onClose }) => {
               value={formData.address}
               onChange={handleChange}
               className={styles.input}
+              placeholder="Enter your address"
               required
             />
             <div className={styles.cut}></div>
@@ -166,6 +169,7 @@ const Form: React.FC<{ onClose: () => void }> = ({ onClose }) => {
               value={formData.phoneNumber}
               onChange={handleChange}
               className={styles.input}
+              placeholder="Enter your phone number"
               required
             />
             <div className={styles.cut}></div>
@@ -183,6 +187,7 @@ const Form: React.FC<{ onClose: () => void }> = ({ onClose }) => {
               value={formData.dateOfBirth}
               onChange={handleChange}
               className={styles.input}
+              placeholder="Enter your date of birth"
               required
             />
             <div className={styles.cut}></div>
