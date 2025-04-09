@@ -110,7 +110,7 @@
 .logout {
   margin-top: auto;
   padding: 0.4rem;
-  color: rgb(60, 145, 230);
+  color: red;
   margin-left: -0.5rem;
 }
 .modalOverlay {

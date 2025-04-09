@@ -106,7 +106,7 @@ const RepairerDashboard = () => {
               className={styles.sidebarMenuItem}
               onClick={() => setShowLogoutModal(true)}
             >
-              <FaSignOutAlt className="w-6 h-6" />
+              <FaSignOutAlt className="w-7 h-7" />
               <span
                 className={`${styles.sidebarMenuText} ${
                   !isSidebarOpen && "hidden"
@@ -163,31 +163,33 @@ const RepairerDashboard = () => {
 
       {/* Logout Confirmation Modal */}
       {showLogoutModal && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg text-center">
-            <h2 className="text-lg font-semibold mb-4">
-              Are you sure you want to log out?
-            </h2>
-            <div className="flex justify-center gap-4">
-              <button
-                className="bg-red-600 text-white px-4 py-2 rounded-lg"
-                onClick={() => {
-                  setShowLogoutModal(false);
-                  handleLogout();
-                }}
-              >
-                Yes
-              </button>
-              <button
-                className="bg-gray-300 px-4 py-2 rounded-lg"
-                onClick={() => setShowLogoutModal(false)}
-              >
-                No
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+  <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+    <div className="bg-white p-8 rounded-xl shadow-xl text-center w-full max-w-md mx-4 min-h-[220px] flex flex-col justify-between">
+      <div>
+        <h2 className="text-xl font-semibold mb-6 text-gray-800">
+          Are you sure you want to log out?
+        </h2>
+      </div>
+      <div className="flex justify-center gap-6 mt-4">
+        <button
+          className="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg text-base font-medium transition-colors duration-200 flex-1 max-w-[160px]"
+          onClick={() => {
+            setShowLogoutModal(false);
+            handleLogout();
+          }}
+        >
+          Yes, Logout
+        </button>
+        <button
+          className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-6 py-3 rounded-lg text-base font-medium transition-colors duration-200 flex-1 max-w-[160px]"
+          onClick={() => setShowLogoutModal(false)}
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+)}
     </div>
   );
 };
