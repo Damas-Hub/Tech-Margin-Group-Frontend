@@ -14,6 +14,7 @@ import styles from ".././componnets/Login.module.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 const Login = () => {
   const router = useRouter();
@@ -48,7 +49,6 @@ const Login = () => {
         userId = staffSnapshot.docs[0].id;
         isFirstLogin = staffData.isFirstLogin ?? true; // Default to true if missing
       } else {
-  
         const adminQuery = query(
           collection(db, "users"),
           where("staff_id", "==", staffId)
@@ -164,7 +164,7 @@ const Login = () => {
                 className={styles.eyeIcon}
                 onClick={() => setShowPassword(!showPassword)}
               >
-                {showPassword ? <FaEyeSlash /> : <FaEye />}
+                {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
               </span>
             </div>
             <span
@@ -172,7 +172,7 @@ const Login = () => {
               onClick={() => router.push("/forgot-password")}
               style={{
                 cursor: "pointer",
-                color: "blue",
+                color: "wheat",
                 textDecoration: "underline",
               }}
             >

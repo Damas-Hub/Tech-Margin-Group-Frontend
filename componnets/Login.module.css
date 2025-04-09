@@ -21,7 +21,7 @@
 .container {
   width: 50rem;
   height: 50rem;
-  background: linear-gradient(0deg, #fff 0%, #f4f7fb 100%);
+  background: linear-gradient(0deg, #2c1203 0%, #52301c 100%);
   border-radius: 40px;
   padding: 25px 35px;
   border: 5px solid #fff;
@@ -68,7 +68,7 @@
   /* text-align: center; */
   font-weight: 700;
   font-size: 50px;
-  color: black;
+  color: wheat;
   font-family: "roboto";
 }
 .subheading {
@@ -83,19 +83,19 @@
 
 .input {
   width: 100%;
-  background: #fff;
-  color: black;
+  background: #52301c;
+  color: white;
   border: none;
   padding: 25px 25px;
   border-radius: 20px;
   font-size: 20px;
   margin-top: 3rem;
-  box-shadow: #cff0ff 0px 10px 10px -5px;
+  box-shadow: #cff0ff 0px 8px 5px -5px;
 }
 
 .input:focus {
   outline: none;
-  border: 2px solid #12b1d1;
+  border: 2px solid #6e462f;
 }
 
 .forgotPassword {
@@ -119,7 +119,8 @@
 .eyeIcon {
   position: absolute;
   right: 15px;
-  top: 60%;
+  top: 70%;
+  font-size: 2rem;
   transform: translateY(-50%);
   background: none;
   border: none;
@@ -133,14 +134,15 @@
 .loginButton {
   width: 100%;
   font-weight: bold;
-  background: linear-gradient(45deg, #2c1203 0%, #12b1d1 100%);
-  color: white;
+  background: linear-gradient(45deg, #2c1203 0%, #52301c 100%);
+  color: wheat;
   padding: 15px;
   margin: 20px 0;
   border-radius: 20px;
   font-size: 20px;
   border: none;
   cursor: pointer;
+  box-shadow: #cff0ff 0px 8px 5px -5px;
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
