@@ -2,14 +2,11 @@ import Image from "next/image";
 import React, { useState } from "react";
 import {
   FaSearch,
-  FaBell,
   FaBars,
   FaSignOutAlt,
   FaComments,
   FaUsers,
   FaHome,
-  FaUserTie,
-  FaIdCard,
 } from "react-icons/fa";
 import { useRouter } from "next/router";
 import toast, { Toaster } from "react-hot-toast";
@@ -20,6 +17,7 @@ import Staffs from "../../pages/secretary/Staffs";
 import Home from "../../pages/admin/Home";
 import NotificationModal from "@/componnets/NotificationModal";
 import NetworkBanner from "@/componnets/NetworkBanner";
+import { FaUsersGear } from "react-icons/fa6";
 
 const SecretaryDashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -31,7 +29,7 @@ const SecretaryDashboard = () => {
   const menuItems = [
     {
       label: "Home",
-      icon: <FaUsers className="w-7 h-7" />,
+      icon: <FaHome className="w-7 h-7" />,
       component: <Home staffRole="Secretary" />,
     },
     {
@@ -46,7 +44,7 @@ const SecretaryDashboard = () => {
     },
     {
       label: "Staffs",
-      icon: <FaUserTie className="w-6 h-6" />,
+      icon: <FaUsersGear className="w-6 h-6" />,
       component: <Staffs />,
     },
   ];

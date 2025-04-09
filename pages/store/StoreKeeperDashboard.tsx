@@ -3,9 +3,9 @@ import {
   FaSearch,
   FaBars,
   FaSignOutAlt,
-  FaRegCommentDots,
   FaShoppingBag,
-  FaUsers,
+  FaComments,
+  FaHome,
 } from "react-icons/fa";
 import { useRouter } from "next/router";
 import toast, { Toaster } from "react-hot-toast";
@@ -19,6 +19,8 @@ import Message from "../admin/Message";
 import Store from "./Store";
 import RequestedItems from "./RequestedItem";
 import NetworkBanner from "@/componnets/NetworkBanner";
+import { MdOutlineLocalGroceryStore } from "react-icons/md";
+import { FaUsersGear } from "react-icons/fa6";
 
 const StoreKeeperDashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -30,7 +32,7 @@ const StoreKeeperDashboard = () => {
   const menuItems = [
     {
       label: "Home",
-      icon: <FaUsers className="w-7 h-7" />,
+      icon: <FaHome className="w-7 h-7" />,
       component: <Home staffRole="Store Keeper" />,
     },
     {
@@ -41,17 +43,17 @@ const StoreKeeperDashboard = () => {
 
     {
       label: "Messages",
-      icon: <FaRegCommentDots className="w-7 h-7" />,
+      icon: <FaComments className="w-7 h-7" />,
       component: <Message />,
     },
     {
       label: "Staffs",
-      icon: <FaUsers className="w-7 h-7" />,
+      icon: <FaUsersGear className="w-7 h-7" />,
       component: <Staffs />,
     },
     {
       label: "RequestedItem",
-      icon: <FaUsers className="w-7 h-7" />,
+      icon: <MdOutlineLocalGroceryStore className="w-7 h-7" />,
       component: <RequestedItems />,
     },
   ];

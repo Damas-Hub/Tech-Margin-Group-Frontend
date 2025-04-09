@@ -2,12 +2,7 @@ import Image from "next/image";
 import React, { useState } from "react";
 import {
   FiSearch,
-  FiBell,
   FiMenu,
-  FiLogOut,
-  FiMessageCircle,
-  FiShoppingBag,
-  FiUsers,
 } from "react-icons/fi";
 import { useRouter } from "next/router";
 import toast, { Toaster } from "react-hot-toast";
@@ -19,8 +14,18 @@ import Staffs from "./Staffs";
 import Home from "./Home";
 import RepairerClients from "./RepairerClients";
 import NotificationModal from "@/componnets/NotificationModal";
-import { FaHome, FaSignOutAlt, FaUsers } from "react-icons/fa";
+import {
+  FaComments,
+  FaHome,
+  FaShoppingBag,
+  FaSignOutAlt,
+  FaTools,
+  FaUsers,
+} from "react-icons/fa";
 import NetworkBanner from "@/componnets/NetworkBanner";
+import { MdOutlineLocalGroceryStore } from "react-icons/md";
+import RequestedItems from "../store/RequestedItem";
+import { FaUsersGear } from "react-icons/fa6";
 
 const AdminDashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -37,28 +42,33 @@ const AdminDashboard = () => {
     },
     {
       label: "Store",
-      icon: <FiShoppingBag className="w-7 h-7" />,
+      icon: <FaShoppingBag className="w-7 h-7" />,
       component: <Store searchTerm={searchTerm} staffRole="Repairer" />,
     },
     {
       label: "Clients",
-      icon: <FiUsers className="w-7 h-7" />,
+      icon: <FaUsers className="w-7 h-7" />,
       component: <Clients searchTerm={searchTerm} />,
     },
     {
       label: "Messages",
-      icon: <FiMessageCircle className="w-7 h-7" />,
+      icon: <FaComments className="w-7 h-7" />,
       component: <Message />,
     },
     {
       label: "Staffs",
-      icon: <FiUsers className="w-7 h-7" />,
+      icon: <FaUsersGear className="w-7 h-7" />,
       component: <Staffs />,
     },
     {
       label: "RepairerClients",
-      icon: <FiUsers className="w-7 h-7" />,
+      icon: <FaTools className="w-7 h-7" />,
       component: <RepairerClients searchTerm={searchTerm} />,
+    },
+    {
+      label: "RequestedItem",
+      icon: <MdOutlineLocalGroceryStore className="w-7 h-7" />,
+      component: <RequestedItems />,
     },
   ];
 

@@ -8,7 +8,6 @@ import {
   FaShoppingBag,
   FaHome,
   FaTools,
-  FaUserCog,
 } from "react-icons/fa";
 import { useRouter } from "next/router";
 import toast, { Toaster } from "react-hot-toast";
@@ -21,6 +20,7 @@ import Home from "../admin/Home";
 import Store from "./Store";
 import Staffs from "../secretary/Staffs";
 import NetworkBanner from "@/componnets/NetworkBanner";
+import { FaUsersGear } from "react-icons/fa6";
 
 const RepairerDashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -47,7 +47,7 @@ const RepairerDashboard = () => {
     },
     {
       label: "Staffs",
-      icon: <FaUserCog className="w-6 h-6" />,
+      icon: <FaUsersGear className="w-6 h-6" />,
       component: <Staffs />,
     },
     {
