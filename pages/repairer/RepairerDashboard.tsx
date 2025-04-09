@@ -169,6 +169,19 @@ const RepairerDashboard = () => {
             </div>
           </main>
         </div>
+        <footer className="bg-[#56021f] text-white py-2 text-center fixed bottom-0 w-full">
+          <p className="text-sm">
+            &copy; {new Date().getFullYear()} TechMarginGroup. Developed by{" "}
+            <a
+              href="https://hubertdhk.netlify.app"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-400 hover:underline"
+            >
+              DamasHub
+            </a>
+          </p>
+        </footer>
 
         {/* Logout Confirmation Modal */}
         {showLogoutModal && (
