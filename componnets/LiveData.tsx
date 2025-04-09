@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./LiveData.module.css";
+import NetworkBanner from "./NetworkBanner";
 
 interface LiveDataProps {
   icon: React.ReactNode;
@@ -9,11 +10,14 @@ interface LiveDataProps {
 
 const LiveData: React.FC<LiveDataProps> = ({ icon, number, text }) => {
   return (
-    <div className={styles.container}>
-      <div className={styles.icon}>{icon}</div>
-      <div className={styles.number}>{number}</div>
-      <div className={styles.text}>{text}</div>
-    </div>
+    <>
+      <NetworkBanner />
+      <div className={styles.container}>
+        <div className={styles.icon}>{icon}</div>
+        <div className={styles.number}>{number}</div>
+        <div className={styles.text}>{text}</div>
+      </div>
+    </>
   );
 };
 

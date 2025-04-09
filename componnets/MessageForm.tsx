@@ -12,6 +12,7 @@ import {
 import { onAuthStateChanged } from "firebase/auth";
 import { motion, AnimatePresence } from "framer-motion";
 import styles from "./MessageForm.module.css";
+import NetworkBanner from "./NetworkBanner";
 
 interface MessageFormProps {
   isVisible: boolean;
@@ -86,67 +87,70 @@ const MessageForm: React.FC<MessageFormProps> = ({ isVisible, onClose }) => {
   const filteredRoles = allRoles.filter((role) => role !== senderRole);
 
   return (
-    <AnimatePresence>
-      {isVisible && (
-        <motion.div
-          className={styles.formWrapper}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.3 }}
-        >
-          <ToastContainer position="top-right" autoClose={3000} />
+    <>
+      <NetworkBanner />
+      <AnimatePresence>
+        {isVisible && (
           <motion.div
-            className={styles.form}
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.8, opacity: 0 }}
+            className={styles.formWrapper}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <div className={styles.titlee}>Send a Message</div>
+            <ToastContainer position="top-right" autoClose={3000} />
+            <motion.div
+              className={styles.form}
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <div className={styles.titlee}>Send a Message</div>
 
-            <div className={styles.inputContainerrr}>
-              <textarea
-                className={styles.inputr}
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                placeholder="Type your message here..."
-              />
-            </div>
+              <div className={styles.inputContainerrr}>
+                <textarea
+                  className={styles.inputr}
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  placeholder="Type your message here..."
+                />
+              </div>
 
-            <div className={styles.inputContainer}>
-              <select
-                className={styles.input}
-                value={recipient}
-                onChange={(e) => setRecipient(e.target.value)}
-              >
-                <option value="">Select Recipient</option>
-                {filteredRoles.map((role) => (
-                  <option key={role} value={role}>
-                    {role}
-                  </option>
-                ))}
-              </select>
-            </div>
+              <div className={styles.inputContainer}>
+                <select
+                  className={styles.input}
+                  value={recipient}
+                  onChange={(e) => setRecipient(e.target.value)}
+                >
+                  <option value="">Select Recipient</option>
+                  {filteredRoles.map((role) => (
+                    <option key={role} value={role}>
+                      {role}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-            <div className={styles.buttonContainer}>
-              <button
-                className={`${styles.button} ${styles.cancelButton}`}
-                // onClick={onClose}
-              >
-                Cancel
-              </button>
-              <button
-                className={`${styles.button} ${styles.submitButton}`}
-                onClick={handleSubmit}
-              >
-                Send
-              </button>
-            </div>
+              <div className={styles.buttonContainer}>
+                <button
+                  className={`${styles.button} ${styles.cancelButton}`}
+                  // onClick={onClose}
+                >
+                  Cancel
+                </button>
+                <button
+                  className={`${styles.button} ${styles.submitButton}`}
+                  onClick={handleSubmit}
+                >
+                  Send
+                </button>
+              </div>
+            </motion.div>
           </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+        )}
+      </AnimatePresence>
+    </>
   );
 };
 

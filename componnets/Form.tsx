@@ -5,6 +5,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styles from "./Form.module.css";
+import NetworkBanner from "./NetworkBanner";
 
 const Form: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -85,136 +86,142 @@ const Form: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   };
 
   return (
-    <div className={`${styles.formWrapper} ${isVisible ? styles.visible : ""}`}>
-      <ToastContainer position="top-right" autoClose={3000} />
-      <div className={`${styles.form} ${isVisible ? styles.formVisible : ""}`}>
-        <div className={styles.title}>Update Staff Profile</div>
-        <form onSubmit={handleSubmit}>
-          {/* Staff ID - Read Only */}
-          {/* Staff ID - Read Only */}
-          <div className={`${styles.inputContainer} ${styles.ic1}`}>
-            <input
-              id="staff_id"
-              type="text"
-              name="staff_id"
-              value={formData.staff_id}
-              className={styles.input}
-              readOnly
-            />
-            <div className={styles.cut}></div>
-            <label htmlFor="staff_id" className={styles.iLabel}>
-              Staff ID
-            </label>
-          </div>
+    <>
+      <NetworkBanner />
+      <div
+        className={`${styles.formWrapper} ${isVisible ? styles.visible : ""}`}
+      >
+        <ToastContainer position="top-right" autoClose={3000} />
+        <div
+          className={`${styles.form} ${isVisible ? styles.formVisible : ""}`}
+        >
+          <div className={styles.title}>Update Staff Profile</div>
+          <form onSubmit={handleSubmit}>
+            {/* Staff ID - Read Only */}
+            {/* Staff ID - Read Only */}
+            <div className={`${styles.inputContainer} ${styles.ic1}`}>
+              <input
+                id="staff_id"
+                type="text"
+                name="staff_id"
+                value={formData.staff_id}
+                className={styles.input}
+                readOnly
+              />
+              <div className={styles.cut}></div>
+              <label htmlFor="staff_id" className={styles.iLabel}>
+                Staff ID
+              </label>
+            </div>
 
-          {/* Email - Read Only */}
-          <div className={`${styles.inputContainer} ${styles.ic1}`}>
-            <input
-              id="email"
-              type="email"
-              name="email"
-              value={formData.email}
-              className={styles.input}
-              readOnly
-            />
-            <div className={styles.cut}></div>
-            <label htmlFor="email" className={styles.iLabel}>
-              Email
-            </label>
-          </div>
+            {/* Email - Read Only */}
+            <div className={`${styles.inputContainer} ${styles.ic1}`}>
+              <input
+                id="email"
+                type="email"
+                name="email"
+                value={formData.email}
+                className={styles.input}
+                readOnly
+              />
+              <div className={styles.cut}></div>
+              <label htmlFor="email" className={styles.iLabel}>
+                Email
+              </label>
+            </div>
 
-          {/* Full Name */}
-          <div className={`${styles.inputContainer} ${styles.ic1}`}>
-            <input
-              id="fullName"
-              type="text"
-              name="fullName"
-              value={formData.fullName}
-              onChange={handleChange}
-              className={styles.input}
-              placeholder="Enter your full name"
+            {/* Full Name */}
+            <div className={`${styles.inputContainer} ${styles.ic1}`}>
+              <input
+                id="fullName"
+                type="text"
+                name="fullName"
+                value={formData.fullName}
+                onChange={handleChange}
+                className={styles.input}
+                placeholder="Enter your full name"
+                required
+              />
+              <div className={styles.cut}></div>
+              <label htmlFor="fullName" className={styles.iLabel}>
+                Full Name
+              </label>
+            </div>
 
-              required
-            />
-            <div className={styles.cut}></div>
-            <label htmlFor="fullName" className={styles.iLabel}>
-              Full Name
-            </label>
-          </div>
+            {/* Address */}
+            <div className={`${styles.inputContainer} ${styles.ic1}`}>
+              <input
+                id="address"
+                type="text"
+                name="address"
+                value={formData.address}
+                onChange={handleChange}
+                className={styles.input}
+                placeholder="Enter your address"
+                required
+              />
+              <div className={styles.cut}></div>
+              <label htmlFor="address" className={styles.iLabel}>
+                Address
+              </label>
+            </div>
 
-          {/* Address */}
-          <div className={`${styles.inputContainer} ${styles.ic1}`}>
-            <input
-              id="address"
-              type="text"
-              name="address"
-              value={formData.address}
-              onChange={handleChange}
-              className={styles.input}
-              placeholder="Enter your address"
-              required
-            />
-            <div className={styles.cut}></div>
-            <label htmlFor="address" className={styles.iLabel}>
-              Address
-            </label>
-          </div>
+            {/* Phone Number */}
+            <div className={`${styles.inputContainer} ${styles.ic1}`}>
+              <input
+                id="phoneNumber"
+                type="tel"
+                name="phoneNumber"
+                value={formData.phoneNumber}
+                onChange={handleChange}
+                className={styles.input}
+                placeholder="Enter your phone number"
+                required
+              />
+              <div className={styles.cut}></div>
+              <label htmlFor="phoneNumber" className={styles.iLabel}>
+                Phone Number
+              </label>
+            </div>
 
-          {/* Phone Number */}
-          <div className={`${styles.inputContainer} ${styles.ic1}`}>
-            <input
-              id="phoneNumber"
-              type="tel"
-              name="phoneNumber"
-              value={formData.phoneNumber}
-              onChange={handleChange}
-              className={styles.input}
-              placeholder="Enter your phone number"
-              required
-            />
-            <div className={styles.cut}></div>
-            <label htmlFor="phoneNumber" className={styles.iLabel}>
-              Phone Number
-            </label>
-          </div>
+            {/* Date of Birth */}
+            <div className={`${styles.inputContainer} ${styles.ic2}`}>
+              <input
+                id="dateOfBirth"
+                type="date"
+                name="dateOfBirth"
+                value={formData.dateOfBirth}
+                onChange={handleChange}
+                className={styles.input}
+                placeholder="Enter your date of birth"
+                required
+              />
+              <div className={styles.cut}></div>
+              <label htmlFor="dateOfBirth" className={styles.iLabel}>
+                Date of Birth
+              </label>
+            </div>
 
-          {/* Date of Birth */}
-          <div className={`${styles.inputContainer} ${styles.ic2}`}>
-            <input
-              id="dateOfBirth"
-              type="date"
-              name="dateOfBirth"
-              value={formData.dateOfBirth}
-              onChange={handleChange}
-              className={styles.input}
-              placeholder="Enter your date of birth"
-              required
-            />
-            <div className={styles.cut}></div>
-            <label htmlFor="dateOfBirth" className={styles.iLabel}>
-              Date of Birth
-            </label>
-          </div>
-
-          <div className={styles.buttonContainer}>
-            <button
-              className={`${styles.button} ${styles.cancelButton}`}
-              type="button"
-              onClick={onClose}
-            >
-              Cancel
-            </button>
-            <button
-              className={`${styles.button} ${styles.submitButton}`}
-              type="submit"
-              disabled={loading}
-            >
-              {loading ? "Saving..." : "Submit"}
-            </button>
-          </div>
-        </form>
+            <div className={styles.buttonContainer}>
+              <button
+                className={`${styles.button} ${styles.cancelButton}`}
+                type="button"
+                onClick={onClose}
+              >
+                Cancel
+              </button>
+              <button
+                className={`${styles.button} ${styles.submitButton}`}
+                type="submit"
+                disabled={loading}
+              >
+                {loading ? "Saving..." : "Submit"}
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
