@@ -188,7 +188,7 @@ const AdminDashboard = () => {
           <p className="text-sm">
             &copy; {new Date().getFullYear()} TechMarginGroup. Developed by{" "}
             <a
-              href="https://www.damashub.com"
+              href="https://hubertdhk.netlify.app"
               target="_blank"
               rel="noopener noreferrer"
               className="text-blue-400 hover:underline"

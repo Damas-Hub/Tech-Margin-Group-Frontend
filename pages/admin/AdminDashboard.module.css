@@ -108,8 +108,8 @@
   /* padding: 0rem; */
 }
 .logout {
-  margin-top: 11rem;
-  padding: 0.4rem;
+  margin-top: auto;
+  padding: 2.5rem;
   color: red;
   margin-left: -0.8rem;
 }
