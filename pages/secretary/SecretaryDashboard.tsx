@@ -18,6 +18,7 @@ import Home from "../../pages/admin/Home";
 import NotificationModal from "@/componnets/NotificationModal";
 import NetworkBanner from "@/componnets/NetworkBanner";
 import { FaUsersGear } from "react-icons/fa6";
+import ProtectedRoute from "@/componnets/ProtectedRoute";
 
 const SecretaryDashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -59,7 +60,8 @@ const SecretaryDashboard = () => {
   };
 
   return (
-    <>
+    
+    <ProtectedRoute allowedRoles={["Secretary"]}>
       <NetworkBanner />
       <div className="flex h-screen">
         <Toaster />
@@ -190,7 +192,7 @@ const SecretaryDashboard = () => {
           </div>
         )}
       </div>
-    </>
+    </ProtectedRoute>
   );
 };
 

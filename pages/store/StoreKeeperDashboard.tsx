@@ -21,6 +21,7 @@ import RequestedItems from "./RequestedItem";
 import NetworkBanner from "@/componnets/NetworkBanner";
 import { MdOutlineLocalGroceryStore } from "react-icons/md";
 import { FaUsersGear } from "react-icons/fa6";
+import ProtectedRoute from "@/componnets/ProtectedRoute";
 
 const StoreKeeperDashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -67,7 +68,8 @@ const StoreKeeperDashboard = () => {
   };
 
   return (
-    <>
+    <ProtectedRoute allowedRoles={["Store Keeper"]}>
+
       <NetworkBanner />
       <div className="flex h-screen">
         <Toaster />
@@ -198,7 +200,7 @@ const StoreKeeperDashboard = () => {
           </div>
         )}
       </div>
-    </>
+    </ProtectedRoute>
   );
 };
 

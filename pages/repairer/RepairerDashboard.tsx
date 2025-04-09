@@ -21,6 +21,7 @@ import Store from "./Store";
 import Staffs from "../secretary/Staffs";
 import NetworkBanner from "@/componnets/NetworkBanner";
 import { FaUsersGear } from "react-icons/fa6";
+import ProtectedRoute from "@/componnets/ProtectedRoute";
 
 const RepairerDashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -67,7 +68,7 @@ const RepairerDashboard = () => {
   };
 
   return (
-    <>
+    <ProtectedRoute allowedRoles={["Repairer"]}>
       <NetworkBanner />
       <div className="flex h-screen">
         <Toaster />
@@ -199,7 +200,7 @@ const RepairerDashboard = () => {
           </div>
         )}
       </div>
-    </>
+      </ProtectedRoute>
   );
 };
 

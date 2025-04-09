@@ -26,6 +26,7 @@ import NetworkBanner from "@/componnets/NetworkBanner";
 import { MdOutlineLocalGroceryStore } from "react-icons/md";
 import RequestedItems from "../store/RequestedItem";
 import { FaUsersGear } from "react-icons/fa6";
+import ProtectedRoute from "@/componnets/ProtectedRoute";
 
 const AdminDashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -83,6 +84,7 @@ const AdminDashboard = () => {
 
   return (
     <>
+     <ProtectedRoute allowedRoles={["Admin"]}>
       <NetworkBanner />
       <div className="flex h-screen">
         <Toaster />
@@ -213,6 +215,7 @@ const AdminDashboard = () => {
           </div>
         )}
       </div>
+      </ProtectedRoute>
     </>
   );
 };
