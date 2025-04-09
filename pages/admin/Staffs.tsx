@@ -51,21 +51,23 @@ const Staffs = () => {
       }}
     >
       {/* Buttons for editing profile and adding staff */}
-      <div style={{ display: "flex", justifyContent: "flex-end", gap: "10px" }}>
-        <button
-          onClick={() => setShowAddStaffModal(true)}
-          style={{
-            padding: "10px 20px",
-            backgroundColor: "#28a745",
-            color: "white",
-            border: "none",
-            borderRadius: "5px",
-            cursor: "pointer",
-          }}
-        >
-          Add Staff
-        </button>
-      </div>
+      <div style={{ display: "flex", gap: "10px" }}>
+  <button
+    style={{
+      marginLeft: "auto",  // This pushes it to the right
+      padding: "10px 20px",
+      backgroundColor: "#56021f",
+      whiteSpace: "nowrap",
+      color: "white",
+      border: "none",
+      borderRadius: "5px",
+      cursor: "pointer",
+    }}
+    onClick={() => setShowAddStaffModal(true)}
+  >
+    Add Staff
+  </button>
+</div>
 
       {/* Staff List */}
       <div

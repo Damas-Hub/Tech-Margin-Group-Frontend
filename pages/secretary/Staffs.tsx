@@ -53,8 +53,9 @@ const Staffs = () => {
         <button
           onClick={() => setShowEditModal(true)}
           style={{
+      marginLeft: "auto",   
             padding: "10px 20px",
-            backgroundColor: "#007bff",
+            backgroundColor: "#56021f",
             color: "white",
             border: "none",
             borderRadius: "5px",
@@ -67,6 +68,7 @@ const Staffs = () => {
 
       <div
         style={{
+          
           display: "grid",
           gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
           gap: "20px",
