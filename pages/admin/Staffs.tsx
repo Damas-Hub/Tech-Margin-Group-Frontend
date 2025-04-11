@@ -1,45 +1,40 @@
-import Form from "@/componnets/Form";
+import React, { useEffect, useState } from "react";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "./../../src/firebaseConfig";
+import { AnimatePresence, motion } from "framer-motion";
 import StaffProfile from "@/componnets/StaffProfile";
 import StaffAccountForm from "@/componnets/StaffAccountForm";
-import React, { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
 
 const Staffs = () => {
-  const [showEditModal, setShowEditModal] = useState(false);
+  const [staffMembers, setStaffMembers] = useState<any[]>([]);
   const [showAddStaffModal, setShowAddStaffModal] = useState(false);
 
-  const staffMembers = [
-    {
-      profilePic:
-        "https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg",
-      name: "John Doe",
-      staffId: "ST12345",
-      role: "Secretary",
-      contactNumber: "+1234567890",
-      backDetails:
-        "This staff member is responsible for handling administrative tasks and ensuring smooth operations.",
-    },
-    {
-      profilePic:
-        "https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg",
-      name: "Jane Smith",
-      staffId: "RP67890",
-      role: "Repairer",
-      contactNumber: "+9876543210",
-      backDetails:
-        "This staff member is responsible for vehicle repairs and maintenance.",
-    },
-    {
-      profilePic:
-        "https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg",
-      name: "Michael Brown",
-      staffId: "SK11223",
-      role: "Store Keeper",
-      contactNumber: "+1029384756",
-      backDetails:
-        "This staff member manages inventory and ensures stock availability.",
-    },
-  ];
+  useEffect(() => {
+    const fetchStaffs = async () => {
+      try {
+        const staffCollection = collection(db, "staffs");
+        const snapshot = await getDocs(staffCollection);
+
+        const staffs = snapshot.docs.map((doc) => {
+          const data = doc.data();
+          return {
+            profilePic: data.profilePic || "https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg",
+            name: data.fullName || "",
+            staffId: data.staff_id || "",
+            contactNumber: data.phoneNumber || "",
+            role: data.role || "",
+            backDetails: "", // Optional: you can customize per role if needed
+          };
+        });
+
+        setStaffMembers(staffs);
+      } catch (error) {
+        console.error("Error fetching staff data:", error);
+      }
+    };
+
+    fetchStaffs();
+  }, []);
 
   return (
     <div
@@ -50,26 +45,25 @@ const Staffs = () => {
         margin: "0 auto",
       }}
     >
-      {/* Buttons for editing profile and adding staff */}
       <div style={{ display: "flex", gap: "10px" }}>
-  <button
-    style={{
-      marginLeft: "auto",  // This pushes it to the right
-      padding: "10px 20px",
-      backgroundColor: "#56021f",
-      whiteSpace: "nowrap",
-      color: "white",
-      border: "none",
-      borderRadius: "5px",
-      cursor: "pointer",
-    }}
-    onClick={() => setShowAddStaffModal(true)}
-  >
-    Add Staff
-  </button>
-</div>
+        <button
+          style={{
+            marginLeft: "auto",
+            padding: "10px 20px",
+            backgroundColor: "#56021f",
+            whiteSpace: "nowrap",
+            color: "white",
+            border: "none",
+            borderRadius: "5px",
+            cursor: "pointer",
+          }}
+          onClick={() => setShowAddStaffModal(true)}
+        >
+          Add Staff
+        </button>
+      </div>
 
-      {/* Staff List */}
+      {/* Grid of Staff Cards */}
       <div
         style={{
           display: "grid",
@@ -92,20 +86,18 @@ const Staffs = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            style={
-              {
-                position: "fixed",
-                top: 0,
-                left: 0,
-                width: "100%",
-                height: "100%",
-                backgroundColor: "rgba(0, 0, 0, 0.5)",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                zIndex: 1000,
-              } as React.CSSProperties
-            }
+            style={{
+              position: "fixed",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              backgroundColor: "rgba(0, 0, 0, 0.5)",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              zIndex: 1000,
+            }}
           >
             <motion.div
               initial={{ scale: 0.8, opacity: 0 }}
