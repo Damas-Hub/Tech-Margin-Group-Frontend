@@ -27,6 +27,7 @@ const StaffAccountForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const [email, setEmail] = useState("");
   const [generatedPassword, setGeneratedPassword] = useState("");
   const [accountCreated, setAccountCreated] = useState(false);
+  
 
   useEffect(() => {
     setIsVisible(true);
