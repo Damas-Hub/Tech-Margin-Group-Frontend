@@ -203,7 +203,7 @@ const Store: React.FC<StoreProps> = ({ searchTerm, staffRole }) => {
                 <td>GH₵{Number(store.price).toFixed(2)}</td>
                 <td>
                   <button
-                    className={styles.addButtonnn}
+                    className={styles.addButton}
                     onClick={() => editItemHandler(store)}
                   >
                     Edit

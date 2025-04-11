@@ -8,9 +8,9 @@ import client from "../../public/assets/client.png";
 import staff from "../../public/assets/staff.png";
 import item from "../../public/assets/item.png";
 import request from "../../public/assets/request.png";
-import pending from "../../public/assets/item.png";
-import progress from "../../public/assets/item.png";
-import resolved from "../../public/assets/item.png";
+import pending from "../../public/assets/task.png";
+import progress from "../../public/assets/task1.png";
+import resolved from "../../public/assets/task2.png";
 
 interface HomeProps {
   staffRole: string;
