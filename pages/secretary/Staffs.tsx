@@ -1,44 +1,41 @@
-import Form from "@/componnets/Form";
-import StaffProfile from "@/componnets/StaffProfile";
+import React, { useEffect, useState } from "react";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "./../../src/firebaseConfig";
 import { AnimatePresence, motion } from "framer-motion";
-
-import React, { useState } from "react";
+import StaffProfile from "@/componnets/StaffProfile";
+import StaffAccountForm from "@/componnets/StaffAccountForm";
+import Form from "@/componnets/Form";
 
 const Staffs = () => {
-  const [showEditModal, setShowEditModal] = useState(false);
+  const [staffMembers, setStaffMembers] = useState<any[]>([]);
+  const [showAddStaffModal, setShowAddStaffModal] = useState(false);
 
-  const staffMembers = [
-    {
-      profilePic:
-        "https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg",
-      name: "John Doe",
-      staffId: "ST12345",
-      role: "Secretary",
-      contactNumber: "+1234567890",
-      backDetails:
-        "This staff member is responsible for handling administrative tasks and ensuring smooth operations.",
-    },
-    {
-      profilePic:
-        "https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg",
-      name: "Jane Smith",
-      staffId: "RP67890",
-      role: "Repairer",
-      contactNumber: "+9876543210",
-      backDetails:
-        "This staff member is responsible for vehicle repairs and maintenance.",
-    },
-    {
-      profilePic:
-        "https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg",
-      name: "Michael Brown",
-      staffId: "SK11223",
-      role: "Store Keeper",
-      contactNumber: "+1029384756",
-      backDetails:
-        "This staff member manages inventory and ensures stock availability.",
-    },
-  ];
+  useEffect(() => {
+    const fetchStaffs = async () => {
+      try {
+        const staffCollection = collection(db, "staffs");
+        const snapshot = await getDocs(staffCollection);
+
+        const staffs = snapshot.docs.map((doc) => {
+          const data = doc.data();
+          return {
+            profilePic: data.profilePic || "https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg",
+            name: data.fullName || "",
+            staffId: data.staff_id || "",
+            contactNumber: data.phoneNumber || "",
+            role: data.role || "",
+            backDetails: "", // Optional: you can customize per role if needed
+          };
+        });
+
+        setStaffMembers(staffs);
+      } catch (error) {
+        console.error("Error fetching staff data:", error);
+      }
+    };
+
+    fetchStaffs();
+  }, []);
 
   return (
     <div
@@ -51,7 +48,7 @@ const Staffs = () => {
     >
       <div style={{ display: "flex", justifyContent: "flex-end", gap: "10px" }}>
         <button
-          onClick={() => setShowEditModal(true)}
+          onClick={() => setShowAddStaffModal(true)}
           style={{
       marginLeft: "auto",   
             padding: "10px 20px",
@@ -81,7 +78,7 @@ const Staffs = () => {
         ))}
       </div>
 
-      {showEditModal && (
+      {showAddStaffModal && (
         <AnimatePresence>
           <motion.div
             initial={{ opacity: 0 }}
@@ -109,7 +106,7 @@ const Staffs = () => {
               exit={{ scale: 0.8, opacity: 0 }}
               transition={{ duration: 0.3 }}
             >
-              <Form onClose={() => setShowEditModal(false)} />
+              <Form onClose={() => setShowAddStaffModal(false)} />
             </motion.div>
           </motion.div>
         </AnimatePresence>
