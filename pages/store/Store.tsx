@@ -120,19 +120,23 @@ const Store: React.FC<StoreProps> = ({ searchTerm, staffRole }) => {
     }
   };
 
-  const filteredItems = items.filter((item) =>
-    Object.values(item).some((value) =>
-      (typeof value === "string" ? value : String(value ?? ""))
-        .toLowerCase()
-        .includes((searchTerm ?? "").toLowerCase())
+  const filteredItems = items
+    .filter((item) =>
+      Object.values(item).some((value) =>
+        (typeof value === "string" ? value : String(value ?? ""))
+          .toLowerCase()
+          .includes((searchTerm ?? "").toLowerCase())
+      )
     )
-  );
-
+    .sort((a, b) => a.name.localeCompare(b.name));  
   return (
     <div className={styles.storeWrapper}>
       <ToastContainer position="top-right" autoClose={3000} />
 
-      <button className={styles.addClientButton} onClick={() => setShowModal(true)}>
+      <button
+        className={styles.addClientButton}
+        onClick={() => setShowModal(true)}
+      >
         Add Item
       </button>
 
@@ -165,7 +169,10 @@ const Store: React.FC<StoreProps> = ({ searchTerm, staffRole }) => {
               className={styles.modalInput}
             />
             <div className={styles.buttonGroup}>
-              <button className={styles.cancelButton} onClick={() => setShowModal(false)}>
+              <button
+                className={styles.cancelButton}
+                onClick={() => setShowModal(false)}
+              >
                 Cancel
               </button>
               <button className={styles.addButton} onClick={addItem}>
@@ -195,7 +202,6 @@ const Store: React.FC<StoreProps> = ({ searchTerm, staffRole }) => {
                 <td>{store.quantity}</td>
                 <td>GH₵{Number(store.price).toFixed(2)}</td>
                 <td>
-                 
                   <button
                     className={styles.addButtonnn}
                     onClick={() => editItemHandler(store)}
@@ -215,7 +221,6 @@ const Store: React.FC<StoreProps> = ({ searchTerm, staffRole }) => {
         </tbody>
       </table>
 
-    
       {editItem && (
         <div className={styles.modalOverlay}>
           <div className={styles.modalContent}>
@@ -228,7 +233,10 @@ const Store: React.FC<StoreProps> = ({ searchTerm, staffRole }) => {
               className={styles.modalInput}
             />
             <div className={styles.buttonGroup}>
-              <button className={styles.cancelButton} onClick={() => setEditItem(null)}>
+              <button
+                className={styles.cancelButton}
+                onClick={() => setEditItem(null)}
+              >
                 Cancel
               </button>
               <button className={styles.addButton} onClick={confirmEdit}>

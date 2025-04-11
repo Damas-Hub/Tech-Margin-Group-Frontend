@@ -40,7 +40,9 @@ const Store: React.FC<StoreProps> = ({ searchTerm, staffRole }) => {
       // Simulate slower loading for better UX (remove in production if too slow)
       setTimeout(() => {
         setItems(
-          snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() } as StoreItem))
+          snapshot.docs.map(
+            (doc) => ({ id: doc.id, ...doc.data() } as StoreItem)
+          )
         );
         setLoading(false);
       }, 800); // 800ms delay
@@ -50,25 +52,26 @@ const Store: React.FC<StoreProps> = ({ searchTerm, staffRole }) => {
 
   // ... (keep all your existing handler functions)
 
-  const filteredItems = items.filter((item) =>
-    Object.values(item).some((value) =>
-      (typeof value === "string" ? value : String(value ?? ""))
-        .toLowerCase()
-        .includes((searchTerm ?? "").toLowerCase())
+  const filteredItems = items
+    .filter((item) =>
+      Object.values(item).some((value) =>
+        (typeof value === "string" ? value : String(value ?? ""))
+          .toLowerCase()
+          .includes((searchTerm ?? "").toLowerCase())
+      )
     )
-  );
+    .sort((a, b) => a.name.localeCompare(b.name)); // Alphabetical sorting A-Z
 
-  // Modal animation variants
   const modalVariants = {
     hidden: { opacity: 0, y: -50 },
     visible: { opacity: 1, y: 0 },
-    exit: { opacity: 0, y: 50 }
+    exit: { opacity: 0, y: 50 },
   };
 
   // Button animation
   const buttonVariants = {
     hover: { scale: 1.05, boxShadow: "0px 5px 15px rgba(0, 0, 0, 0.1)" },
-    tap: { scale: 0.98 }
+    tap: { scale: 0.98 },
   };
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>): void {
@@ -79,7 +82,9 @@ const Store: React.FC<StoreProps> = ({ searchTerm, staffRole }) => {
     }));
   }
 
-  async function addItem(event: React.MouseEvent<HTMLButtonElement, MouseEvent>): Promise<void> {
+  async function addItem(
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ): Promise<void> {
     event.preventDefault();
     if (!newItem.name || !newItem.quantity || !newItem.price) {
       toast.error("Please fill in all fields.");
@@ -112,39 +117,48 @@ const Store: React.FC<StoreProps> = ({ searchTerm, staffRole }) => {
     setEditQuantity(store.quantity); // Pre-fill the quantity with the current value
   }
 
-  async function confirmRequest(event: React.MouseEvent<HTMLButtonElement, MouseEvent>): Promise<void> {
-     if (!requestItem || requestQuantity < 1 || requestQuantity > requestItem.quantity) {
-       toast.error("Invalid request quantity.");
-       return;
-     }
-   
-     try {
-       // Decrease the store quantity
-       const itemRef = doc(db, "store", requestItem.id);
-       await updateDoc(itemRef, {
-         quantity: requestItem.quantity - requestQuantity,
-         updatedAt: serverTimestamp(),
-       });
-   
- // Add store id when requesting an item
- await addDoc(collection(db, "requestedItems"), {
-   name: requestItem.name,
-   quantityRequested: requestQuantity,
-   status: "pending",
-   storeId: requestItem.id,  // Store the store item's id
-   createdAt: serverTimestamp(),
- });
- 
-   
-       toast.success(`Successfully requested ${requestQuantity} of ${requestItem.name}.`);
-       setRequestItem(null);
-     } catch (error) {
-       console.error("Error processing request:", error);
-       toast.error("Failed to process request. Please try again.");
-     }
-   }
+  async function confirmRequest(
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ): Promise<void> {
+    if (
+      !requestItem ||
+      requestQuantity < 1 ||
+      requestQuantity > requestItem.quantity
+    ) {
+      toast.error("Invalid request quantity.");
+      return;
+    }
 
-  async function confirmEdit(event: React.MouseEvent<HTMLButtonElement, MouseEvent>): Promise<void> {
+    try {
+      // Decrease the store quantity
+      const itemRef = doc(db, "store", requestItem.id);
+      await updateDoc(itemRef, {
+        quantity: requestItem.quantity - requestQuantity,
+        updatedAt: serverTimestamp(),
+      });
+
+      // Add store id when requesting an item
+      await addDoc(collection(db, "requestedItems"), {
+        name: requestItem.name,
+        quantityRequested: requestQuantity,
+        status: "pending",
+        storeId: requestItem.id, // Store the store item's id
+        createdAt: serverTimestamp(),
+      });
+
+      toast.success(
+        `Successfully requested ${requestQuantity} of ${requestItem.name}.`
+      );
+      setRequestItem(null);
+    } catch (error) {
+      console.error("Error processing request:", error);
+      toast.error("Failed to process request. Please try again.");
+    }
+  }
+
+  async function confirmEdit(
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ): Promise<void> {
     event.preventDefault();
     if (!editItem || editQuantity < 1) {
       toast.error("Invalid quantity.");
@@ -268,7 +282,7 @@ const Store: React.FC<StoreProps> = ({ searchTerm, staffRole }) => {
           <tbody>
             {filteredItems.length > 0 ? (
               filteredItems.map((store: StoreItem, index: number) => (
-                <motion.tr 
+                <motion.tr
                   key={store.id}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}

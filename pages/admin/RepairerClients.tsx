@@ -20,7 +20,7 @@ interface Client {
   problem: string;
   date: string | Timestamp;
   status: string;
-  searchTerm?: string;  
+  searchTerm?: string;
 }
 
 const formatDate = (date: string | Timestamp): string => {
@@ -45,9 +45,9 @@ const RepairerClients: React.FC<RepairerClientsProps> = ({ searchTerm }) => {
       opacity: 1,
       transition: {
         when: "beforeChildren",
-        staggerChildren: 0.1
-      }
-    }
+        staggerChildren: 0.1,
+      },
+    },
   };
 
   const rowVariants = {
@@ -56,24 +56,25 @@ const RepairerClients: React.FC<RepairerClientsProps> = ({ searchTerm }) => {
       opacity: 1,
       x: 0,
       transition: {
-        duration: 0.3
-      }
+        duration: 0.3,
+      },
     },
     hover: {
       scale: 1.01,
       backgroundColor: "rgba(86, 2, 31, 0.03)",
-      transition: { type: "spring", stiffness: 300 }
-    }
+      transition: { type: "spring", stiffness: 300 },
+    },
   };
 
   const selectVariants = {
     hover: { scale: 1.02 },
-    tap: { scale: 0.98 }
+    tap: { scale: 0.98 },
   };
 
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, "clients"), (snapshot) => {
-      setTimeout(() => { // Simulate loading delay for better UX
+      setTimeout(() => {
+        // Simulate loading delay for better UX
         const clientData: Client[] = snapshot.docs.map((doc) => {
           const data = doc.data();
           return {
@@ -107,24 +108,26 @@ const RepairerClients: React.FC<RepairerClientsProps> = ({ searchTerm }) => {
     }
   };
 
-  const filteredItems = clients.filter((item) =>
-    Object.values(item).some((value) =>
-      (typeof value === "string" ? value : String(value ?? ""))
-        .toLowerCase()
-        .includes((searchTerm ?? "").toLowerCase())
+  const filteredItems = clients
+    .filter((item) =>
+      Object.values(item).some((value) =>
+        (typeof value === "string" ? value : String(value ?? ""))
+          .toLowerCase()
+          .includes((searchTerm ?? "").toLowerCase())
+      )
     )
-  );
+    .sort((a, b) => a.name.localeCompare(b.name)); // Alphabetical sorting A-Z
 
   return (
-    <motion.div 
+    <motion.div
       className={styles.storeWrapper}
       initial="hidden"
       animate="visible"
       variants={containerVariants}
     >
       <ToastContainer position="top-right" autoClose={3000} />
-      
-      <motion.h2 
+
+      <motion.h2
         className={styles.clientListTitle}
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -148,7 +151,7 @@ const RepairerClients: React.FC<RepairerClientsProps> = ({ searchTerm }) => {
           <p>Loading clients...</p>
         </motion.div>
       ) : (
-        <motion.table 
+        <motion.table
           className={styles.storeTable}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -182,17 +185,21 @@ const RepairerClients: React.FC<RepairerClientsProps> = ({ searchTerm }) => {
                     <td>{client.phoneNumber}</td>
                     <td>{client.problem}</td>
                     <td>{formatDate(client.date)}</td>
-                    <td className={
-                      client.status === "Resolved" 
-                        ? styles.resolved 
-                        : styles.notDone
-                    }>
+                    <td
+                      className={
+                        client.status === "Resolved"
+                          ? styles.resolved
+                          : styles.notDone
+                      }
+                    >
                       {client.status}
                     </td>
                     <td>
                       <motion.select
                         value={client.status}
-                        onChange={(e) => handleStatusChange(client.id, e.target.value)}
+                        onChange={(e) =>
+                          handleStatusChange(client.id, e.target.value)
+                        }
                         className={styles.inputdate}
                         variants={selectVariants}
                         whileHover="hover"

@@ -49,13 +49,18 @@ const Store: React.FC<StoreProps> = ({ searchTerm, staffRole }) => {
 
   // ... (keep all your existing handler functions)
 
-  const filteredItems = items.filter((item) =>
+  const filteredItems = items
+  .filter((item) =>
     Object.values(item).some((value) =>
       (typeof value === "string" ? value : String(value ?? ""))
         .toLowerCase()
         .includes((searchTerm ?? "").toLowerCase())
     )
-  );
+  )
+  .sort((a, b) => a.name.localeCompare(b.name)); // Alphabetical sorting A-Z
+
+// Or for case-insensitive sorting:
+// .sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase())));
 
   // Animation variants
   const containerVariants = {

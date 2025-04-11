@@ -110,13 +110,15 @@ const ClientForm: React.FC<ClientFormProps> = ({ searchTerm }) => {
     }
   };
 
-  const filteredItems = clients.filter((item) =>
-    Object.values(item).some((value) =>
-      (typeof value === "string" ? value : String(value ?? ""))
-        .toLowerCase()
-        .includes((searchTerm ?? "").toLowerCase())
+  const filteredItems = clients
+    .filter((item) =>
+      Object.values(item).some((value) =>
+        (typeof value === "string" ? value : String(value ?? ""))
+          .toLowerCase()
+          .includes((searchTerm ?? "").toLowerCase())
+      )
     )
-  );
+    .sort((a, b) => a.name.localeCompare(b.name)); // Alphabetical sorting A-Z
 
   return (
     <div className={styles.storeWrapper}>
@@ -197,8 +199,8 @@ const ClientForm: React.FC<ClientFormProps> = ({ searchTerm }) => {
                   className={styles.modalInput}
                 >
                   <option value="Not Done">Not Done</option>
-                  <option value="In Progress">In Progress</option>
-                  <option value="Resolved">Resolved</option>
+                 {/*  <option value="In Progress">In Progress</option>
+                  <option value="Resolved">Resolved</option> */}
                 </select>
                 <div className={styles.buttonGroup}>
                   <button
