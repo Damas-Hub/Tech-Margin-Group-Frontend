@@ -1,6 +1,11 @@
-import { initializeApp, getApps, getApp } from "firebase/app";
+import { initializeApp, getApps, getApp, FirebaseApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  Auth,
+} from "firebase/auth";
 
 // Firebase configuration using environment variables
 const firebaseConfig = {
@@ -13,10 +18,25 @@ const firebaseConfig = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID || "",
 };
 
-
-
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 const db = getFirestore(app);
 const auth = getAuth(app);
 
-export { db, auth, signInWithEmailAndPassword, createUserWithEmailAndPassword };
+// Function to return a secondary auth instance
+let secondaryApp = null;
+
+const getSecondaryAuth = () => {
+  if (!secondaryApp) {
+    secondaryApp = initializeApp(firebaseConfig, "Secondary");
+  }
+  return getAuth(secondaryApp);
+};
+
+export {
+  db,
+  auth,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  getSecondaryAuth,
+  deleteApp,
+};

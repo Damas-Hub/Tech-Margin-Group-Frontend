@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 
 interface Props {
   children: React.ReactNode;
-  allowedRoles: string[]; // e.g., ['Admin']
+  allowedRoles: string[];  
 }
 
 const ProtectedRoute = ({ children, allowedRoles }: Props) => {

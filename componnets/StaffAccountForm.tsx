@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { FaEye, FaEyeSlash, FaCopy } from "react-icons/fa";
 import { auth, db } from "../src/firebaseConfig";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import {
   collection,
   doc,
@@ -14,6 +17,8 @@ import {
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styles from "./StaffAccountForm.module.css";
+import { getSecondaryAuth } from "../src/firebaseConfig";
+import { deleteApp } from "firebase/app";
 
 const StaffAccountForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -71,7 +76,13 @@ const StaffAccountForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     setGeneratedPassword(password);
 
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const secondaryAuth = getSecondaryAuth(); // 👈 use secondary auth
+
+      const userCredential = await createUserWithEmailAndPassword(
+        secondaryAuth,
+        email,
+        password
+      );
       const user = userCredential.user;
 
       const newStaffId = await generateStaffId(role);
@@ -90,8 +101,15 @@ const StaffAccountForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 
       setStaffId(newStaffId);
       setAccountCreated(true);
-      toast.success("Staff account created successfully! Copy the password below.");
+      toast.success(
+        "Staff account created successfully! Copy the password below."
+      );
+
+      // ✅ Cleanup secondary app
+      await deleteApp(secondaryAuth.app);
     } catch (error: any) {
+      console.error("❌ Error during account creation:", error);
+
       let errorMessage = "Account creation failed. Please try again.";
 
       if (error.code === "auth/email-already-in-use") {
@@ -105,6 +123,7 @@ const StaffAccountForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
       toast.error(errorMessage);
     }
   };
+
   const copyToClipboard = () => {
     const textArea = document.createElement("textarea");
     textArea.value = generatedPassword;
