@@ -251,12 +251,11 @@
 
 /* Select input styling */
 .inputdate {
-  padding: 8px 12px;
   border-radius: 10px;
   border: 1px solid #ddd;
   background-color: #56021f;
   cursor: pointer;
-  transition: all 0.2s ease;
+  /* transition: all 0.2s ease; */
 }
 
 .inputdate:focus {

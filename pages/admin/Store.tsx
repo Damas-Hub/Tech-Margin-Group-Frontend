@@ -106,10 +106,13 @@ const Store: React.FC<StoreProps> = ({ searchTerm, staffRole }) => {
       toast.error("Failed to add item. Please try again.");
     }
   }
-
   function requestItemHandler(store: StoreItem): void {
-    setRequestItem(store);
-    setRequestQuantity(1); // Reset the request quantity to 1 when opening the modal
+    if (store.quantity > 0) {
+      setRequestItem(store);
+      setRequestQuantity(1);
+    } else {
+      toast.error("This item is out of stock.");
+    }
   }
 
   function editItemHandler(store: StoreItem): void {

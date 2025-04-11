@@ -54,7 +54,7 @@
   background-color: #56021f;
   color: white;
   border: none;
-  /* width: 35%; */
+  width: 30%;
   white-space: nowrap;
   padding: 10px 20px;
   cursor: pointer;
@@ -86,13 +86,13 @@
   background-color: #56021f;
   color: white;
   border: none;
+  width: 30%;
   white-space: nowrap;
   margin-left: 1rem;
   padding: 10px 20px;
   margin-right: 0.5rem;
   cursor: pointer;
   border-radius: 5px;
-  transition: all 0.3s;
 }
 
 .addButton:hover,
@@ -195,7 +195,7 @@
   background-color: #bbb;
   color: black;
   border: none;
-  width: 45%;
+  width: 30%;
   padding: 10px 20px;
   cursor: pointer;
   border-radius: 5px;

@@ -163,21 +163,31 @@
   }
 
   .sidebarOpen {
-    width: 0; /* No space for the sidebar when open on small screens */
+    width: 14rem;
+    position: fixed;
+    z-index: 1000;
+    height: 100vh;
   }
+  
 
   .sidebarClosed {
-    width: 0; /* Hide the closed sidebar on small screens */
+    width: 0;
+    overflow: hidden;
   }
+  
 
   .mainContent {
-    flex: 1;
+    /* flex: 1; */
     margin-left: 0; /* No margin for main content when sidebar is hidden */
   }
 }
 
 @media (min-width: 769px) {
-  .sidebar {
-    display: flex; /* Always show the sidebar on larger screens */
+  .sidebarClosed {
+    width: 3.5rem;
+  }
+  
+  .sidebarOpen {
+    width: 14rem;
   }
 }

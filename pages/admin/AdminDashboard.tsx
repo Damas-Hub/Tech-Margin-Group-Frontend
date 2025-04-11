@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FiSearch, FiMenu } from "react-icons/fi";
 import { useRouter } from "next/router";
 import toast, { Toaster } from "react-hot-toast";
@@ -31,6 +31,8 @@ const AdminDashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const router = useRouter();
+
+  const [isMobile, setIsMobile] = useState(false);
 
   const menuItems = [
     {
@@ -78,6 +80,32 @@ const AdminDashboard = () => {
       router.push("/login");
     }, 2000);
   };
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+      // Auto-close sidebar on mobile if it's open
+      if (window.innerWidth < 768 && isSidebarOpen) {
+        setIsSidebarOpen(false);
+      }
+      // Auto-open sidebar on desktop if it's closed (unless user toggled it)
+      if (window.innerWidth >= 768 && !isSidebarOpen && !manuallyToggled) {
+        setIsSidebarOpen(true);
+      }
+    };
+
+    // Initialize on mount
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [isSidebarOpen]);
+
+  // Track if user manually toggled the sidebar
+  const [manuallyToggled, setManuallyToggled] = useState(false);
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+    setManuallyToggled(true);
+  };
 
   return (
     <>
@@ -92,10 +120,7 @@ const AdminDashboard = () => {
             }`}
           >
             <div className={styles.sidebarHeader}>
-              <button
-                onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-                className={styles.menu}
-              >
+              <button onClick={toggleSidebar} className={styles.menu}>
                 <FiMenu className="w-8 h-8" />
               </button>
             </div>
