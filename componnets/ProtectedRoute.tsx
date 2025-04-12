@@ -88,7 +88,7 @@ const ProtectedRoute = ({ children, allowedRoles }: Props) => {
             animation: "spin 1s linear infinite",
           }}
         ></div>
-        <p style={{ marginTop: "16px", fontSize: "16px" }}>
+        <p style={{ marginTop: "16px", fontSize: "20px" }}>
           Checking access...
         </p>
 
