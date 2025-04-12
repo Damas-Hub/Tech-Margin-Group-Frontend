@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { FaEye, FaEyeSlash, FaCopy } from "react-icons/fa";
-import { auth, db } from "../src/firebaseConfig";
+import { FaCopy } from "react-icons/fa";
+import { db } from "../src/firebaseConfig";
 import {
   createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
 } from "firebase/auth";
 import {
   collection,
@@ -17,8 +16,10 @@ import {
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styles from "./StaffAccountForm.module.css";
-import { getSecondaryAuth } from "../src/firebaseConfig";
-import { deleteApp } from "firebase/app";
+import {
+  getSecondaryAuth,
+  cleanupSecondaryApp,
+} from "../src/firebaseConfig";
 
 const StaffAccountForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -27,7 +28,6 @@ const StaffAccountForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const [email, setEmail] = useState("");
   const [generatedPassword, setGeneratedPassword] = useState("");
   const [accountCreated, setAccountCreated] = useState(false);
-  
 
   useEffect(() => {
     setIsVisible(true);
@@ -38,7 +38,7 @@ const StaffAccountForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   };
 
   const generateStaffId = async (role: string): Promise<string> => {
-    if (role === "Special Assignment") return staffId; // Manual input
+    if (role === "Special Assignment") return staffId;
 
     const rolePrefixes: { [key: string]: string } = {
       Secretary: "Secretary",
@@ -77,7 +77,7 @@ const StaffAccountForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     setGeneratedPassword(password);
 
     try {
-      const secondaryAuth = getSecondaryAuth(); // 👈 use secondary auth
+      const secondaryAuth = getSecondaryAuth();
 
       const userCredential = await createUserWithEmailAndPassword(
         secondaryAuth,
@@ -102,12 +102,10 @@ const StaffAccountForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 
       setStaffId(newStaffId);
       setAccountCreated(true);
-      toast.success(
-        "Staff account created successfully! Copy the password below."
-      );
+      toast.success("Staff account created successfully! Copy the password below.");
 
       // ✅ Cleanup secondary app
-      await deleteApp(secondaryAuth.app);
+      await cleanupSecondaryApp();
     } catch (error: any) {
       console.error("❌ Error during account creation:", error);
 
@@ -175,7 +173,6 @@ const StaffAccountForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
           </select>
         </div>
 
-        {/* Display Generated Password After Account Creation */}
         {accountCreated && (
           <div className={styles.generatedPasswordContainer}>
             <div className={styles.generatedPassword}>
