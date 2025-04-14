@@ -1,4 +1,3 @@
-
 # Mechanic Shop Management System
 
 ## Overview
