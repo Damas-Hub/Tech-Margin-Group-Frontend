@@ -49,7 +49,7 @@ The **Mechanic Shop Management System** is a web-based platform designed to stre
 ## 🛠 Technology Stack
 
 ### 💻 Frontend
-- **Next.js for UI
+- **Next.js** for UI
 - **React (with Framer Motion)** for component rendering and animations
 - **Firebase Authentication** for login management
 - **Toastify** for feedback messages
