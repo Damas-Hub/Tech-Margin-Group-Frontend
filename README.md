@@ -49,16 +49,16 @@ The **Mechanic Shop Management System** is a web-based platform designed to stre
 ## 🛠 Technology Stack
 
 ### 💻 Frontend
-- **HTML, CSS, JavaScript** for UI
+- **Next.js for UI
 - **React (with Framer Motion)** for component rendering and animations
 - **Firebase Authentication** for login management
 - **Toastify** for feedback messages
 - **LocalStorage/SessionStorage** for session handling
 
-### 🔧 Backend (Work In Progress)
+### 🔧 Backend  
 - **Firebase Firestore** for real-time database
 - **Cloud Firestore Rules** for data protection
-- (Planned) **Node.js + Express** for custom APIs
+ 
 
 ---
 
@@ -69,8 +69,7 @@ The **Mechanic Shop Management System** is a web-based platform designed to stre
 ✅ Real-time Messaging & Notification System  
 ✅ Role-based Message Filtering  
 ✅ Firestore Integration for Store & Messaging  
-🔧 Backend API (Coming Soon)  
-📱 Mobile Optimization (Planned)
+ 
 
 ---
 
