@@ -272,5 +272,138 @@
   color: #666;
 }
 
-/* Animations */
+/* Media query for 350px to 450px screens */
+@media (min-width: 350px) and (max-width: 450px) {
+  .storeWrapper {
+    padding: 5px;
+  }
+
+  .storeTable {
+    font-size: 12px;
+  }
+
+  .storeTable th, 
+  .storeTable td {
+    padding: 8px 4px;
+  }
+
+  .modalContent {
+    width: 90%;
+    padding: 15px;
+  }
+
+  .modalInput {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .addClientButton {
+    padding: 8px 15px;
+    font-size: 14px;
+    margin-bottom: 15px;
+  }
+
+  .buttonGroup {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .buttonGroup button {
+    width: 100%;
+  }
+
+  .storeTable th:nth-child(3),
+  .storeTable td:nth-child(3),
+  .storeTable th:nth-child(4),
+  .storeTable td:nth-child(4) {
+    display: none;
+  }
+
+  .clientListTitle {
+    font-size: 18px;
+    margin-top: 0.5rem;
+  }
+
+  .addButton,
+  .cancelButton {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  /* Adjust modal form layout */
+  .modalForm {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
+/* Media query for 350px to 450px screens - RepairerClients specific */
+@media (min-width: 350px) and (max-width: 450px) {
+  .storeWrapper {
+    padding: 5px;
+    overflow-x: auto;
+  }
+
+  .storeTable {
+    font-size: 12px;
+    min-width: 350px; /* Ensure table doesn't shrink too much */
+  }
+
+  .storeTable th, 
+  .storeTable td {
+    padding: 8px 4px;
+  }
+
+  /* Hide less important columns on small screens */
+  .storeTable th:nth-child(3), /* Phone */
+  .storeTable td:nth-child(3),
+  .storeTable th:nth-child(4), /* Problem */
+  .storeTable td:nth-child(4) {
+    display: none;
+  }
+
+  /* Adjust status dropdown */
+  .inputdate {
+    min-width: 120px;
+    font-size: 12px;
+    padding: 5px;
+  }
+
+  .clientListTitle {
+    font-size: 18px;
+    margin: 0.5rem 0;
+    text-align: center;
+  }
+
+  /* Status text adjustments */
+  .resolved, 
+  .notDone {
+    font-size: 12px;
+  }
+
+  /* Loading spinner */
+  .loadingContainer {
+    height: 150px;
+  }
+
+  .loadingSpinner {
+    width: 40px;
+    height: 40px;
+    border-width: 4px;
+  }
+
+  /* No results message */
+  .noResults {
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  /* Ensure table header stays visible */
+  .storeTable thead {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
+}
  

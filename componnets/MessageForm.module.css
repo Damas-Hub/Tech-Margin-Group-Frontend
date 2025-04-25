@@ -132,6 +132,8 @@
   }
   .inputr {
     background-color: #303245;
+    resize: vertical; 
+    max-height: 200px;
     border-radius: 12px;
     border: 0;
     box-sizing: border-box;
@@ -142,6 +144,13 @@
     outline: 0;
     padding: 4px 20px 0;
     width: 100%;
+  }
+  select.input {
+    -webkit-appearance: none; 
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg..."); /* Custom arrow */
+    background-repeat: no-repeat;
+    background-position: right 10px center;
   }
   
   .cut {
@@ -277,4 +286,61 @@
       opacity: 1;
     }
   }
-  
+ /* Media query for 350px to 450px screens */
+@media (min-width: 350px) and (max-width: 450px) {
+  .form {
+    width: 95vw;
+    padding: 15px;
+    border-radius: 15px;
+    height: auto;
+    min-height: 60vh;
+  }
+
+  .titlee {
+    font-size: 24px;
+    margin-bottom: 15px;
+  }
+
+  .inputContainer,
+  .inputContainerrr {
+    margin-bottom: 1rem;
+  }
+
+  .input {
+    font-size: 14px;
+    padding: 4px 15px 0;
+    height: 45px;
+  }
+
+  .inputr {
+    font-size: 14px;
+    height: 120px;
+    margin-bottom: 1rem;
+  }
+
+  .buttonContainer {
+    display: flex; /* Keep flex layout */
+    flex-direction: row; /* Keep buttons in row */
+    gap: 10px; /* Reduce gap between buttons */
+    margin-top: 20px;
+  }
+
+  .button {
+    font-size: 14px; /* Smaller font */
+    height: 40px; /* Smaller height */
+    padding: 0 10px; /* Adjust padding */
+    min-width: 0; /* Allow buttons to shrink */
+    flex: 1; /* Both buttons take equal space */
+  }
+
+  /* Adjust form positioning */
+  .formWrapper {
+    padding: 10px;
+    margin-top: 0.5rem;
+  }
+
+  /* Animation adjustments */
+  .formVisible {
+    transform: scale(1);
+  }
+}
