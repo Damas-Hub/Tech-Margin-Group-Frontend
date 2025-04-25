@@ -157,7 +157,7 @@
   cursor: pointer;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 370px) {
   .sidebar {
     display: none; /* Hide sidebar on small screens */
   }

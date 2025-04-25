@@ -6,15 +6,25 @@ import { useRouter } from "next/router";
 
 interface Props {
   children: React.ReactNode;
-  allowedRoles: string[];  
+  allowedRoles: string[];
 }
 
 const ProtectedRoute = ({ children, allowedRoles }: Props) => {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [authorized, setAuthorized] = useState(false);
+  const [showMobileWarning, setShowMobileWarning] = useState(false);
 
   useEffect(() => {
+    // 👇 Check for mobile screen (350px - 450px)
+    const width = window.innerWidth;
+    if (width >= 350 && width <= 450) {
+      setShowMobileWarning(true);
+      setTimeout(() => {
+        setShowMobileWarning(false); // hide warning after delay
+      }, 4000); // adjust delay as needed
+    }
+
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (!user) {
         router.replace("/login");
@@ -65,7 +75,7 @@ const ProtectedRoute = ({ children, allowedRoles }: Props) => {
     return () => unsubscribe();
   }, []);
 
-  if (loading) {
+  if (loading || showMobileWarning) {
     return (
       <div
         style={{
@@ -76,21 +86,36 @@ const ProtectedRoute = ({ children, allowedRoles }: Props) => {
           backgroundColor: "#f3f4f6",
           flexDirection: "column",
           color: "#56021f",
+          padding: "1rem",
+          textAlign: "center",
         }}
       >
-        <div
-          style={{
-            border: "4px solid #56021f",
-            borderTop: "4px solid #007bff",
-            borderRadius: "50%",
-            width: "40px",
-            height: "40px",
-            animation: "spin 1s linear infinite",
-          }}
-        ></div>
-        <p style={{ marginTop: "16px", fontSize: "16px" }}>
-          Checking access...
-        </p>
+        {showMobileWarning ? (
+          <>
+            <h2 style={{ fontSize: "1.2rem", fontWeight: "bold" }}>
+              ⚠️ Not Optimized for Mobile
+            </h2>
+            <p style={{ marginTop: "0.5rem", maxWidth: "300px" }}>
+              This system is not fully responsive on mobile devices. Please use a tablet or PC for the best experience.
+            </p>
+          </>
+        ) : (
+          <>
+            <div
+              style={{
+                border: "4px solid #56021f",
+                borderTop: "4px solid #007bff",
+                borderRadius: "50%",
+                width: "40px",
+                height: "40px",
+                animation: "spin 1s linear infinite",
+              }}
+            ></div>
+            <p style={{ marginTop: "16px", fontSize: "16px" }}>
+              Checking access...
+            </p>
+          </>
+        )}
 
         <style jsx>{`
           @keyframes spin {
