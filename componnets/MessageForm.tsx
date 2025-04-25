@@ -8,6 +8,7 @@ import {
   serverTimestamp,
   doc,
   getDoc,
+  getDocs,
 } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 import { motion, AnimatePresence } from "framer-motion";
@@ -57,21 +58,38 @@ const MessageForm: React.FC<MessageFormProps> = ({ isVisible, onClose }) => {
     }
 
     const user = auth.currentUser;
-
     if (!user) {
       toast.error("No authenticated user.");
       return;
     }
 
     try {
-      await addDoc(collection(db, "messages"), {
-        message,
-        recipient,
-        sender: senderRole,
-        senderUid: user.uid,
-        timestamp: serverTimestamp(),
-        read: false,
-      });
+      if (recipient === "ALL_STAFFS") {
+        const staffsSnapshot = await getDocs(collection(db, "staffs"));
+        const sendPromises = staffsSnapshot.docs.map((docSnap) => {
+          const staffData = docSnap.data();
+          return addDoc(collection(db, "messages"), {
+            message,
+            recipient: staffData.role,
+            recipientUid: docSnap.id,
+            sender: senderRole,
+            senderUid: user.uid,
+            timestamp: serverTimestamp(),
+            read: false,
+          });
+        });
+
+        await Promise.all(sendPromises);
+      } else {
+        await addDoc(collection(db, "messages"), {
+          message,
+          recipient,
+          sender: senderRole,
+          senderUid: user.uid,
+          timestamp: serverTimestamp(),
+          read: false,
+        });
+      }
 
       toast.success("Message sent successfully!");
       setMessage("");
@@ -82,8 +100,8 @@ const MessageForm: React.FC<MessageFormProps> = ({ isVisible, onClose }) => {
     }
   };
 
-  // All possible roles
   const allRoles = ["Admin", "Secretary", "Repairer", "Store Keeper"];
+  const isAdmin = senderRole === "Admin";
   const filteredRoles = allRoles.filter((role) => role !== senderRole);
 
   return (
@@ -124,6 +142,11 @@ const MessageForm: React.FC<MessageFormProps> = ({ isVisible, onClose }) => {
                   onChange={(e) => setRecipient(e.target.value)}
                 >
                   <option value="">Select Recipient</option>
+
+                  {isAdmin && (
+                    <option value="ALL_STAFFS">All Staffs</option>
+                  )}
+
                   {filteredRoles.map((role) => (
                     <option key={role} value={role}>
                       {role}
@@ -135,7 +158,7 @@ const MessageForm: React.FC<MessageFormProps> = ({ isVisible, onClose }) => {
               <div className={styles.buttonContainer}>
                 <button
                   className={`${styles.button} ${styles.cancelButton}`}
-                  // onClick={onClose}
+                  onClick={onClose}
                 >
                   Cancel
                 </button>

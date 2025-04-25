@@ -18,18 +18,28 @@ const firebaseConfig = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID || "",
 };
 
+// Main app initialization
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 const db = getFirestore(app);
 const auth = getAuth(app);
 
-// Function to return a secondary auth instance
+// Secondary app handling
 let secondaryApp = null;
 
-const getSecondaryAuth = () => {
+const getSecondaryApp = () => {
   if (!secondaryApp) {
     secondaryApp = initializeApp(firebaseConfig, "Secondary");
   }
-  return getAuth(secondaryApp);
+  return secondaryApp;
+};
+
+const getSecondaryAuth = () => getAuth(getSecondaryApp());
+
+const cleanupSecondaryApp = async () => {
+  if (secondaryApp) {
+    await deleteApp(secondaryApp);
+    secondaryApp = null;
+  }
 };
 
 export {
@@ -38,5 +48,6 @@ export {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   getSecondaryAuth,
-  deleteApp,
+  getSecondaryApp,
+  cleanupSecondaryApp,
 };
