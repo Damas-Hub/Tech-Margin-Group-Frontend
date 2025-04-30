@@ -199,8 +199,7 @@ const ClientForm: React.FC<ClientFormProps> = ({ searchTerm }) => {
                   className={styles.modalInput}
                 >
                   <option value="Not Done">Not Done</option>
-                 {/*  <option value="In Progress">In Progress</option>
-                  <option value="Resolved">Resolved</option> */}
+                
                 </select>
                 <div className={styles.buttonGroup}>
                   <button

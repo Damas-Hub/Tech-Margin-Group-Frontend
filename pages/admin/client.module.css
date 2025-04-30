@@ -1,0 +1,409 @@
+.storeWrapper {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f4f6f9;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+  }
+  
+  .storeTable {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 10px;
+    margin-bottom: 3.5rem;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .storeTable th,
+  .storeTable td {
+    padding: 14px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+  }
+  .input {
+    flex: 1;
+    min-width: 300px;
+    background-color: #303245;
+    border-radius: 5px;
+    border: 0;
+    color: #eee;
+    font-size: 18px;
+  }
+  .inputdate {
+    flex: 1;
+    min-width: 200px;
+    background-color: #303245;
+    border-radius: 5px;
+    border: 0;
+    color: #eee;
+    font-size: 18px;
+    padding: 10px;
+    margin: 5px;
+  }
+  .storeTable th {
+    background-color: #56021f;
+    color: white;
+    font-weight: bold;
+  }
+  
+  .storeTable tr:nth-child(even) {
+    background-color: rgba(0, 0, 0, 0.03);
+  }
+  
+  .addButton {
+    background-color: #56021f;
+    color: white;
+    border: none;
+    width: 20%;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: all 0.3s;
+  }
+  
+  .addButton:hover {
+    background-color: #92062d;
+  }
+  
+  .cancelButton:hover {
+    background-color: #bbb;
+  }
+  
+  .resolved {
+    color: green;
+    font-weight: bold;
+  }
+  
+  .notDone {
+    color: red;
+    font-weight: bold;
+  }
+  
+  .noResults {
+    text-align: center;
+    padding: 15px;
+    font-size: 16px;
+    color: gray;
+  }
+  
+  .formContainer h2 {
+    text-align: center;
+    color: #333;
+  }
+  
+  .formContainer input,
+  .formContainer select {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  .addClientButton {
+    background-color: #56021f;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: all 0.3s;
+  }
+  
+  .addClientButton:hover {
+    background-color: #92062d;
+  }
+  
+  .buttonGroup {
+    display: flex;
+    justify-content: right;
+    margin-top: 15px;
+  }
+  .inputContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+  }
+  
+  /* Modal Overlay */
+  .modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  .addClientButton,
+  .addButton,
+  .cancelButton {
+    transition: transform 0.2s ease, background-color 0.3s ease;
+  }
+  /* Modal Content */
+  .modalContent {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    width: 40%;
+    /* max-width: 90%; */
+    text-align: center;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+    animation: slideIn 0.3s ease-in-out;
+  }
+  
+  /* Modal Inputs */
+  .modalInput {
+    width: 100%;
+    padding: 15px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 20px;
+    font-family: Verdana, Tahoma, sans-serif;
+    transition: border 0.3s ease-in-out;
+  }
+  
+  .modalInput:focus {
+    border-color: #56021f;
+    outline: none;
+  }
+  
+  /* Button Group */
+  .buttonGroup {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+  }
+  
+  /* Buttons */
+  .cancelButton,
+  .addButton {
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: all 0.3s;
+    border: none;
+  }
+  
+  .cancelButton {
+    background-color: #bbb;
+    color: black;
+  }
+  
+  .addButton {
+    background-color: #56021f;
+    color: white;
+  }
+  
+  .cancelButton:hover {
+    background-color: #999;
+  }
+  
+  .addButton:hover {
+    background-color: #92062d;
+  }
+  .clientListTitle{
+    margin-top: 1rem;
+  }
+  /* Loading spinner styles */
+  .loadingContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    width: 100%;
+  }
+  
+  .loadingSpinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #56021f;
+    border-radius: 50%;
+    margin-bottom: 15px;
+  }
+  
+   
+  
+  /* Status colors */
+  .resolved {
+    color: green;
+    font-weight: bold;
+  }
+  
+  .notDone {
+    color: #d32f2f;
+    font-weight: bold;
+  }
+  
+  /* Select input styling */
+  .inputdate {
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    background-color: #56021f;
+    cursor: pointer;
+    /* transition: all 0.2s ease; */
+  }
+  
+  .inputdate:focus {
+    outline: none;
+    border-color: #56021f;
+    box-shadow: 0 0 0 2px rgba(86, 2, 31, 0.2);
+  }
+  
+  /* No results styling */
+  .noResults {
+    text-align: center;
+    padding: 20px;
+    font-size: 16px;
+    color: #666;
+  }
+  
+  /* Media query for 350px to 450px screens */
+  @media (min-width: 350px) and (max-width: 450px) {
+    .storeWrapper {
+      padding: 5px;
+    }
+  
+    .storeTable {
+      font-size: 12px;
+    }
+  
+    .storeTable th, 
+    .storeTable td {
+      padding: 8px 4px;
+    }
+  
+    .modalContent {
+      width: 90%;
+      padding: 15px;
+    }
+  
+    .modalInput {
+      font-size: 14px;
+      padding: 10px;
+    }
+  
+    .addClientButton {
+      padding: 8px 15px;
+      font-size: 14px;
+      margin-bottom: 15px;
+    }
+  
+    .buttonGroup {
+      flex-direction: column;
+      gap: 5px;
+    }
+  
+    .buttonGroup button {
+      width: 100%;
+    }
+  
+    .storeTable th:nth-child(3),
+    .storeTable td:nth-child(3),
+    .storeTable th:nth-child(4),
+    .storeTable td:nth-child(4) {
+      display: none;
+    }
+  
+    .clientListTitle {
+      font-size: 18px;
+      margin-top: 0.5rem;
+    }
+  
+    .addButton,
+    .cancelButton {
+      font-size: 14px;
+      padding: 8px;
+    }
+  
+    /* Adjust modal form layout */
+    .modalForm {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+  }
+  
+  /* Media query for 350px to 450px screens - RepairerClients specific */
+  @media (min-width: 350px) and (max-width: 450px) {
+    .storeWrapper {
+      padding: 5px;
+      overflow-x: auto;
+    }
+  
+    .storeTable {
+      font-size: 12px;
+      min-width: 350px; /* Ensure table doesn't shrink too much */
+    }
+  
+    .storeTable th, 
+    .storeTable td {
+      padding: 8px 4px;
+    }
+  
+    /* Hide less important columns on small screens */
+    .storeTable th:nth-child(3), /* Phone */
+    .storeTable td:nth-child(3),
+    .storeTable th:nth-child(4), /* Problem */
+    .storeTable td:nth-child(4) {
+      display: none;
+    }
+  
+    /* Adjust status dropdown */
+    .inputdate {
+      min-width: 120px;
+      font-size: 12px;
+      padding: 5px;
+    }
+  
+    .clientListTitle {
+      font-size: 18px;
+      margin: 0.5rem 0;
+      text-align: center;
+    }
+  
+    /* Status text adjustments */
+    .resolved, 
+    .notDone {
+      font-size: 12px;
+    }
+  
+    /* Loading spinner */
+    .loadingContainer {
+      height: 150px;
+    }
+  
+    .loadingSpinner {
+      width: 40px;
+      height: 40px;
+      border-width: 4px;
+    }
+  
+    /* No results message */
+    .noResults {
+      padding: 10px;
+      font-size: 14px;
+    }
+  
+    /* Ensure table header stays visible */
+    .storeTable thead {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+  }
+   
