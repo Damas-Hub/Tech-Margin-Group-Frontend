@@ -20,7 +20,6 @@ const Form: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     dateOfBirth: "",
   });
 
-  // 🔹 Fetch logged-in user data
   useEffect(() => {
     setIsVisible(true);
 
@@ -215,7 +214,7 @@ const Form: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                 type="submit"
                 disabled={loading}
               >
-                {loading ? "Saving..." : "Submit"}
+                {loading ? "Saving..." : "Update"}
               </button>
             </div>
           </form>

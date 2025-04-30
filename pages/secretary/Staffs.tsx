@@ -3,7 +3,6 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "./../../src/firebaseConfig";
 import { AnimatePresence, motion } from "framer-motion";
 import StaffProfile from "@/componnets/StaffProfile";
-import StaffAccountForm from "@/componnets/StaffAccountForm";
 import Form from "@/componnets/Form";
 
 const Staffs = () => {

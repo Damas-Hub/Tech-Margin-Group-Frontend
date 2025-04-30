@@ -186,3 +186,69 @@
     opacity: 1;
   }
 }
+
+/* Media query for 350px to 450px screens */
+@media (min-width: 350px) and (max-width: 450px) {
+  .form {
+    width: 90vw;
+    padding: 15px;
+    border-radius: 15px;
+  }
+
+  .title {
+    font-size: 24px;
+    margin-top: 20px;
+  }
+
+  .inputContainer {
+    height: 45px;
+    margin-top: 25px !important;
+  }
+
+  .ic1 {
+    margin-top: 25px;
+  }
+
+  .ic2 {
+    margin-top: 20px;
+  }
+
+  .input {
+    font-size: 14px;
+    padding: 4px 15px 0;
+  }
+
+  .iLabel {
+    font-size: 14px;
+    top: 15px;
+  }
+
+  .input:focus ~ .iLabel {
+    transform: translateY(-25px) translateX(10px) scale(0.75);
+  }
+
+  .buttonContainer {
+    display: flex;
+    flex-direction: row;  
+    justify-content: space-between;  
+    gap: 10px;
+    margin-top: 25px;
+    flex-wrap: wrap;  
+  }
+  
+
+  .button {
+    font-size: 16px;
+    height: 45px;
+  }
+
+  /* Adjust form positioning */
+  .formWrapper {
+    padding: 10px;
+  }
+
+  /* Animation adjustments */
+  .formVisible {
+    transform: scale(1);
+  }
+}
