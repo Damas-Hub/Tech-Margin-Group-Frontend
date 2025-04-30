@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   FaSearch,
   FaBars,
@@ -29,6 +29,19 @@ const RepairerDashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setIsSidebarOpen(false);
+      } else {
+        setIsSidebarOpen(true);
+      }
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const menuItems = [
     {
@@ -96,7 +109,10 @@ const RepairerDashboard = () => {
                   className={`${styles.sidebarMenuItem} ${
                     activePage === item.label ? "bg-[#B05858] " : ""
                   }`}
-                  onClick={() => setActivePage(item.label)}
+                  onClick={() => {
+                    setActivePage(item.label);
+                    if (window.innerWidth < 768) setIsSidebarOpen(false);
+                  }}
                 >
                   {item.icon}
                   <span
@@ -213,7 +229,7 @@ const RepairerDashboard = () => {
           </div>
         )}
       </div>
-      </ProtectedRoute>
+    </ProtectedRoute>
   );
 };
 

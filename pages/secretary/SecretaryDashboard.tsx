@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   FaSearch,
   FaBars,
@@ -21,11 +21,27 @@ import { FaUsersGear } from "react-icons/fa6";
 import ProtectedRoute from "@/componnets/ProtectedRoute";
 
 const SecretaryDashboard = () => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(
+    typeof window !== "undefined" ? window.innerWidth >= 768 : true
+  );
   const [activePage, setActivePage] = useState("Home");
   const [searchTerm, setSearchTerm] = useState("");
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const router = useRouter();
+
+  // Auto-collapse sidebar on small screens
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setIsSidebarOpen(false);
+      } else {
+        setIsSidebarOpen(true);
+      }
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const menuItems = [
     {
@@ -60,7 +76,6 @@ const SecretaryDashboard = () => {
   };
 
   return (
-    
     <ProtectedRoute allowedRoles={["Secretary"]}>
       <NetworkBanner />
       <div className="flex h-screen">
@@ -83,24 +98,28 @@ const SecretaryDashboard = () => {
 
           <div className={styles.sidebarContent}>
             <nav>
-              {menuItems.map((item) => (
-                <button
-                  key={item.label}
-                  className={`${styles.sidebarMenuItem} ${
-                    activePage === item.label ? "bg-[#B05858]" : ""
-                  }`}
-                  onClick={() => setActivePage(item.label)}
-                >
-                  {item.icon}
-                  <span
-                    className={`${styles.sidebarMenuText} ${
-                      !isSidebarOpen && "hidden"
-                    }`}
-                  >
-                    {item.label}
-                  </span>
-                </button>
-              ))}
+            {menuItems.map((item) => (
+  <button
+    key={item.label}
+    className={`${styles.sidebarMenuItem} ${
+      activePage === item.label ? "bg-[#B05858]" : ""
+    }`}
+    onClick={() => {
+      setActivePage(item.label);
+      if (window.innerWidth < 768) setIsSidebarOpen(false);
+    }}
+  >
+    {item.icon}
+    <span
+      className={`${styles.sidebarMenuText} ${
+        !isSidebarOpen && "hidden"
+      }`}
+    >
+      {item.label}
+    </span>
+  </button>
+))}
+
             </nav>
             <div className={styles.logout}>
               <button
@@ -154,13 +173,13 @@ const SecretaryDashboard = () => {
           {/* Render Active Page */}
           <main className={styles.contentArea}>
             <div className={styles.contentCard}>
-              {menuItems.find((item) => item.label === activePage)
-                ?.component || (
+              {menuItems.find((item) => item.label === activePage)?.component || (
                 <h2 className="text-2xl font-semibold">Page Not Found</h2>
               )}
             </div>
           </main>
         </div>
+
         <footer className="bg-[#56021f] text-white py-2 text-center fixed bottom-0 w-full">
           <p className="text-sm">
             &copy; {new Date().getFullYear()} TechMarginGroup. Developed by{" "}
@@ -175,7 +194,7 @@ const SecretaryDashboard = () => {
           </p>
         </footer>
 
-        {/* Logout Confirmation Modal */}
+        {/* Logout Modal */}
         {showLogoutModal && (
           <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
             <div className="bg-white p-8 rounded-xl shadow-xl text-center w-full max-w-md mx-4 min-h-[220px] flex flex-col justify-between">

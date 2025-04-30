@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { FiSearch, FiMenu } from "react-icons/fi";
 import { useRouter } from "next/router";
 import toast, { Toaster } from "react-hot-toast";
@@ -31,8 +31,14 @@ const AdminDashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const router = useRouter();
+  const hasUserToggledSidebar = useRef(false);
 
-  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const width = window.innerWidth;
+    if (width >= 350 && width <= 450 && !hasUserToggledSidebar.current) {
+      setIsSidebarOpen(false);
+    }
+  }, []);
 
   const menuItems = [
     {
@@ -80,32 +86,6 @@ const AdminDashboard = () => {
       router.push("/login");
     }, 2000);
   };
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-      // Auto-close sidebar on mobile if it's open
-      if (window.innerWidth < 768 && isSidebarOpen) {
-        setIsSidebarOpen(false);
-      }
-      // Auto-open sidebar on desktop if it's closed (unless user toggled it)
-      if (window.innerWidth >= 768 && !isSidebarOpen && !manuallyToggled) {
-        setIsSidebarOpen(true);
-      }
-    };
-
-    // Initialize on mount
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, [isSidebarOpen]);
-
-  // Track if user manually toggled the sidebar
-  const [manuallyToggled, setManuallyToggled] = useState(false);
-
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-    setManuallyToggled(true);
-  };
 
   return (
     <>
@@ -120,7 +100,13 @@ const AdminDashboard = () => {
             }`}
           >
             <div className={styles.sidebarHeader}>
-              <button onClick={toggleSidebar} className={styles.menu}>
+              <button
+                onClick={() => {
+                  setIsSidebarOpen((prev) => !prev);
+                  hasUserToggledSidebar.current = true;
+                }}
+                className={styles.menu}
+              >
                 <FiMenu className="w-8 h-8" />
               </button>
             </div>
@@ -131,9 +117,14 @@ const AdminDashboard = () => {
                   <button
                     key={item.label}
                     className={`${styles.sidebarMenuItem} ${
-                      activePage === item.label ? "bg-[#B05858] " : ""
+                      activePage === item.label ? "bg-[#B05858]" : ""
                     }`}
-                    onClick={() => setActivePage(item.label)}
+                    onClick={() => {
+                      setActivePage(item.label);
+                      if (window.innerWidth < 768) {
+                        setIsSidebarOpen(false);
+                      }
+                    }}
                   >
                     {item.icon}
                     <span
