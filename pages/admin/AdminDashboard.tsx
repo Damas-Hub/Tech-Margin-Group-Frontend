@@ -86,6 +86,14 @@ const AdminDashboard = () => {
       router.push("/login");
     }, 2000);
   };
+  const [screenWidth, setScreenWidth] = useState(0);
+
+  useEffect(() => {
+    const handleResize = () => setScreenWidth(window.innerWidth);
+    handleResize();  
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
     <>
@@ -96,7 +104,11 @@ const AdminDashboard = () => {
           {/* Sidebar */}
           <div
             className={`${styles.sidebar} ${
-              isSidebarOpen ? styles.sidebarOpen : styles.sidebarClosed
+              isSidebarOpen
+                ? `${styles.sidebarOpen} ${
+                    screenWidth <= 450 ? styles.sidebarFullScreen : ""
+                  }`
+                : styles.sidebarClosed
             }`}
           >
             <div className={styles.sidebarHeader}>

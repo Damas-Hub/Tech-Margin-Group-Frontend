@@ -1,7 +1,6 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import {
-  FaSearch,
   FaBars,
   FaSignOutAlt,
   FaComments,
@@ -81,6 +80,15 @@ const RepairerDashboard = () => {
     }, 2000);
   };
 
+  const [screenWidth, setScreenWidth] = useState(0);
+
+  useEffect(() => {
+    const handleResize = () => setScreenWidth(window.innerWidth);
+    handleResize(); // Set initial width
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <ProtectedRoute allowedRoles={["Repairer"]}>
       <NetworkBanner />
@@ -90,7 +98,11 @@ const RepairerDashboard = () => {
         {/* Sidebar */}
         <div
           className={`${styles.sidebar} ${
-            isSidebarOpen ? styles.sidebarOpen : styles.sidebarClosed
+            isSidebarOpen
+              ? `${styles.sidebarOpen} ${
+                  screenWidth <= 450 ? styles.sidebarFullScreen : ""
+                }`
+              : styles.sidebarClosed
           }`}
         >
           <div className={styles.sidebarHeader}>

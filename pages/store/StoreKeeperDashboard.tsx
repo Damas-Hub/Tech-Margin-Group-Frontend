@@ -31,18 +31,18 @@ const StoreKeeperDashboard = () => {
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const router = useRouter();
 
-   useEffect(() => {
-      const handleResize = () => {
-        if (window.innerWidth < 768) {
-          setIsSidebarOpen(false);
-        } else {
-          setIsSidebarOpen(true);
-        }
-      };
-      handleResize();
-      window.addEventListener("resize", handleResize);
-      return () => window.removeEventListener("resize", handleResize);
-    }, []);
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setIsSidebarOpen(false);
+      } else {
+        setIsSidebarOpen(true);
+      }
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const menuItems = [
     {
@@ -81,9 +81,17 @@ const StoreKeeperDashboard = () => {
     }, 2000);
   };
 
+  const [screenWidth, setScreenWidth] = useState(0);
+
+  useEffect(() => {
+    const handleResize = () => setScreenWidth(window.innerWidth);
+    handleResize(); // Set initial width
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <ProtectedRoute allowedRoles={["Store Keeper"]}>
-
       <NetworkBanner />
       <div className="flex h-screen">
         <Toaster />
@@ -91,7 +99,11 @@ const StoreKeeperDashboard = () => {
         {/* Sidebar */}
         <div
           className={`${styles.sidebar} ${
-            isSidebarOpen ? styles.sidebarOpen : styles.sidebarClosed
+            isSidebarOpen
+              ? `${styles.sidebarOpen} ${
+                  screenWidth <= 450 ? styles.sidebarFullScreen : ""
+                }`
+              : styles.sidebarClosed
           }`}
         >
           <div className={styles.sidebarHeader}>
@@ -105,7 +117,7 @@ const StoreKeeperDashboard = () => {
 
           <div className={styles.sidebarContent}>
             <nav>
-            {menuItems.map((item) => (
+              {menuItems.map((item) => (
                 <button
                   key={item.label}
                   className={`${styles.sidebarMenuItem} ${
@@ -148,35 +160,35 @@ const StoreKeeperDashboard = () => {
         {/* Main Content */}
         <div className={styles.mainContent}>
           <header className={styles.header}>
-          <div className="flex flex-wrap items-center justify-between gap-4 p-4">
-                {/* Search Box */}
-                <div className={`${styles.searchWrapper} flex-1 min-w-[100px]`}>
-                  <FiSearch className={styles.searchIcon} />
-                  <input
-                    type="text"
-                    placeholder="Search..."
-                    className={styles.searchInput}
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                  />
-                </div>
-
-                {/* Notification & Avatar */}
-                <div className="flex items-center gap-3 sm:gap-6 ml-auto">
-                  <NotificationModal
-                    staffRole={userRole}
-                    className="w-7 h-7 cursor-pointer text-red-600"
-                  />
-
-                  <Image
-                    src="https://cdn.vectorstock.com/i/1000v/31/40/mechanic-logo-vector-44593140.jpg"
-                    alt="Logo"
-                    width={35}
-                    height={35}
-                    className="w-12 h-12 rounded-full"
-                  />
-                </div>
+            <div className="flex flex-wrap items-center justify-between gap-4 p-4">
+              {/* Search Box */}
+              <div className={`${styles.searchWrapper} flex-1 min-w-[100px]`}>
+                <FiSearch className={styles.searchIcon} />
+                <input
+                  type="text"
+                  placeholder="Search..."
+                  className={styles.searchInput}
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
               </div>
+
+              {/* Notification & Avatar */}
+              <div className="flex items-center gap-3 sm:gap-6 ml-auto">
+                <NotificationModal
+                  staffRole={userRole}
+                  className="w-7 h-7 cursor-pointer text-red-600"
+                />
+
+                <Image
+                  src="https://cdn.vectorstock.com/i/1000v/31/40/mechanic-logo-vector-44593140.jpg"
+                  alt="Logo"
+                  width={35}
+                  height={35}
+                  className="w-12 h-12 rounded-full"
+                />
+              </div>
+            </div>
           </header>
 
           {/* Render Active Page */}
@@ -190,18 +202,18 @@ const StoreKeeperDashboard = () => {
           </main>
         </div>
         <footer className="bg-[#56021f] text-white py-1 sm:py-2 text-center fixed bottom-0 w-full">
-  <p className="text-xs sm:text-sm">
-    &copy; {new Date().getFullYear()} TechMarginGroup. Developed by{" "}
-    <a
-      href="https://hubertdhk.netlify.app"
-      target="_blank"
-      rel="noopener noreferrer"
-      className="text-blue-400 hover:underline"
-    >
-      DamasHub
-    </a>
-  </p>
-</footer>
+          <p className="text-xs sm:text-sm">
+            &copy; {new Date().getFullYear()} TechMarginGroup. Developed by{" "}
+            <a
+              href="https://hubertdhk.netlify.app"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-400 hover:underline"
+            >
+              DamasHub
+            </a>
+          </p>
+        </footer>
 
         {/* Logout Confirmation Modal */}
         {showLogoutModal && (
