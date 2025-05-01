@@ -10,14 +10,17 @@ interface LiveDataProps {
 
 const LiveData: React.FC<LiveDataProps> = ({ icon, number, text }) => {
   return (
-    <>
-      <NetworkBanner />
-      <div className={styles.container}>
-        <div className={styles.icon}>{icon}</div>
-        <div className={styles.number}>{number}</div>
-        <div className={styles.text}>{text}</div>
-      </div>
-    </>
+<>
+  <NetworkBanner />
+  <div className={styles.wrapper}>
+    <div className={styles.container}>
+      <div className={styles.icon}>{icon}</div>
+      <div className={styles.number}>{number}</div>
+      <div className={styles.text}>{text}</div>
+    </div>
+  </div>
+</>
+
   );
 };
 
