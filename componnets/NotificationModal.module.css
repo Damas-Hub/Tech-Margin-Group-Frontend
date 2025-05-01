@@ -164,3 +164,12 @@
   margin-top: 16px;
   text-align: right;
 }
+@media (max-width: 450px) {
+  .notificationContainer {
+    right: -4.3rem;
+    margin-top: 5px;
+    left: auto;
+    width: 70vw;
+    transform: translateX(-5%);
+  }
+}
