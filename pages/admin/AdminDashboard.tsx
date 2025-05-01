@@ -158,8 +158,9 @@ const AdminDashboard = () => {
           {/* Main Content */}
           <div className={styles.mainContent}>
             <header className={styles.header}>
-              <div className="flex items-center justify-between p-4">
-                <div className={styles.searchWrapper}>
+              <div className="flex flex-wrap items-center justify-between gap-4 p-4">
+                {/* Search Box */}
+                <div className={`${styles.searchWrapper} flex-1 min-w-[100px]`}>
                   <FiSearch className={styles.searchIcon} />
                   <input
                     type="text"
@@ -170,7 +171,8 @@ const AdminDashboard = () => {
                   />
                 </div>
 
-                <div className="flex items-center space-x-12 ml-auto">
+                {/* Notification & Avatar */}
+                <div className="flex items-center gap-3 sm:gap-6 ml-auto">
                   <NotificationModal
                     staffRole={userRole}
                     className="w-7 h-7 cursor-pointer text-red-600"
@@ -201,19 +203,18 @@ const AdminDashboard = () => {
 
         {/* Footer */}
         <footer className="bg-[#56021f] text-white py-1 sm:py-2 text-center fixed bottom-0 w-full">
-  <p className="text-xs sm:text-sm">
-    &copy; {new Date().getFullYear()} TechMarginGroup. Developed by{" "}
-    <a
-      href="https://hubertdhk.netlify.app"
-      target="_blank"
-      rel="noopener noreferrer"
-      className="text-blue-400 hover:underline"
-    >
-      DamasHub
-    </a>
-  </p>
-</footer>
-
+          <p className="text-xs sm:text-sm">
+            &copy; {new Date().getFullYear()} TechMarginGroup. Developed by{" "}
+            <a
+              href="https://hubertdhk.netlify.app"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-400 hover:underline"
+            >
+              DamasHub
+            </a>
+          </p>
+        </footer>
 
         {/* Logout Confirmation Modal */}
         {showLogoutModal && (

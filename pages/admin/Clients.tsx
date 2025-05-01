@@ -11,7 +11,7 @@ import {
 import { toast, ToastContainer } from "react-toastify";
 import { motion, AnimatePresence } from "framer-motion";
 import "react-toastify/dist/ReactToastify.css";
-import styles from "./Clients.module.css";
+import styles from "./client.module.css";
 import Spinner from "@/componnets/Spinner";
 
 interface Client {
@@ -199,7 +199,6 @@ const ClientForm: React.FC<ClientFormProps> = ({ searchTerm }) => {
                   className={styles.modalInput}
                 >
                   <option value="Not Done">Not Done</option>
-                
                 </select>
                 <div className={styles.buttonGroup}>
                   <button

@@ -22,6 +22,7 @@ import NetworkBanner from "@/componnets/NetworkBanner";
 import { MdOutlineLocalGroceryStore } from "react-icons/md";
 import { FaUsersGear } from "react-icons/fa6";
 import ProtectedRoute from "@/componnets/ProtectedRoute";
+import { FiSearch } from "react-icons/fi";
 
 const StoreKeeperDashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -147,32 +148,35 @@ const StoreKeeperDashboard = () => {
         {/* Main Content */}
         <div className={styles.mainContent}>
           <header className={styles.header}>
-            <div className="flex items-center justify-between p-4">
-              <div className={styles.searchWrapper}>
-                <FaSearch className={styles.searchIcon} />
-                <input
-                  type="text"
-                  placeholder="Search..."
-                  className={styles.searchInput}
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
-              </div>
+          <div className="flex flex-wrap items-center justify-between gap-4 p-4">
+                {/* Search Box */}
+                <div className={`${styles.searchWrapper} flex-1 min-w-[100px]`}>
+                  <FiSearch className={styles.searchIcon} />
+                  <input
+                    type="text"
+                    placeholder="Search..."
+                    className={styles.searchInput}
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                  />
+                </div>
 
-              <div className="flex items-center space-x-12 ml-auto">
-                <NotificationModal
-                  staffRole={userRole}
-                  className="w-7 h-7 cursor-pointer text-red-600"
-                />
-                <Image
-                  src="https://cdn.vectorstock.com/i/1000v/31/40/mechanic-logo-vector-44593140.jpg"
-                  alt="Logo"
-                  width={48}
-                  height={48}
-                  className="rounded-full"
-                />
+                {/* Notification & Avatar */}
+                <div className="flex items-center gap-3 sm:gap-6 ml-auto">
+                  <NotificationModal
+                    staffRole={userRole}
+                    className="w-7 h-7 cursor-pointer text-red-600"
+                  />
+
+                  <Image
+                    src="https://cdn.vectorstock.com/i/1000v/31/40/mechanic-logo-vector-44593140.jpg"
+                    alt="Logo"
+                    width={35}
+                    height={35}
+                    className="w-12 h-12 rounded-full"
+                  />
+                </div>
               </div>
-            </div>
           </header>
 
           {/* Render Active Page */}
