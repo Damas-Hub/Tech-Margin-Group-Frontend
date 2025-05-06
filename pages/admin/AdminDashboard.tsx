@@ -151,7 +151,7 @@ const AdminDashboard = () => {
               </nav>
               <div className={styles.logout}>
                 <button
-                  className={styles.sidebarMenuItem}
+                  className={styles.sidebarMenuIthem}
                   onClick={() => setShowLogoutModal(true)}
                 >
                   <FaSignOutAlt className="w-7 h-7" />
@@ -160,7 +160,7 @@ const AdminDashboard = () => {
                       !isSidebarOpen && "hidden"
                     }`}
                   >
-                    Logout
+                    
                   </span>
                 </button>
               </div>

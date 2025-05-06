@@ -39,7 +39,7 @@
   padding: 0.5rem;
   margin-top: 1rem;
   /* margin-bottom: 1rem; */
-  justify-content: space-evenly;
+  justify-content: space-between;
   border-radius: 0.6rem;
   cursor: pointer;
   transition: background-color 0.2s ease;
@@ -49,7 +49,7 @@
   margin-left: -10px;
 }
 .sidebarMenuItem:hover {
-  background-color: #B05858;
+  background-color: #b05858;
 }
 
 /* Main Content Styles */
@@ -96,10 +96,9 @@
 /* Content Area */
 .contentArea {
   padding: 0.5rem;
-  background-color: transparent;
+  background-color: white;
   overflow: auto;
   height: calc(100vh - 4rem);
-  /* border-radius: 20px; */
 }
 .sidebarFullScreen {
   position: fixed;
@@ -112,7 +111,6 @@
   transition: all 0.3s ease;
 }
 
-
 .contentCard {
   background-color: #ffff;
   border-radius: 0.5rem;
@@ -122,8 +120,33 @@
   margin-top: auto;
   padding: 2.5rem;
   color: red;
-  margin-left: -0.8rem;
+  margin-left: -2rem;
 }
+.sidebarMenuIthem {
+  /* display: flex; */
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px;
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 5px;
+}
+.sidebarMenuIthem:hover {
+  background-color: rgba(252, 6, 6, 0.1);
+}
+
+.sidebarMenuText {
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+ 
 .modalOverlay {
   position: fixed;
   top: 0;
@@ -170,7 +193,7 @@
 
 @media (max-width: 370px) {
   .sidebar {
-    display: none;  
+    display: none;
   }
 
   .sidebarOpen {
@@ -179,29 +202,32 @@
     z-index: 1000;
     height: 100vh;
   }
- .logout{
-  padding: 3.5rem;
-
- }
 
   .sidebarClosed {
     width: 0;
     overflow: hidden;
   }
-  
 
   .mainContent {
     /* flex: 1; */
-    margin-left: 0;  
+    margin-left: 0;
   }
 }
 
-@media (min-width: 769px) {
+@media (min-width: 350px) and (max-width: 450px) {
   .sidebarClosed {
     width: 3.5rem;
   }
-  
+
   .sidebarOpen {
-    width: 14rem;
+    width: 11rem;
+    padding: 5px;
+  }
+  .logout {
+    padding: 1.5rem;
+    margin-bottom: 5.5rem;
+    overflow: hidden;
+  margin-left: -1rem;
+
   }
 }
