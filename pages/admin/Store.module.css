@@ -303,7 +303,8 @@
 
   .addButton,
   .addButtonn,
-  .addButtonnn {
+  .addButtonnn,
+  .addButt {
     width: 100%;
     font-size: 12px;
     padding: 8px;
