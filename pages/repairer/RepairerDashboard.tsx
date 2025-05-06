@@ -92,7 +92,8 @@ const RepairerDashboard = () => {
   return (
     <ProtectedRoute allowedRoles={["Repairer"]}>
       <NetworkBanner />
-      <div className="flex h-screen">
+      <div className={`flex h-screen ${styles.mobileContainer}`}>
+
         <Toaster />
 
         {/* Sidebar */}

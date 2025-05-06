@@ -93,7 +93,7 @@ const StoreKeeperDashboard = () => {
   return (
     <ProtectedRoute allowedRoles={["Store Keeper"]}>
       <NetworkBanner />
-      <div className="flex h-screen">
+      <div className={`flex h-screen ${styles.mobileContainer}`}>
         <Toaster />
 
         {/* Sidebar */}
@@ -149,9 +149,7 @@ const StoreKeeperDashboard = () => {
                   className={`${styles.sidebarMenuText} ${
                     !isSidebarOpen && "hidden"
                   }`}
-                >
-                
-                </span>
+                ></span>
               </button>
             </div>
           </div>

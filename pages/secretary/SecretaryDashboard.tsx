@@ -88,7 +88,7 @@ const SecretaryDashboard = () => {
   return (
     <ProtectedRoute allowedRoles={["Secretary"]}>
       <NetworkBanner />
-      <div className="flex h-screen">
+      <div className={`flex h-screen ${styles.mobileContainer}`}>
         <Toaster />
 
         {/* Sidebar */}
@@ -144,9 +144,7 @@ const SecretaryDashboard = () => {
                   className={`${styles.sidebarMenuText} ${
                     !isSidebarOpen && "hidden"
                   }`}
-                >
-                  
-                </span>
+                ></span>
               </button>
             </div>
           </div>

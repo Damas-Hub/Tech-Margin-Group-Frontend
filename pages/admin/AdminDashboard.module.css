@@ -217,7 +217,7 @@
   .sidebarClosed {
     width: 3.5rem;
   }
-  body {
+  .mobileContainer {
     overflow: hidden;
     height: 100vh;
   }
@@ -225,7 +225,10 @@
     width: 10rem;
     padding: 5px;
   }
-
+.container{
+  overflow: hidden;
+  height: 100vh;
+}
   .logout {
     padding: 1.5rem;
     margin-bottom: 5.5rem;

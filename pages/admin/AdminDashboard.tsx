@@ -105,10 +105,10 @@ const AdminDashboard = () => {
   }, []);
 
   return (
-    <>
+    <div>
       <ProtectedRoute allowedRoles={["Admin"]}>
         <NetworkBanner />
-        <div className="flex h-screen overflow-hidden">
+        <div className={`flex h-screen ${styles.mobileContainer}`}>
           <Toaster />
           {/* Sidebar */}
           <div
@@ -267,7 +267,7 @@ const AdminDashboard = () => {
           </div>
         )}
       </ProtectedRoute>
-    </>
+    </div>
   );
 };
 
