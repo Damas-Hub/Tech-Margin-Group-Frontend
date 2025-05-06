@@ -1,6 +1,6 @@
 .sidebar {
   background-color: #56021f;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); */
   transition: all 0.3s ease;
   display: flex;
   flex-direction: column;
@@ -229,5 +229,9 @@
     overflow: hidden;
   margin-left: -1rem;
 
+  }
+  html, body {
+    height: 100%;
+    overflow: hidden;
   }
 }
