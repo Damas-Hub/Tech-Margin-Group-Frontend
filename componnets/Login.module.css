@@ -27,71 +27,11 @@
   border: 5px solid #fff;
   box-shadow: rgba(133, 189, 215, 0.88) 0px 30px 30px -35px;
 }
-/* Media query for small screens */
-/* Media query for 350px to 450px screens */
-@media (min-width: 350px) and (max-width: 450px) {
-  .wrapper {
-    background: linear-gradient(0deg, #2c1203 0%, #52301c 100%);
-  }
-  
-  .imageSide {
-    display: none;
-  }
-  
-  .container {
-    width: 100%;
-    height: 100%;
-    /* max-width: 100%; */
-    border-radius: 0;
-    border: none;
-    padding: 10px;
-    box-shadow: none;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-  
-  .heading {
-    font-size: 30px;
-    text-align: center;
-  }
-  
-  .subheading {
-    font-size: 15px;
-    text-align: center;
-    margin-top: 5px;
-  }
-  
-  .form {
-    margin-top: 20px;
-  }
-  
-  .input {
-    padding: 10px 20px;
-    font-size: 16px;
-    margin-top: 2rem;
-  }
-  
-  .forgotPassword {
-    font-size: 16px;
-    margin-top: 15px;
-  }
-  
-  .loginButton {
-    padding: 12px;
-    font-size: 18px;
-    margin: 15px 0;
-  }
-  
-  .eyeIcon {
-    font-size: 1.5rem;
-  }
-  
-  
-}
+ 
+
 
 .heading {
-  /* text-align: center; */
+  font-family: "roboto";
   font-weight: 700;
   font-size: 50px;
   color: wheat;
@@ -105,6 +45,8 @@
 }
 .form {
   margin-top: 30px;
+  font-family: "roboto";
+  
 }
 
 .input {
@@ -113,10 +55,11 @@
   color: white;
   border: none;
   padding: 20px 20px;
-  border-radius: 20px;
-  font-size: 20px;
+  font-family: "roboto";
+  border-radius: 10px;
+  font-size: 15px;
   margin-top: 3rem;
-  box-shadow: #cff0ff 0px 8px 5px -5px;
+  box-shadow: #cff0ff 0px 8px 5px -8px;
 }
 
 .input:focus {
@@ -209,4 +152,61 @@
   100% {
     opacity: 1;
   }
+}
+
+@media (min-width: 350px) and (max-width: 450px) {
+  .wrapper {
+    background: linear-gradient(0deg, #2c1203 0%, #52301c 100%);
+  }
+  
+  .imageSide {
+    display: none;
+  }
+  
+  .container {
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+    border: none;
+    padding: 10px;
+    box-shadow: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .heading {
+    font-size: 30px;
+    text-align: center;
+  }
+  
+  .subheading {
+    font-size: 15px;
+    text-align: center;
+    margin-top: 5px;
+  }
+ 
+  
+  .input {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin-top: 2rem;
+  }
+  
+  .forgotPassword {
+    font-size: 16px;
+    margin-top: 15px;
+  }
+  
+  .loginButton {
+    padding: 12px;
+    font-size: 18px;
+    margin: 15px 0;
+  }
+  
+  .eyeIcon {
+    font-size: 1.5rem;
+  }
+  
+  
 }
