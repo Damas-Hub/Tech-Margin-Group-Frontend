@@ -55,6 +55,19 @@
   background-color: #56021f;
   color: white;
   border: none;
+  width: 50%;
+  white-space: nowrap;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: all 0.3s;
+  margin-right: 5px;
+}
+.addButt {
+  background-color: #56021f;
+  color: white;
+  border: none;
   width: 30%;
   white-space: nowrap;
   padding: 10px 20px;
@@ -138,6 +151,7 @@
   display: flex;
   justify-content: space-evenly;
   margin-top: 15px;
+  gap: 1rem;
 }
 
 .inputContainer {
@@ -196,7 +210,7 @@
   background-color: #bbb;
   color: black;
   border: none;
-  width: 30%;
+  width: 50%;
   padding: 10px 20px;
   cursor: pointer;
   border-radius: 5px;
@@ -327,7 +341,7 @@
   }
 
   .buttonGroup {
-    flex-direction: column;
+    flex-direction: row;
     gap: 5px;
   }
 

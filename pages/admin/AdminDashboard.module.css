@@ -38,7 +38,7 @@
   width: 100%;
   padding: 0.5rem;
   margin-top: 1rem;
-  margin-bottom: 1rem;
+  /* margin-bottom: 1rem; */
   justify-content: space-evenly;
   border-radius: 0.6rem;
   cursor: pointer;
@@ -170,7 +170,7 @@
 
 @media (max-width: 370px) {
   .sidebar {
-    display: none; /* Hide sidebar on small screens */
+    display: none;  
   }
 
   .sidebarOpen {
@@ -179,7 +179,10 @@
     z-index: 1000;
     height: 100vh;
   }
- 
+ .logout{
+  padding: 3.5rem;
+
+ }
 
   .sidebarClosed {
     width: 0;
@@ -189,7 +192,7 @@
 
   .mainContent {
     /* flex: 1; */
-    margin-left: 0; /* No margin for main content when sidebar is hidden */
+    margin-left: 0;  
   }
 }
 

@@ -152,7 +152,7 @@ const RequestedItems: React.FC = () => {
                   {item.status === "pending" && !loading ? (
                     <div className={styles.actionButtons}>
                       <motion.button
-                        className={styles.addButton}
+                        className={styles.addButt}
                         onClick={() => handleApprove(item)}
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
@@ -160,7 +160,7 @@ const RequestedItems: React.FC = () => {
                         Approve
                       </motion.button>
                       <motion.button
-                        className={styles.addButton}
+                        className={styles.addButt}
                         onClick={() => handleReject(item)}
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
