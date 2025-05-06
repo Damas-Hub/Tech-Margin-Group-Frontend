@@ -146,7 +146,6 @@
   text-overflow: ellipsis;
 }
 
- 
 .modalOverlay {
   position: fixed;
   top: 0;
@@ -218,23 +217,23 @@
   .sidebarClosed {
     width: 3.5rem;
   }
-
+  body {
+    overflow: hidden;
+    height: 100vh;
+  }
   .sidebarOpen {
-    width: 11rem;
+    width: 10rem;
     padding: 5px;
   }
+
   .logout {
     padding: 1.5rem;
     margin-bottom: 5.5rem;
     overflow: hidden;
-  margin-left: -1rem;
+    margin-left: -1rem;
+  }
 
-  }
-  html, body {
-    height: 100%;
-    overflow: hidden;
-  }
-  .sidebarMenuItem{
+  .sidebarMenuItem {
     margin-top: 1.5rem;
   }
 }

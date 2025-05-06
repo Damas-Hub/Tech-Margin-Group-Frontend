@@ -89,8 +89,17 @@ const AdminDashboard = () => {
   const [screenWidth, setScreenWidth] = useState(0);
 
   useEffect(() => {
-    const handleResize = () => setScreenWidth(window.innerWidth);
-    handleResize();  
+    const handleResize = () => {
+      const width = window.innerWidth;
+      if (width >= 350 && width <= 450 && !hasUserToggledSidebar.current) {
+        setIsSidebarOpen(false);
+      }
+      setScreenWidth(width);
+    };
+    
+    // Set initial state
+    handleResize();
+    
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -99,7 +108,7 @@ const AdminDashboard = () => {
     <>
       <ProtectedRoute allowedRoles={["Admin"]}>
         <NetworkBanner />
-        <div className="flex h-screen">
+        <div className="flex h-screen overflow-hidden">
           <Toaster />
           {/* Sidebar */}
           <div
