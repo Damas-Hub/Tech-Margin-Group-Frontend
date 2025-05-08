@@ -123,7 +123,8 @@ const RequestedItems: React.FC = () => {
   return (
     <div className={styles.storeWrapper}>
       <ToastContainer position="top-right" autoClose={3000} />
-      <h2>Requested Items</h2>
+      <h2 style={{ color: "black" }}>Add Client Details</h2>
+
       {requestedItems.length === 0 ? (
         <p>No requests yet</p>
       ) : (

@@ -181,6 +181,7 @@
 .modalContent {
   background: white;
   padding: 30px;
+  color: #333;
   border-radius: 12px;
   width: 90%;
   max-width: 500px;

@@ -212,6 +212,7 @@
 }
 .clientListTitle{
   margin-top: 1rem;
+  color: #333;
 }
 /* Loading spinner styles */
 .loadingContainer {

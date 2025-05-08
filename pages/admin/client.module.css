@@ -22,6 +22,7 @@
     padding: 14px;
     text-align: center;
     border-bottom: 1px solid #ddd;
+    color: #333;
   }
   .input {
     flex: 1;
@@ -173,7 +174,9 @@
     font-family: Verdana, Tahoma, sans-serif;
     transition: border 0.3s ease-in-out;
   }
-  
+  .modalForm{
+    color: #333;
+  }
   .modalInput:focus {
     border-color: #56021f;
     outline: none;
@@ -216,6 +219,7 @@
   }
   .clientListTitle{
     margin-top: 1rem;
+    color: #333;
   }
   /* Loading spinner styles */
   .loadingContainer {

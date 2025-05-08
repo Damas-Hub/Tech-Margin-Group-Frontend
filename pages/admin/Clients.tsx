@@ -146,7 +146,8 @@ const ClientForm: React.FC<ClientFormProps> = ({ searchTerm }) => {
               exit={{ scale: 0.5, opacity: 0 }}
               transition={{ duration: 0.3 }}
             >
-              <h2>Add Client Details</h2>
+              <h2 style={{ color: "black" }}>Add Client Details</h2>
+
               <form onSubmit={handleSubmit} className={styles.modalForm}>
                 <input
                   type="text"
