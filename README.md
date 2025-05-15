@@ -4,7 +4,6 @@
 The **Mechanic Shop Management System** is a web-based platform designed to streamline operations within a mechanic shop. It enables an **Admin** to manage staff, track repairs, handle item requests, and facilitate secure, role-based communication among different shop roles.
 
 ---
-
 ## ✨ Features
 
 ### 🔹 Admin Panel
